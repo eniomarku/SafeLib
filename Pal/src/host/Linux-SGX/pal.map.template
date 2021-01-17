@@ -1,5 +1,0 @@
-PAL {
-    # rider added 2020-9-16 ocall_dpdk_load_module; ocall_dpdk_init_handle; ocall_dpdk_destroy_handle; ocall_set_net_env;
-    global: $(PAL_SYMBOLS) ocall_dpdk_load_module; ocall_dpdk_init_handle; ocall_dpdk_destroy_handle; ocall_set_net_env;
-    local: *;
-};

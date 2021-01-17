@@ -1,0 +1,17 @@
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/rt/aio_write64.o: \
+ ../sysdeps/unix/sysv/linux/wordsize-64/aio_write64.c \
+ ../include/stdc-predef.h \
+ /home/nuc/graphene_test/graphene/LibOS/glibc-build/libc-modules.h \
+ ../include/libc-symbols.h \
+ /home/nuc/graphene_test/graphene/LibOS/glibc-build/config.h \
+ ../sysdeps/generic/symbol-hacks.h
+
+../include/stdc-predef.h:
+
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/libc-modules.h:
+
+../include/libc-symbols.h:
+
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/config.h:
+
+../sysdeps/generic/symbol-hacks.h:

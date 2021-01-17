@@ -1,0 +1,8 @@
+/home/nuc/graphene_test/graphene/Examples/libVNF_epc/libVNF-release-socc/build/CMakeFiles/install/strip.dir
+/home/nuc/graphene_test/graphene/Examples/libVNF_epc/libVNF-release-socc/build/CMakeFiles/install/local.dir
+/home/nuc/graphene_test/graphene/Examples/libVNF_epc/libVNF-release-socc/build/CMakeFiles/vnf-kernelbypass-dynamic.dir
+/home/nuc/graphene_test/graphene/Examples/libVNF_epc/libVNF-release-socc/build/CMakeFiles/edit_cache.dir
+/home/nuc/graphene_test/graphene/Examples/libVNF_epc/libVNF-release-socc/build/CMakeFiles/rebuild_cache.dir
+/home/nuc/graphene_test/graphene/Examples/libVNF_epc/libVNF-release-socc/build/CMakeFiles/list_install_components.dir
+/home/nuc/graphene_test/graphene/Examples/libVNF_epc/libVNF-release-socc/build/CMakeFiles/vnf-kernelbypass-static.dir
+/home/nuc/graphene_test/graphene/Examples/libVNF_epc/libVNF-release-socc/build/CMakeFiles/install.dir

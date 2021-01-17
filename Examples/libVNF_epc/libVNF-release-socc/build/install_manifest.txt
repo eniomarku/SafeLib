@@ -1,0 +1,10 @@
+/usr/lib/libvnf-kernelbypass-dynamic.so
+/usr/lib/libvnf-kernelbypass-static.a
+/usr/local/lib/libvnf-kernelbypass-dynamic.so
+/usr/local/lib/libvnf-kernelbypass-static.a
+/usr/include/libvnf/datastore/dspackethandler.hpp
+/usr/include/libvnf/datastore/utils.hpp
+/usr/include/libvnf/core.hpp
+/usr/local/include/libvnf/datastore/dspackethandler.hpp
+/usr/local/include/libvnf/datastore/utils.hpp
+/usr/local/include/libvnf/core.hpp

@@ -1,0 +1,1381 @@
+Archive member included to satisfy reference by file (symbol)
+
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__libc_check_standard_fds)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-errno.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (rtld_errno)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-closedir.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__closedir)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rewinddir.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__rewinddir)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__readdir)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fdopendir.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__fdopendir)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os) (__getdents64)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-dl-addr-obj.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (_dl_addr_inside_object)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__profil)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-prof-freq.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__profile_frequency)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__GI___xstat64)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__GI___fxstat64)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__GI___lxstat64)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__lseek)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__access)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__GI___close_nocancel)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__GI___fcntl64_nocancel)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__GI___open64_nocancel)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__GI___openat64_nocancel)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__GI___read_nocancel)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__GI___pread64_nocancel)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__GI___write_nocancel)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-scratch_buffer_set_array_size.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__libc_scratch_buffer_set_array_size)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__mmap)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-munmap.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__munmap)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mprotect.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__mprotect)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-uname.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__uname)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__GI__exit)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getpid.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__getpid)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-environ.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__environ)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setjmp.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__sigsetjmp)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-__longjmp.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__longjmp)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os) (__sigaction)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strdup.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__strdup)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcmp-sse2.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (strcmp)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strncmp-sse2.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (strncmp)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memchr-sse2.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (memchr)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rawmemchr-sse2.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (rawmemchr)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memcmp-sse2.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (memcmp)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strchr-sse2.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (strchr)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strlen-sse2.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (strlen)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strnlen-sse2.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (strnlen)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-stpcpy-sse2.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__stpcpy)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcspn-sse2.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (strcspn)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memmove-sse2-unaligned-erms.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (__mempcpy)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memset-sse2-unaligned-erms.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os (memset)
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setitimer.os)
+                              /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os) (__setitimer)
+
+Discarded input sections
+
+ COMMON         0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+ COMMON         0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-errno.os)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+START GROUP
+LOAD /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+LOAD /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a
+LOAD /usr/lib/gcc/x86_64-linux-gnu/7/libgcc.a
+END GROUP
+
+.interp
+ *(.interp)
+
+.note.gnu.build-id
+ *(.note.gnu.build-id)
+
+.hash
+ *(.hash)
+
+.gnu.hash
+ *(.gnu.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rela.init
+ *(.rela.init)
+
+.rela.text
+ *(.rela.text)
+
+.rela.fini
+ *(.rela.fini)
+
+.rela.rodata
+ *(.rela.rodata)
+
+.rela.data.rel.ro
+ *(.rela.data.rel.ro)
+
+.rela.data
+ *(.rela.data)
+
+.rela.tdata
+ *(.rela.tdata)
+
+.rela.tbss
+ *(.rela.tbss)
+
+.rela.ctors
+ *(.rela.ctors)
+
+.rela.dtors
+ *(.rela.dtors)
+
+.rela.got
+ *(.rela.got)
+
+.rela.bss
+ *(.rela.bss)
+
+.rela.ldata
+ *(.rela.ldata)
+
+.rela.lbss
+ *(.rela.lbss)
+
+.rela.lrodata
+ *(.rela.lrodata)
+
+.rela.ifunc
+ *(.rela.ifunc)
+
+.rela.plt
+ *(.rela.plt)
+
+.init
+ *(SORT_NONE(.init))
+
+.plt
+ *(.plt)
+
+.plt.got
+ *(.plt.got)
+
+.plt.sec
+ *(.plt.sec)
+
+.text           0x0000000000000000    0x1e3a2
+ *(.text .stub)
+ .text          0x0000000000000000    0x19520 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+                0x0000000000000000                _start
+                0x0000000000000008                _dl_start_user
+                0x0000000000000c10                handle_preload_list
+                0x0000000000006650                _dl_dst_count
+                0x00000000000066f0                _dl_dst_substitute
+                0x0000000000006eb0                _dl_init_paths
+                0x00000000000071b0                _dl_map_object
+                0x0000000000007c20                _dl_rtld_di_serinfo
+                0x0000000000008b80                _dl_lookup_symbol_x
+                0x0000000000009b20                _dl_setup_hash
+                0x0000000000009bd0                _dl_add_to_namespace_list
+                0x0000000000009c60                _dl_new_object
+                0x000000000000a080                _dl_try_allocate_static_tls
+                0x000000000000a160                _dl_allocate_static_tls
+                0x000000000000a190                _dl_nothread_init_static_tls
+                0x000000000000a1d0                _dl_protect_relro
+                0x000000000000a240                _dl_reloc_bad_type
+                0x000000000000a310                _dl_relocate_object
+                0x000000000000bd80                _dl_map_object_deps
+                0x000000000000cdd0                _dl_important_hwcaps
+                0x000000000000d590                _dl_fixup
+                0x000000000000d770                _dl_profile_fixup
+                0x000000000000de30                _dl_call_pltexit
+                0x000000000000e0d0                _dl_init
+                0x000000000000e210                _dl_fini
+                0x000000000000e610                _dl_debug_state
+                0x000000000000e610                __GI__dl_debug_state
+                0x000000000000e620                _dl_debug_initialize
+                0x000000000000ecc0                _dl_sysdep_read_whole_file
+                0x000000000000ed50                _dl_debug_printf
+                0x000000000000ee00                _dl_debug_printf_c
+                0x000000000000eeb0                _dl_dprintf
+                0x000000000000ef50                _dl_name_match_p
+                0x000000000000efc0                _dl_higher_prime_number
+                0x000000000000f040                _dl_strtoul
+                0x000000000000f1b0                _dl_check_map_versions
+                0x000000000000f910                _dl_check_all_versions
+                0x000000000000f980                _dl_start_profile
+                0x00000000000100e0                __GI__dl_mcount
+                0x00000000000100e0                _dl_mcount
+                0x0000000000010630                _dl_next_tls_modid
+                0x0000000000010730                _dl_count_modids
+                0x00000000000107a0                _dl_determine_tlsoffset
+                0x0000000000010960                _dl_get_tls_static_info
+                0x0000000000010980                _dl_allocate_tls_storage
+                0x0000000000010a40                __GI__dl_allocate_tls_init
+                0x0000000000010a40                _dl_allocate_tls_init
+                0x0000000000010cc0                __GI__dl_allocate_tls
+                0x0000000000010cc0                _dl_allocate_tls
+                0x0000000000010d00                _dl_deallocate_tls
+                0x0000000000010d00                __GI__dl_deallocate_tls
+                0x0000000000010d80                _dl_update_slotinfo
+                0x0000000000010ff0                __GI___tls_get_addr
+                0x0000000000010ff0                ___tls_get_addr
+                0x0000000000011030                _dl_tls_get_addr_soft
+                0x00000000000110b0                _dl_add_to_slotinfo
+                0x00000000000111a0                __tls_get_addr_slow
+                0x00000000000111d0                _dl_get_origin
+                0x0000000000011380                _dl_scope_free
+                0x0000000000011450                _dl_make_stack_executable
+                0x0000000000011450                __GI__dl_make_stack_executable
+                0x0000000000011750                __GI__dl_find_dso_for_object
+                0x0000000000011750                _dl_find_dso_for_object
+                0x0000000000011820                _dl_open
+                0x0000000000011b50                _dl_show_scope
+                0x0000000000012930                _dl_close_worker
+                0x00000000000139c0                _dl_close
+                0x0000000000013a30                _dl_runtime_profile_avx512
+                0x0000000000013eb0                _dl_runtime_profile_avx
+                0x0000000000014330                _dl_runtime_profile_sse
+                0x0000000000014530                _dl_runtime_resolve_fxsave
+                0x00000000000145b0                _dl_runtime_resolve_xsave
+                0x0000000000014680                _dl_runtime_resolve_xsavec
+                0x0000000000014770                _dl_exception_create
+                0x0000000000014770                __GI__dl_exception_create
+                0x0000000000014870                __GI__dl_exception_create_format
+                0x0000000000014870                _dl_exception_create_format
+                0x0000000000014cf0                _dl_exception_free
+                0x0000000000014cf0                __GI__dl_exception_free
+                0x0000000000014d20                _dl_sort_maps
+                0x0000000000015000                register_library
+                0x0000000000015003                syscalldb
+                0x0000000000015010                _dl_cache_libcmp
+                0x00000000000150e0                _dl_load_cache_lookup
+                0x0000000000015780                _dl_unload_cache
+                0x0000000000015880                __tunable_set_val
+                0x00000000000158a0                __GI___tunables_init
+                0x0000000000015d90                __tunable_get_val
+                0x0000000000015d90                __GI___tunable_get_val
+                0x0000000000015df0                _dl_make_tlsdesc_dynamic
+                0x00000000000160f0                _dl_tlsdesc_resolve_rela_fixup
+                0x00000000000162b0                _dl_tlsdesc_resolve_hold_fixup
+                0x00000000000162f0                _dl_unmap
+                0x0000000000016370                _dl_tlsdesc_return
+                0x0000000000016380                _dl_tlsdesc_undefweak
+                0x0000000000016390                _dl_tlsdesc_dynamic
+                0x0000000000016430                _dl_tlsdesc_resolve_rela
+                0x00000000000164a0                _dl_tlsdesc_resolve_hold
+                0x0000000000016520                __tls_get_addr
+                0x0000000000016560                __get_cpu_features
+                0x0000000000016570                _dl_tunable_set_hwcaps
+                0x0000000000017600                _dl_sysdep_start
+                0x0000000000017ee0                _dl_sysdep_start_cleanup
+                0x0000000000017ef0                _dl_show_auxv
+                0x0000000000018070                _dl_discover_osversion
+                0x0000000000018250                _dl_next_ld_env_entry
+                0x00000000000182a0                unsetenv
+                0x0000000000018310                malloc
+                0x0000000000018440                calloc
+                0x0000000000018480                free
+                0x00000000000184c0                __sigjmp_save
+                0x00000000000184d0                __strerror_r
+                0x00000000000185b0                __GI___libc_fatal
+                0x00000000000185b0                __libc_fatal
+                0x00000000000185e0                __GI___chk_fail
+                0x00000000000185e0                __chk_fail
+                0x00000000000185f0                __GI___assert_fail
+                0x00000000000185f0                __assert_fail
+                0x0000000000018640                realloc
+                0x00000000000186d0                __GI___assert_perror_fail
+                0x00000000000186d0                __assert_perror_fail
+                0x0000000000018740                _itoa
+                0x0000000000018790                __strsep
+                0x0000000000018790                strsep
+                0x0000000000018790                __strsep_g
+                0x00000000000188d0                _dl_signal_exception
+                0x0000000000018920                _dl_signal_error
+                0x0000000000018970                _dl_signal_cexception
+                0x00000000000189f0                _dl_signal_cerror
+                0x0000000000018a80                _dl_catch_exception
+                0x0000000000018b60                _dl_catch_error
+                0x0000000000018bb0                _dl_receive_error
+                0x0000000000018bf0                _dl_resolve_conflicts
+                0x0000000000018d60                __brk
+                0x0000000000018d60                brk
+                0x0000000000018dd0                sbrk
+                0x0000000000018dd0                __sbrk
+                0x0000000000018e60                __getcwd
+                0x0000000000018e60                getcwd
+                0x00000000000192a0                openat64
+                0x0000000000019320                __alloc_dir
+                0x0000000000019420                __opendir
+                0x0000000000019420                opendir
+                0x00000000000194c0                __fxstatat
+                0x00000000000194c0                __fxstatat64
+                0x00000000000194c0                __GI___fxstatat64
+ .text          0x0000000000019520       0xd2 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+                0x00000000000195c0                __libc_check_standard_fds
+ .text          0x00000000000195f2        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-errno.os)
+ *fill*         0x00000000000195f2        0xe 
+ .text          0x0000000000019600       0x28 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-closedir.os)
+                0x0000000000019600                __closedir
+                0x0000000000019600                closedir
+ *fill*         0x0000000000019628        0x8 
+ .text          0x0000000000019630       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rewinddir.os)
+                0x0000000000019630                rewinddir
+                0x0000000000019630                __rewinddir
+ .text          0x0000000000019660       0x8d /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+                0x0000000000019660                readdir
+                0x0000000000019660                __readdir64
+                0x0000000000019660                __readdir
+                0x0000000000019660                readdir64
+ *fill*         0x00000000000196ed        0x3 
+ .text          0x00000000000196f0       0x9e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fdopendir.os)
+                0x00000000000196f0                fdopendir
+                0x00000000000196f0                __fdopendir
+ *fill*         0x000000000001978e        0x2 
+ .text          0x0000000000019790       0x48 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+                0x0000000000019790                __getdents
+                0x0000000000019790                getdents64
+                0x0000000000019790                __getdents64
+ *fill*         0x00000000000197d8        0x8 
+ .text          0x00000000000197e0       0x53 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-dl-addr-obj.os)
+                0x00000000000197e0                _dl_addr_inside_object
+ *fill*         0x0000000000019833        0xd 
+ .text          0x0000000000019840      0x103 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+                0x0000000000019890                __profil
+                0x0000000000019890                profil
+ *fill*         0x0000000000019943        0xd 
+ .text          0x0000000000019950        0x7 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-prof-freq.os)
+                0x0000000000019950                __profile_frequency
+ *fill*         0x0000000000019957        0x9 
+ .text          0x0000000000019960       0x60 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+                0x0000000000019960                _xstat
+                0x0000000000019960                __xstat64
+                0x0000000000019960                __GI___xstat64
+                0x0000000000019960                __GI___xstat
+                0x0000000000019960                __xstat
+ .text          0x00000000000199c0       0x50 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+                0x00000000000199c0                __GI___fxstat
+                0x00000000000199c0                __GI___fxstat64
+                0x00000000000199c0                __fxstat64
+                0x00000000000199c0                _fxstat
+                0x00000000000199c0                __fxstat
+ .text          0x0000000000019a10       0x60 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+                0x0000000000019a10                __GI___lxstat
+                0x0000000000019a10                _lxstat
+                0x0000000000019a10                __lxstat
+                0x0000000000019a10                __lxstat64
+                0x0000000000019a10                __GI___lxstat64
+ .text          0x0000000000019a70       0x38 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+                0x0000000000019a70                __lseek64
+                0x0000000000019a70                lseek
+                0x0000000000019a70                __libc_lseek64
+                0x0000000000019a70                __lseek
+                0x0000000000019a70                __libc_lseek
+                0x0000000000019a70                lseek64
+ *fill*         0x0000000000019aa8        0x8 
+ .text          0x0000000000019ab0       0x36 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+                0x0000000000019ab0                access
+                0x0000000000019ab0                __access
+ *fill*         0x0000000000019ae6        0xa 
+ .text          0x0000000000019af0       0x36 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+                0x0000000000019af0                __GI___close_nocancel
+ *fill*         0x0000000000019b26        0xa 
+ .text          0x0000000000019b30       0xaf /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+                0x0000000000019b30                __fcntl64_nocancel_adjusted
+                0x0000000000019bb0                __fcntl64_nocancel
+                0x0000000000019bb0                __GI___fcntl64_nocancel
+ *fill*         0x0000000000019bdf        0x1 
+ .text          0x0000000000019be0       0x86 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+                0x0000000000019be0                __GI___open_nocancel
+                0x0000000000019be0                __open_nocancel
+                0x0000000000019be0                __GI___open64_nocancel
+                0x0000000000019be0                __open64_nocancel
+ *fill*         0x0000000000019c66        0xa 
+ .text          0x0000000000019c70       0x76 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+                0x0000000000019c70                __GI___openat64_nocancel
+                0x0000000000019c70                __openat64_nocancel
+                0x0000000000019c70                __GI___openat_nocancel
+                0x0000000000019c70                __openat_nocancel
+ *fill*         0x0000000000019ce6        0xa 
+ .text          0x0000000000019cf0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+                0x0000000000019cf0                __read_nocancel
+                0x0000000000019cf0                __GI___read_nocancel
+ .text          0x0000000000019d20       0x40 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+                0x0000000000019d20                __GI___pread64_nocancel
+                0x0000000000019d20                __pread64_nocancel
+ .text          0x0000000000019d60       0x38 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+                0x0000000000019d60                __GI___write_nocancel
+                0x0000000000019d60                __write_nocancel
+ *fill*         0x0000000000019d98        0x8 
+ .text          0x0000000000019da0       0xb0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-scratch_buffer_set_array_size.os)
+                0x0000000000019da0                __libc_scratch_buffer_set_array_size
+ .text          0x0000000000019e50       0xec /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+                0x0000000000019e50                __mmap
+                0x0000000000019e50                mmap
+                0x0000000000019e50                __mmap64
+                0x0000000000019e50                mmap64
+ *fill*         0x0000000000019f3c        0x4 
+ .text          0x0000000000019f40       0x32 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-munmap.os)
+                0x0000000000019f40                munmap
+                0x0000000000019f40                __GI___munmap
+                0x0000000000019f40                __GI_munmap
+                0x0000000000019f40                __munmap
+ *fill*         0x0000000000019f72        0xe 
+ .text          0x0000000000019f80       0x32 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mprotect.os)
+                0x0000000000019f80                __mprotect
+                0x0000000000019f80                __GI___mprotect
+                0x0000000000019f80                __GI_mprotect
+                0x0000000000019f80                mprotect
+ *fill*         0x0000000000019fb2        0xe 
+ .text          0x0000000000019fc0       0x32 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-uname.os)
+                0x0000000000019fc0                uname
+                0x0000000000019fc0                __GI_uname
+                0x0000000000019fc0                __uname
+                0x0000000000019fc0                __GI___uname
+ *fill*         0x0000000000019ff2        0xe 
+ .text          0x000000000001a000       0x6a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+                0x000000000001a000                _Exit
+                0x000000000001a000                __GI__exit
+                0x000000000001a000                _exit
+ *fill*         0x000000000001a06a        0x6 
+ .text          0x000000000001a070       0x1a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getpid.os)
+                0x000000000001a070                __getpid
+                0x000000000001a070                getpid
+                0x000000000001a070                __GI_getpid
+                0x000000000001a070                __GI___getpid
+ .text          0x000000000001a08a        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-environ.os)
+ *fill*         0x000000000001a08a        0x6 
+ .text          0x000000000001a090       0x4f /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setjmp.os)
+                0x000000000001a090                __sigsetjmp
+                0x000000000001a090                __GI___sigsetjmp
+ *fill*         0x000000000001a0df        0x1 
+ .text          0x000000000001a0e0       0x4a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-__longjmp.os)
+                0x000000000001a0e0                __longjmp
+ *fill*         0x000000000001a12a        0x6 
+ .text          0x000000000001a130      0x1f8 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+                0x000000000001a150                __libc_sigaction
+                0x000000000001a300                sigaction
+                0x000000000001a300                __sigaction
+ *fill*         0x000000000001a328        0x8 
+ .text          0x000000000001a330       0x41 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strdup.os)
+                0x000000000001a330                __strdup
+                0x000000000001a330                strdup
+ *fill*         0x000000000001a371        0xf 
+ .text          0x000000000001a380     0x1439 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcmp-sse2.os)
+                0x000000000001a380                strcmp
+ *fill*         0x000000000001b7b9        0x7 
+ .text          0x000000000001b7c0     0x1849 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strncmp-sse2.os)
+                0x000000000001b7c0                strncmp
+ *fill*         0x000000000001d009        0x7 
+ .text          0x000000000001d010      0x323 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memchr-sse2.os)
+                0x000000000001d010                memchr
+                0x000000000001d010                __memchr
+ *fill*         0x000000000001d333        0xd 
+ .text          0x000000000001d340      0x1f9 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rawmemchr-sse2.os)
+                0x000000000001d340                __rawmemchr
+                0x000000000001d340                rawmemchr
+ *fill*         0x000000000001d539        0x7 
+ .text          0x000000000001d540      0x400 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memcmp-sse2.os)
+                0x000000000001d540                bcmp
+                0x000000000001d540                memcmp
+ .text          0x000000000001d940      0x21a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strchr-sse2.os)
+                0x000000000001d940                index
+                0x000000000001d940                strchr
+ *fill*         0x000000000001db5a        0x6 
+ .text          0x000000000001db60      0x19c /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strlen-sse2.os)
+                0x000000000001db60                strlen
+ *fill*         0x000000000001dcfc        0x4 
+ .text          0x000000000001dd00      0x218 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strnlen-sse2.os)
+                0x000000000001dd00                __strnlen
+                0x000000000001dd00                strnlen
+ *fill*         0x000000000001df18        0x8 
+ .text          0x000000000001df20       0xdc /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-stpcpy-sse2.os)
+                0x000000000001df20                stpcpy
+                0x000000000001df20                __stpcpy
+ *fill*         0x000000000001dffc        0x4 
+ .text          0x000000000001e000       0x97 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcspn-sse2.os)
+                0x000000000001e000                strcspn
+ *fill*         0x000000000001e097        0x9 
+ .text          0x000000000001e0a0      0x1ed /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memmove-sse2-unaligned-erms.os)
+                0x000000000001e0a0                mempcpy
+                0x000000000001e0a0                __mempcpy
+                0x000000000001e0b0                memmove
+                0x000000000001e0b0                memcpy
+ *fill*         0x000000000001e28d        0x3 
+ .text          0x000000000001e290       0xda /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memset-sse2-unaligned-erms.os)
+                0x000000000001e290                memset
+ *fill*         0x000000000001e36a        0x6 
+ .text          0x000000000001e370       0x32 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setitimer.os)
+                0x000000000001e370                setitimer
+                0x000000000001e370                __setitimer
+                0x000000000001e370                __GI_setitimer
+                0x000000000001e370                __GI___setitimer
+ *(.gnu.warning)
+
+.text.unlikely  0x0000000000000000      0x2b3
+ .text.unlikely
+                0x0000000000000000      0x2b3 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+
+.fini
+ *(SORT_NONE(.fini))
+
+.rodata         0x0000000000000000      0xf78
+ *(.rodata)
+ .rodata        0x0000000000000000      0xef8 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+                0x0000000000000e50                __GI__itoa_lower_digits
+                0x0000000000000e50                _itoa_lower_digits
+ .rodata        0x0000000000000ef8       0x40 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcmp-sse2.os)
+ .rodata        0x0000000000000f38       0x40 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strncmp-sse2.os)
+
+.rodata.str1.1  0x0000000000000000     0x1303
+ .rodata.str1.1
+                0x0000000000000000     0x12ef /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+ .rodata.str1.1
+                0x00000000000012ef       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+
+.rodata.str1.8  0x0000000000000000     0x2791
+ .rodata.str1.8
+                0x0000000000000000     0x2791 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+
+.rodata.str1.16
+                0x0000000000000000      0x3a6
+ .rodata.str1.16
+                0x0000000000000000      0x3a6 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+
+.rodata.cst4    0x0000000000000000        0x8
+ .rodata.cst4   0x0000000000000000        0x8 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+                0x0000000000000000                glibc_version
+
+.rodata.cst16   0x0000000000000000       0x20
+ .rodata.cst16  0x0000000000000000       0x20 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+
+.rodata.str1.32
+                0x0000000000000000       0x7b
+ .rodata.str1.32
+                0x0000000000000000       0x7b /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+
+.rodata1
+ *(.rodata1)
+
+.eh_frame_hdr
+ *(.eh_frame_hdr)
+
+.eh_frame       0x0000000000000000     0x30b8
+ *(.eh_frame)
+ .eh_frame      0x0000000000000000     0x2600 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+                                       0x2660 (size before relaxing)
+ .eh_frame      0x0000000000002600       0x68 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+ .eh_frame      0x0000000000002668       0x38 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-closedir.os)
+ .eh_frame      0x00000000000026a0       0x38 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rewinddir.os)
+ .eh_frame      0x00000000000026d8       0x48 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+ .eh_frame      0x0000000000002720       0x50 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fdopendir.os)
+ .eh_frame      0x0000000000002770       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+ .eh_frame      0x00000000000027a0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-dl-addr-obj.os)
+ .eh_frame      0x00000000000027d0       0x48 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+ .eh_frame      0x0000000000002818       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-prof-freq.os)
+ .eh_frame      0x0000000000002848       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+ .eh_frame      0x0000000000002878       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+ .eh_frame      0x00000000000028a8       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+ .eh_frame      0x00000000000028d8       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+ .eh_frame      0x0000000000002908       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+ .eh_frame      0x0000000000002938       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+ .eh_frame      0x0000000000002968       0x50 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+ .eh_frame      0x00000000000029b8       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+ .eh_frame      0x00000000000029e8       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+ .eh_frame      0x0000000000002a18       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+ .eh_frame      0x0000000000002a48       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+ .eh_frame      0x0000000000002a78       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+ .eh_frame      0x0000000000002aa8       0x60 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-scratch_buffer_set_array_size.os)
+ .eh_frame      0x0000000000002b08       0x80 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+ .eh_frame      0x0000000000002b88       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-munmap.os)
+ .eh_frame      0x0000000000002bb8       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mprotect.os)
+ .eh_frame      0x0000000000002be8       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-uname.os)
+ .eh_frame      0x0000000000002c18       0x38 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+ .eh_frame      0x0000000000002c50       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getpid.os)
+ .eh_frame      0x0000000000002c80       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setjmp.os)
+ .eh_frame      0x0000000000002cb0       0x48 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-__longjmp.os)
+ .eh_frame      0x0000000000002cf8       0xe8 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+                                         0xf0 (size before relaxing)
+ .eh_frame      0x0000000000002de0       0x50 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strdup.os)
+ .eh_frame      0x0000000000002e30       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcmp-sse2.os)
+ .eh_frame      0x0000000000002e60       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strncmp-sse2.os)
+ .eh_frame      0x0000000000002e90       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memchr-sse2.os)
+ .eh_frame      0x0000000000002ec0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rawmemchr-sse2.os)
+ .eh_frame      0x0000000000002ef0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memcmp-sse2.os)
+ .eh_frame      0x0000000000002f20       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strchr-sse2.os)
+ .eh_frame      0x0000000000002f50       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strlen-sse2.os)
+ .eh_frame      0x0000000000002f80       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strnlen-sse2.os)
+ .eh_frame      0x0000000000002fb0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-stpcpy-sse2.os)
+ .eh_frame      0x0000000000002fe0       0x38 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcspn-sse2.os)
+ .eh_frame      0x0000000000003018       0x40 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memmove-sse2-unaligned-erms.os)
+ .eh_frame      0x0000000000003058       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memset-sse2-unaligned-erms.os)
+ .eh_frame      0x0000000000003088       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setitimer.os)
+
+.gcc_except_table
+ *(.gcc_except_table)
+
+.gnu_extab
+ *(.gnu_extab*)
+
+.exception_ranges
+ *(.exception_ranges)
+
+.eh_frame
+ *(.eh_frame)
+
+.gnu_extab
+ *(.gnu_extab)
+
+.gcc_except_table
+ *(.gcc_except_table)
+
+.exception_ranges
+ *(.exception_ranges)
+
+.tdata
+ *(.tdata)
+
+.tbss
+ *(.tbss)
+
+.jcr
+ *(.jcr)
+
+.dynamic
+ *(.dynamic)
+
+.got
+ *(.got)
+
+.got.plt
+ *(.got.plt)
+
+.data           0x0000000000000000      0xf98
+ *(.data)
+ .data          0x0000000000000000      0xf98 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+                0x0000000000000000                _rtld_global
+                0x0000000000000000                _rtld_local
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-errno.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-closedir.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rewinddir.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fdopendir.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-dl-addr-obj.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-prof-freq.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-scratch_buffer_set_array_size.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-munmap.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mprotect.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-uname.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getpid.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-environ.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setjmp.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-__longjmp.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strdup.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcmp-sse2.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strncmp-sse2.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memchr-sse2.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rawmemchr-sse2.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memcmp-sse2.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strchr-sse2.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strlen-sse2.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strnlen-sse2.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-stpcpy-sse2.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcspn-sse2.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memmove-sse2-unaligned-erms.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memset-sse2-unaligned-erms.os)
+ .data          0x0000000000000f98        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setitimer.os)
+
+.data.rel.ro    0x0000000000000000      0x924
+ .data.rel.ro   0x0000000000000000      0x924 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+                0x00000000000000c0                __pointer_chk_guard_local
+                0x00000000000000c8                _dl_skip_args
+                0x00000000000000d0                __GI__dl_argv
+                0x00000000000000d0                _dl_argv
+                0x00000000000000d8                _dl_argc
+                0x00000000000000e0                _rtld_global_ro
+                0x00000000000000e0                _rtld_local_ro
+                0x0000000000000340                __stack_prot
+                0x0000000000000910                _dl_random
+                0x0000000000000918                __libc_stack_end
+                0x0000000000000918                __GI___libc_stack_end
+                0x0000000000000920                __GI___libc_enable_secure
+                0x0000000000000920                __libc_enable_secure
+
+.data1
+ *(.data1)
+
+.bss            0x0000000000000000      0x130
+ *(.bss)
+ .bss           0x0000000000000000      0x108 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+                0x00000000000000d0                __libc_multiple_libcs
+                0x0000000000000100                __curbrk
+ .bss           0x0000000000000108        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+ .bss           0x0000000000000108        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-errno.os)
+ .bss           0x0000000000000108        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-closedir.os)
+ .bss           0x0000000000000108        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rewinddir.os)
+ .bss           0x0000000000000108        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+ .bss           0x0000000000000108        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fdopendir.os)
+ .bss           0x0000000000000108        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+ .bss           0x0000000000000108        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-dl-addr-obj.os)
+ .bss           0x0000000000000108       0x20 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-prof-freq.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-scratch_buffer_set_array_size.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-munmap.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mprotect.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-uname.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+ .bss           0x0000000000000128        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getpid.os)
+ .bss           0x0000000000000128        0x8 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-environ.os)
+                0x0000000000000128                _environ
+                0x0000000000000128                __environ
+                0x0000000000000128                environ
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setjmp.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-__longjmp.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strdup.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcmp-sse2.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strncmp-sse2.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memchr-sse2.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rawmemchr-sse2.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memcmp-sse2.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strchr-sse2.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strlen-sse2.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strnlen-sse2.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-stpcpy-sse2.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcspn-sse2.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memmove-sse2-unaligned-erms.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memset-sse2-unaligned-erms.os)
+ .bss           0x0000000000000130        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setitimer.os)
+
+.lbss
+ *(.lbss)
+
+.lrodata
+ *(.lrodata)
+
+.ldata
+ *(.ldata)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x0000000000000000      0xad4
+ *(.comment)
+ .comment       0x0000000000000000      0x63c /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+ .comment       0x000000000000063c       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+ .comment       0x0000000000000666       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-errno.os)
+ .comment       0x0000000000000690       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-closedir.os)
+ .comment       0x00000000000006ba       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rewinddir.os)
+ .comment       0x00000000000006e4       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+ .comment       0x000000000000070e       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fdopendir.os)
+ .comment       0x0000000000000738       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+ .comment       0x0000000000000762       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-dl-addr-obj.os)
+ .comment       0x000000000000078c       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+ .comment       0x00000000000007b6       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-prof-freq.os)
+ .comment       0x00000000000007e0       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+ .comment       0x000000000000080a       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+ .comment       0x0000000000000834       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+ .comment       0x000000000000085e       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+ .comment       0x0000000000000888       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+ .comment       0x00000000000008b2       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+ .comment       0x00000000000008dc       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+ .comment       0x0000000000000906       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+ .comment       0x0000000000000930       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+ .comment       0x000000000000095a       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+ .comment       0x0000000000000984       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+ .comment       0x00000000000009ae       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+ .comment       0x00000000000009d8       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-scratch_buffer_set_array_size.os)
+ .comment       0x0000000000000a02       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+ .comment       0x0000000000000a2c       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+ .comment       0x0000000000000a56       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-environ.os)
+ .comment       0x0000000000000a80       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+ .comment       0x0000000000000aaa       0x2a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strdup.os)
+
+.note.GNU-stack
+                0x0000000000000000        0x0
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-errno.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-closedir.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rewinddir.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fdopendir.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-dl-addr-obj.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-prof-freq.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-scratch_buffer_set_array_size.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-munmap.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mprotect.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-uname.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getpid.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-environ.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setjmp.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-__longjmp.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strdup.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcmp-sse2.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strncmp-sse2.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memchr-sse2.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rawmemchr-sse2.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memcmp-sse2.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strchr-sse2.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strlen-sse2.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strnlen-sse2.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-stpcpy-sse2.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcspn-sse2.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memmove-sse2-unaligned-erms.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memset-sse2-unaligned-erms.os)
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setitimer.os)
+
+.gnu.build.attributes
+ *(.gnu.build.attributes)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x0000000000000000     0x10e0
+ *(.debug_aranges)
+ .debug_aranges
+                0x0000000000000000      0x830 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+ .debug_aranges
+                0x0000000000000830       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+ .debug_aranges
+                0x0000000000000860       0x20 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-errno.os)
+ .debug_aranges
+                0x0000000000000880       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-closedir.os)
+ .debug_aranges
+                0x00000000000008b0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rewinddir.os)
+ .debug_aranges
+                0x00000000000008e0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+ .debug_aranges
+                0x0000000000000910       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fdopendir.os)
+ .debug_aranges
+                0x0000000000000940       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+ .debug_aranges
+                0x0000000000000970       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-dl-addr-obj.os)
+ .debug_aranges
+                0x00000000000009a0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+ .debug_aranges
+                0x00000000000009d0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-prof-freq.os)
+ .debug_aranges
+                0x0000000000000a00       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+ .debug_aranges
+                0x0000000000000a30       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+ .debug_aranges
+                0x0000000000000a60       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+ .debug_aranges
+                0x0000000000000a90       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+ .debug_aranges
+                0x0000000000000ac0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+ .debug_aranges
+                0x0000000000000af0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+ .debug_aranges
+                0x0000000000000b20       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+ .debug_aranges
+                0x0000000000000b50       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+ .debug_aranges
+                0x0000000000000b80       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+ .debug_aranges
+                0x0000000000000bb0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+ .debug_aranges
+                0x0000000000000be0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+ .debug_aranges
+                0x0000000000000c10       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+ .debug_aranges
+                0x0000000000000c40       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-scratch_buffer_set_array_size.os)
+ .debug_aranges
+                0x0000000000000c70       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+ .debug_aranges
+                0x0000000000000ca0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-munmap.os)
+ .debug_aranges
+                0x0000000000000cd0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mprotect.os)
+ .debug_aranges
+                0x0000000000000d00       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-uname.os)
+ .debug_aranges
+                0x0000000000000d30       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+ .debug_aranges
+                0x0000000000000d60       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getpid.os)
+ .debug_aranges
+                0x0000000000000d90       0x20 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-environ.os)
+ .debug_aranges
+                0x0000000000000db0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setjmp.os)
+ .debug_aranges
+                0x0000000000000de0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-__longjmp.os)
+ .debug_aranges
+                0x0000000000000e10       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+ .debug_aranges
+                0x0000000000000e40       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strdup.os)
+ .debug_aranges
+                0x0000000000000e70       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcmp-sse2.os)
+ .debug_aranges
+                0x0000000000000ea0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strncmp-sse2.os)
+ .debug_aranges
+                0x0000000000000ed0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memchr-sse2.os)
+ .debug_aranges
+                0x0000000000000f00       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rawmemchr-sse2.os)
+ .debug_aranges
+                0x0000000000000f30       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memcmp-sse2.os)
+ .debug_aranges
+                0x0000000000000f60       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strchr-sse2.os)
+ .debug_aranges
+                0x0000000000000f90       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strlen-sse2.os)
+ .debug_aranges
+                0x0000000000000fc0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strnlen-sse2.os)
+ .debug_aranges
+                0x0000000000000ff0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-stpcpy-sse2.os)
+ .debug_aranges
+                0x0000000000001020       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcspn-sse2.os)
+ .debug_aranges
+                0x0000000000001050       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memmove-sse2-unaligned-erms.os)
+ .debug_aranges
+                0x0000000000001080       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memset-sse2-unaligned-erms.os)
+ .debug_aranges
+                0x00000000000010b0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setitimer.os)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x0000000000000000    0xaf485
+ *(.debug_info)
+ .debug_info    0x0000000000000000    0x92894 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+ .debug_info    0x0000000000092894      0xa92 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+ .debug_info    0x0000000000093326      0x67e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-errno.os)
+ .debug_info    0x00000000000939a4     0x1c86 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-closedir.os)
+ .debug_info    0x000000000009562a     0x1c4b /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rewinddir.os)
+ .debug_info    0x0000000000097275     0x1d1d /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+ .debug_info    0x0000000000098f92     0x1e05 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fdopendir.os)
+ .debug_info    0x000000000009ad97     0x1bc5 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+ .debug_info    0x000000000009c95c     0x2718 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-dl-addr-obj.os)
+ .debug_info    0x000000000009f074      0xc44 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+ .debug_info    0x000000000009fcb8     0x38c4 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-prof-freq.os)
+ .debug_info    0x00000000000a357c      0x8b1 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+ .debug_info    0x00000000000a3e2d      0x8b0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+ .debug_info    0x00000000000a46dd      0x8b1 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+ .debug_info    0x00000000000a4f8e      0x7bf /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+ .debug_info    0x00000000000a574d      0x78e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+ .debug_info    0x00000000000a5edb      0x76a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+ .debug_info    0x00000000000a6645      0xa44 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+ .debug_info    0x00000000000a7089      0x875 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+ .debug_info    0x00000000000a78fe      0x893 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+ .debug_info    0x00000000000a8191      0x7db /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+ .debug_info    0x00000000000a896c      0x81c /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+ .debug_info    0x00000000000a9188      0x7e0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+ .debug_info    0x00000000000a9968      0x388 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-scratch_buffer_set_array_size.os)
+ .debug_info    0x00000000000a9cf0     0x3ca1 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+ .debug_info    0x00000000000ad991       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-munmap.os)
+ .debug_info    0x00000000000ad9bf       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mprotect.os)
+ .debug_info    0x00000000000ad9ed       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-uname.os)
+ .debug_info    0x00000000000ada1b      0x7a8 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+ .debug_info    0x00000000000ae1c3       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getpid.os)
+ .debug_info    0x00000000000ae1f1       0xf8 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-environ.os)
+ .debug_info    0x00000000000ae2e9       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setjmp.os)
+ .debug_info    0x00000000000ae317       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-__longjmp.os)
+ .debug_info    0x00000000000ae345      0xcdf /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+ .debug_info    0x00000000000af024      0x20b /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strdup.os)
+ .debug_info    0x00000000000af22f       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcmp-sse2.os)
+ .debug_info    0x00000000000af25d       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strncmp-sse2.os)
+ .debug_info    0x00000000000af28b       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memchr-sse2.os)
+ .debug_info    0x00000000000af2b9       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rawmemchr-sse2.os)
+ .debug_info    0x00000000000af2e7       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memcmp-sse2.os)
+ .debug_info    0x00000000000af315       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strchr-sse2.os)
+ .debug_info    0x00000000000af343       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strlen-sse2.os)
+ .debug_info    0x00000000000af371       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strnlen-sse2.os)
+ .debug_info    0x00000000000af39f       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-stpcpy-sse2.os)
+ .debug_info    0x00000000000af3cd       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcspn-sse2.os)
+ .debug_info    0x00000000000af3fb       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memmove-sse2-unaligned-erms.os)
+ .debug_info    0x00000000000af429       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memset-sse2-unaligned-erms.os)
+ .debug_info    0x00000000000af457       0x2e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setitimer.os)
+
+.debug_abbrev   0x0000000000000000     0xfb98
+ *(.debug_abbrev)
+ .debug_abbrev  0x0000000000000000     0xbcc0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+ .debug_abbrev  0x000000000000bcc0      0x22a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+ .debug_abbrev  0x000000000000beea      0x127 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-errno.os)
+ .debug_abbrev  0x000000000000c011      0x363 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-closedir.os)
+ .debug_abbrev  0x000000000000c374      0x32f /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rewinddir.os)
+ .debug_abbrev  0x000000000000c6a3      0x356 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+ .debug_abbrev  0x000000000000c9f9      0x36f /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fdopendir.os)
+ .debug_abbrev  0x000000000000cd68      0x343 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+ .debug_abbrev  0x000000000000d0ab      0x35d /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-dl-addr-obj.os)
+ .debug_abbrev  0x000000000000d408      0x2c7 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+ .debug_abbrev  0x000000000000d6cf      0x39a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-prof-freq.os)
+ .debug_abbrev  0x000000000000da69      0x188 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+ .debug_abbrev  0x000000000000dbf1      0x197 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+ .debug_abbrev  0x000000000000dd88      0x188 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+ .debug_abbrev  0x000000000000df10      0x193 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+ .debug_abbrev  0x000000000000e0a3      0x184 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+ .debug_abbrev  0x000000000000e227      0x186 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+ .debug_abbrev  0x000000000000e3ad      0x253 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+ .debug_abbrev  0x000000000000e600      0x197 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+ .debug_abbrev  0x000000000000e797      0x1a6 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+ .debug_abbrev  0x000000000000e93d      0x19c /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+ .debug_abbrev  0x000000000000ead9      0x1ab /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+ .debug_abbrev  0x000000000000ec84      0x19a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+ .debug_abbrev  0x000000000000ee1e      0x1ef /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-scratch_buffer_set_array_size.os)
+ .debug_abbrev  0x000000000000f00d      0x426 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+ .debug_abbrev  0x000000000000f433       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-munmap.os)
+ .debug_abbrev  0x000000000000f447       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mprotect.os)
+ .debug_abbrev  0x000000000000f45b       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-uname.os)
+ .debug_abbrev  0x000000000000f46f      0x190 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+ .debug_abbrev  0x000000000000f5ff       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getpid.os)
+ .debug_abbrev  0x000000000000f613       0x8b /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-environ.os)
+ .debug_abbrev  0x000000000000f69e       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setjmp.os)
+ .debug_abbrev  0x000000000000f6b2       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-__longjmp.os)
+ .debug_abbrev  0x000000000000f6c6      0x282 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+ .debug_abbrev  0x000000000000f948      0x14c /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strdup.os)
+ .debug_abbrev  0x000000000000fa94       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcmp-sse2.os)
+ .debug_abbrev  0x000000000000faa8       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strncmp-sse2.os)
+ .debug_abbrev  0x000000000000fabc       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memchr-sse2.os)
+ .debug_abbrev  0x000000000000fad0       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rawmemchr-sse2.os)
+ .debug_abbrev  0x000000000000fae4       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memcmp-sse2.os)
+ .debug_abbrev  0x000000000000faf8       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strchr-sse2.os)
+ .debug_abbrev  0x000000000000fb0c       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strlen-sse2.os)
+ .debug_abbrev  0x000000000000fb20       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strnlen-sse2.os)
+ .debug_abbrev  0x000000000000fb34       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-stpcpy-sse2.os)
+ .debug_abbrev  0x000000000000fb48       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcspn-sse2.os)
+ .debug_abbrev  0x000000000000fb5c       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memmove-sse2-unaligned-erms.os)
+ .debug_abbrev  0x000000000000fb70       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memset-sse2-unaligned-erms.os)
+ .debug_abbrev  0x000000000000fb84       0x14 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setitimer.os)
+
+.debug_line     0x0000000000000000    0x17fb7
+ *(.debug_line)
+ .debug_line    0x0000000000000000    0x11ebb /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+ .debug_line    0x0000000000011ebb      0x2a1 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+ .debug_line    0x000000000001215c      0x17d /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-errno.os)
+ .debug_line    0x00000000000122d9      0x452 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-closedir.os)
+ .debug_line    0x000000000001272b      0x424 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rewinddir.os)
+ .debug_line    0x0000000000012b4f      0x45f /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+ .debug_line    0x0000000000012fae      0x4b1 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fdopendir.os)
+ .debug_line    0x000000000001345f      0x3c0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+ .debug_line    0x000000000001381f      0x44d /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-dl-addr-obj.os)
+ .debug_line    0x0000000000013c6c      0x37d /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+ .debug_line    0x0000000000013fe9      0x523 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-prof-freq.os)
+ .debug_line    0x000000000001450c      0x20a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+ .debug_line    0x0000000000014716      0x20a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+ .debug_line    0x0000000000014920      0x20b /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+ .debug_line    0x0000000000014b2b      0x1ec /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+ .debug_line    0x0000000000014d17      0x1f6 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+ .debug_line    0x0000000000014f0d      0x1fe /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+ .debug_line    0x000000000001510b      0x266 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+ .debug_line    0x0000000000015371      0x252 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+ .debug_line    0x00000000000155c3      0x26e /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+ .debug_line    0x0000000000015831      0x231 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+ .debug_line    0x0000000000015a62      0x235 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+ .debug_line    0x0000000000015c97      0x232 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+ .debug_line    0x0000000000015ec9      0x126 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-scratch_buffer_set_array_size.os)
+ .debug_line    0x0000000000015fef      0x557 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+ .debug_line    0x0000000000016546       0x5a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-munmap.os)
+ .debug_line    0x00000000000165a0       0x5a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mprotect.os)
+ .debug_line    0x00000000000165fa       0x5a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-uname.os)
+ .debug_line    0x0000000000016654      0x1fb /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+ .debug_line    0x000000000001684f       0x58 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getpid.os)
+ .debug_line    0x00000000000168a7       0x75 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-environ.os)
+ .debug_line    0x000000000001691c       0x61 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setjmp.os)
+ .debug_line    0x000000000001697d       0x61 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-__longjmp.os)
+ .debug_line    0x00000000000169de      0x2e2 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+ .debug_line    0x0000000000016cc0       0xbf /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strdup.os)
+ .debug_line    0x0000000000016d7f      0x48f /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcmp-sse2.os)
+ .debug_line    0x000000000001720e      0x525 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strncmp-sse2.os)
+ .debug_line    0x0000000000017733      0x126 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memchr-sse2.os)
+ .debug_line    0x0000000000017859       0xd3 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rawmemchr-sse2.os)
+ .debug_line    0x000000000001792c      0x14c /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memcmp-sse2.os)
+ .debug_line    0x0000000000017a78       0xde /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strchr-sse2.os)
+ .debug_line    0x0000000000017b56       0xa5 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strlen-sse2.os)
+ .debug_line    0x0000000000017bfb       0xa5 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strnlen-sse2.os)
+ .debug_line    0x0000000000017ca0       0x95 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-stpcpy-sse2.os)
+ .debug_line    0x0000000000017d35       0x80 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcspn-sse2.os)
+ .debug_line    0x0000000000017db5       0xfc /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memmove-sse2-unaligned-erms.os)
+ .debug_line    0x0000000000017eb1       0xac /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memset-sse2-unaligned-erms.os)
+ .debug_line    0x0000000000017f5d       0x5a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setitimer.os)
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str      0x0000000000000000    0x70f55
+ *(.debug_str)
+ .debug_str     0x0000000000000000    0x5b977 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+ .debug_str     0x000000000005b977      0x7a5 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+ .debug_str     0x000000000005c11c      0x536 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-errno.os)
+ .debug_str     0x000000000005c652     0x1519 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-closedir.os)
+ .debug_str     0x000000000005db6b     0x14e9 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rewinddir.os)
+ .debug_str     0x000000000005f054     0x156b /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+ .debug_str     0x00000000000605bf     0x161b /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fdopendir.os)
+ .debug_str     0x0000000000061bda     0x145c /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+ .debug_str     0x0000000000063036     0x1bb6 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-dl-addr-obj.os)
+ .debug_str     0x0000000000064bec      0x8d6 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+ .debug_str     0x00000000000654c2     0x27a7 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-prof-freq.os)
+ .debug_str     0x0000000000067c69      0x69f /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+ .debug_str     0x0000000000068308      0x69d /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+ .debug_str     0x00000000000689a5      0x6a2 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+ .debug_str     0x0000000000069047      0x615 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+ .debug_str     0x000000000006965c      0x604 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+ .debug_str     0x0000000000069c60      0x619 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+ .debug_str     0x000000000006a279      0x706 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+ .debug_str     0x000000000006a97f      0x6ac /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+ .debug_str     0x000000000006b02b      0x6c2 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+ .debug_str     0x000000000006b6ed      0x644 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+ .debug_str     0x000000000006bd31      0x66c /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+ .debug_str     0x000000000006c39d      0x647 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+ .debug_str     0x000000000006c9e4      0x30a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-scratch_buffer_set_array_size.os)
+ .debug_str     0x000000000006ccee     0x2881 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+ .debug_str     0x000000000006f56f       0x69 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-munmap.os)
+ .debug_str     0x000000000006f5d8       0x69 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mprotect.os)
+ .debug_str     0x000000000006f641       0x6a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-uname.os)
+ .debug_str     0x000000000006f6ab      0x5f6 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+ .debug_str     0x000000000006fca1       0x6a /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getpid.os)
+ .debug_str     0x000000000006fd0b      0x1f6 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-environ.os)
+ .debug_str     0x000000000006ff01       0x63 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setjmp.os)
+ .debug_str     0x000000000006ff64       0x66 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-__longjmp.os)
+ .debug_str     0x000000000006ffca      0x7f1 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+ .debug_str     0x00000000000707bb      0x20d /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strdup.os)
+ .debug_str     0x00000000000709c8       0x63 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcmp-sse2.os)
+ .debug_str     0x0000000000070a2b       0x63 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strncmp-sse2.os)
+ .debug_str     0x0000000000070a8e       0x70 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memchr-sse2.os)
+ .debug_str     0x0000000000070afe       0x73 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rawmemchr-sse2.os)
+ .debug_str     0x0000000000070b71       0x63 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memcmp-sse2.os)
+ .debug_str     0x0000000000070bd4       0x70 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strchr-sse2.os)
+ .debug_str     0x0000000000070c44       0x70 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strlen-sse2.os)
+ .debug_str     0x0000000000070cb4       0x70 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strnlen-sse2.os)
+ .debug_str     0x0000000000070d24       0x63 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-stpcpy-sse2.os)
+ .debug_str     0x0000000000070d87       0x64 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strcspn-sse2.os)
+ .debug_str     0x0000000000070deb       0x81 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memmove-sse2-unaligned-erms.os)
+ .debug_str     0x0000000000070e6c       0x80 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-memset-sse2-unaligned-erms.os)
+ .debug_str     0x0000000000070eec       0x69 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-setitimer.os)
+
+.debug_loc      0x0000000000000000    0x332eb
+ *(.debug_loc)
+ .debug_loc     0x0000000000000000    0x30aee /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+ .debug_loc     0x0000000000030aee      0x138 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-check_fds.os)
+ .debug_loc     0x0000000000030c26       0x82 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-closedir.os)
+ .debug_loc     0x0000000000030ca8       0x4c /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-rewinddir.os)
+ .debug_loc     0x0000000000030cf4      0x1a8 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+ .debug_loc     0x0000000000030e9c       0xbe /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fdopendir.os)
+ .debug_loc     0x0000000000030f5a      0x174 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+ .debug_loc     0x00000000000310ce       0x65 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-dl-addr-obj.os)
+ .debug_loc     0x0000000000031133      0x252 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+ .debug_loc     0x0000000000031385      0x182 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+ .debug_loc     0x0000000000031507      0x182 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+ .debug_loc     0x0000000000031689      0x182 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+ .debug_loc     0x000000000003180b       0x5b /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+ .debug_loc     0x0000000000031866       0x5b /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+ .debug_loc     0x00000000000318c1       0x5b /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+ .debug_loc     0x000000000003191c      0x337 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+ .debug_loc     0x0000000000031c53      0x299 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+ .debug_loc     0x0000000000031eec      0x1b7 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+ .debug_loc     0x00000000000320a3       0x5b /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+ .debug_loc     0x00000000000320fe       0xc7 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+ .debug_loc     0x00000000000321c5       0x5b /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+ .debug_loc     0x0000000000032220      0x323 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-scratch_buffer_set_array_size.os)
+ .debug_loc     0x0000000000032543      0x820 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+ .debug_loc     0x0000000000032d63      0x148 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+ .debug_loc     0x0000000000032eab      0x339 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+ .debug_loc     0x00000000000331e4      0x107 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-strdup.os)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_pubtypes
+ *(.debug_pubtypes)
+
+.debug_ranges   0x0000000000000000     0x8390
+ *(.debug_ranges)
+ .debug_ranges  0x0000000000000000     0x7e10 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/dl-allobjs.os
+ .debug_ranges  0x0000000000007e10       0xa0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-readdir64.os)
+ .debug_ranges  0x0000000000007eb0       0x50 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-getdents64.os)
+ .debug_ranges  0x0000000000007f00       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-profil.os)
+ .debug_ranges  0x0000000000007f30       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-xstat.os)
+ .debug_ranges  0x0000000000007f60       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fxstat.os)
+ .debug_ranges  0x0000000000007f90       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lxstat.os)
+ .debug_ranges  0x0000000000007fc0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-lseek64.os)
+ .debug_ranges  0x0000000000007ff0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-access.os)
+ .debug_ranges  0x0000000000008020       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-close_nocancel.os)
+ .debug_ranges  0x0000000000008050       0x60 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-fcntl_nocancel.os)
+ .debug_ranges  0x00000000000080b0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-open64_nocancel.os)
+ .debug_ranges  0x00000000000080e0       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-openat64_nocancel.os)
+ .debug_ranges  0x0000000000008110       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-read_nocancel.os)
+ .debug_ranges  0x0000000000008140       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-pread64_nocancel.os)
+ .debug_ranges  0x0000000000008170       0x30 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-write_nocancel.os)
+ .debug_ranges  0x00000000000081a0       0xa0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-mmap64.os)
+ .debug_ranges  0x0000000000008240       0x90 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-_exit.os)
+ .debug_ranges  0x00000000000082d0       0xc0 /home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/rtld-libc.a(rtld-sigaction.os)
+
+.debug_macro
+ *(.debug_macro)
+
+.debug_addr
+ *(.debug_addr)
+
+.gnu.attributes
+ *(.gnu.attributes)
+OUTPUT(/home/nuc/graphene_test/graphene/LibOS/glibc-build/elf/librtld.os elf64-x86-64)

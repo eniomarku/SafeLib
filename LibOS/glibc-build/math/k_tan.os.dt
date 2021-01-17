@@ -1,0 +1,16 @@
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/math/k_tan.os: \
+ ../sysdeps/ieee754/dbl-64/k_tan.c ../include/stdc-predef.h \
+ /home/nuc/graphene_test/graphene/LibOS/glibc-build/libc-modules.h \
+ ../include/libc-symbols.h \
+ /home/nuc/graphene_test/graphene/LibOS/glibc-build/config.h \
+ ../sysdeps/generic/symbol-hacks.h
+
+../include/stdc-predef.h:
+
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/libc-modules.h:
+
+../include/libc-symbols.h:
+
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/config.h:
+
+../sysdeps/generic/symbol-hacks.h:

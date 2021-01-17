@@ -1,2 +1,0 @@
-sgx.enclave_size = "4G"
-sgx.thread_num = 8

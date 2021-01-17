@@ -1,8 +1,0 @@
-*.manifest
-*.manifest.sgx
-*.sig
-*.token
-pal_loader
-*.o
-*~
-*.swp

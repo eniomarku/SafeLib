@@ -1,0 +1,41 @@
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/math/s_rintl.os: \
+ ../sysdeps/x86_64/fpu/s_rintl.c ../include/stdc-predef.h \
+ /home/nuc/graphene_test/graphene/LibOS/glibc-build/libc-modules.h \
+ ../include/libc-symbols.h \
+ /home/nuc/graphene_test/graphene/LibOS/glibc-build/config.h \
+ ../sysdeps/generic/symbol-hacks.h ../sysdeps/i386/fpu/s_rintl.c \
+ ../sysdeps/generic/libm-alias-ldouble.h ../sysdeps/x86/bits/floatn.h \
+ ../include/features.h ../include/sys/cdefs.h ../misc/sys/cdefs.h \
+ ../sysdeps/x86/bits/wordsize.h \
+ ../sysdeps/ieee754/ldbl-96/bits/long-double.h ../include/gnu/stubs.h \
+ ../bits/floatn-common.h
+
+../include/stdc-predef.h:
+
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/libc-modules.h:
+
+../include/libc-symbols.h:
+
+/home/nuc/graphene_test/graphene/LibOS/glibc-build/config.h:
+
+../sysdeps/generic/symbol-hacks.h:
+
+../sysdeps/i386/fpu/s_rintl.c:
+
+../sysdeps/generic/libm-alias-ldouble.h:
+
+../sysdeps/x86/bits/floatn.h:
+
+../include/features.h:
+
+../include/sys/cdefs.h:
+
+../misc/sys/cdefs.h:
+
+../sysdeps/x86/bits/wordsize.h:
+
+../sysdeps/ieee754/ldbl-96/bits/long-double.h:
+
+../include/gnu/stubs.h:
+
+../bits/floatn-common.h:

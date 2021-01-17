@@ -1,0 +1,2 @@
+/usr/bin/ar qc libvnf-kernelbypass-static.a  CMakeFiles/vnf-kernelbypass-static.dir/src/datastore/dspackethandler.cpp.o CMakeFiles/vnf-kernelbypass-static.dir/src/datastore/utils.cpp.o CMakeFiles/vnf-kernelbypass-static.dir/src/kernel_bypass_impl/core.cpp.o
+/usr/bin/ranlib libvnf-kernelbypass-static.a
