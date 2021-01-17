@@ -4,15 +4,16 @@ B_KERNELBYPASS_STATIC=b-kernelbypass-static
 B_KERNELBYPASS_DYNAMIC=b-kernelbypass-dynamic
 CXX_FLAGS=-fpermissive -std=c++11 -g -O3 -Wno-write-strings -Wall
 A=a
+B=b
 C=c
 
 # options
-DPDK=1
+DPDK=0
 PS=0
-NETMAP=0
+NETMAP=1
 
 # mtcp library and header
-MTCP_P_FLD  = /home/nuc/mtcp/
+MTCP_P_FLD  = /home/rahul2514888/trishal/mtcp-p
 MTCP_FLD    = $(MTCP_P_FLD)/mtcp
 MTCP_INC    = -I$(MTCP_FLD)/include
 MTCP_LIB    = -L$(MTCP_FLD)/lib
@@ -36,27 +37,22 @@ ifeq ($(PS),1)
 endif
 
 # dpdk library and header
-DPDK_INC=$(MTCP_P_FLD)/dpdk/include
-DPDK_LIB=$(MTCP_P_FLD)/dpdk/lib
-#ifeq ($(DPDK),1)
-#	DPDK_MACHINE_FLAGS = $(shell cat $(MTCP_P_FLD)/dpdk/include/cflags.txt)
-#	INCLUDES += $(DPDK_MACHINE_FLAGS) -I$(DPDK_INC) -include $(DPDK_INC)/rte_config.h
-#endif
+DPDK_INC=/include
+DPDK_LIB=/lib
+ifeq ($(DPDK),1)
+	DPDK_MACHINE_FLAGS = $(shell cat /include/cflags.txt)
+	INCLUDES += $(DPDK_MACHINE_FLAGS) -I$(DPDK_INC) -include $(DPDK_INC)/rte_config.h
+endif
 
 ifeq ($(shell uname -m),x86_64)
 	LIBS += -m64
 endif
 
-#ifeq ($(DPDK),1)
-#	DPDK_LIB_FLAGS = $(shell cat $(MTCP_P_FLD)/dpdk/lib/ldflags.txt)
-#	LIBS += -ldl -march=native -export-dynamic -L$(MTCP_P_FLD)/dpdk/lib $(DPDK_LIB_FLAGS)
-#else
-#	LIBS += -ldl -march=native -export-dynamic -L$(MTCP_P_FLD)/dpdk/lib $(DPDK_LIB_FLAGS)
-#endif
 ifeq ($(DPDK),1)
-DPDK_MACHINE_LINKER_FLAGS=$${RTE_SDK}/$${RTE_TARGET}/lib/ldflags.txt
-DPDK_MACHINE_LDFLAGS=$(shell cat ${DPDK_MACHINE_LINKER_FLAGS})
-LIBS += -g -O3 -pthread -lrt -march=native ${MTCP_FLD}/lib/libmtcp.a -lnuma -lmtcp -lpthread -lrt -ldl -lgmp -L${RTE_SDK}/${RTE_TARGET}/lib ${DPDK_MACHINE_LDFLAGS}
+	DPDK_LIB_FLAGS = $(shell cat /lib/ldflags.txt)
+	LIBS += -ldl -march=native -export-dynamic -L$(MTCP_P_FLD)/dpdk/lib $(DPDK_LIB_FLAGS)
+else
+	LIBS += -ldl -march=native -export-dynamic -L$(MTCP_P_FLD)/dpdk/lib $(DPDK_LIB_FLAGS)
 endif
 
 all:
@@ -73,13 +69,16 @@ $(B_KERNEL_STATIC): b.cpp
 	g++ b.o -O3 -std=c++11 -lvnf-kernel-static -lpthread -lboost_system -lsctp -o $(B_KERNEL_STATIC)
 
 $(B_KERNEL_DYNAMIC): b.cpp
-	g++ b.cpp -O3 -std=c++11 -lvnf-kernel-dynamic -lpthread -lboost_system -o $(B_KERNEL_DYNAMIC)
+	g++ b.cpp -O3 -std=c++11 -lvnf-kernel-dynamic -lpthread -lboost_system -lsctp -o $(B_KERNEL_DYNAMIC)
 
 $(A): a.cpp
-	g++ a.cpp -std=c++11 -lpthread -lboost_system -o $(A)
+	g++ a.cpp -std=c++11 -lpthread -o $(A)
+
+$(B): b.cpp
+	g++ b.cpp -std=c++11 -lpthread -o $(B)
 
 $(C): c.cpp
 	g++ c.cpp -std=c++11 -lpthread -lboost_system -o $(C)
 
 clean:
-	rm -f *~ *.o *.log $(B_KERNEL_STATIC) $(B_KERNEL_DYNAMIC) $(B_KERNELBYPASS_STATIC) $(B_KERNELBYPASS_DYNAMIC) $(A) $(C) log_*
+	rm -f *~ *.o $(B_KERNEL_STATIC) $(B_KERNEL_DYNAMIC) $(B_KERNELBYPASS_STATIC) $(B_KERNELBYPASS_DYNAMIC) $(A) $(B) $(C) log_*

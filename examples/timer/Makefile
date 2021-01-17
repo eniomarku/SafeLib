@@ -7,12 +7,12 @@ A=a
 C=c
 
 # options
-DPDK=1
+DPDK=0
 PS=0
-NETMAP=0
+NETMAP=1
 
 # mtcp library and header
-MTCP_P_FLD  = /home/nuc/mtcp/
+MTCP_P_FLD  = /home/rahul2514888/trishal/mtcp-p
 MTCP_FLD    = $(MTCP_P_FLD)/mtcp
 MTCP_INC    = -I$(MTCP_FLD)/include
 MTCP_LIB    = -L$(MTCP_FLD)/lib
@@ -36,27 +36,22 @@ ifeq ($(PS),1)
 endif
 
 # dpdk library and header
-DPDK_INC=$(MTCP_P_FLD)/dpdk/include
-DPDK_LIB=$(MTCP_P_FLD)/dpdk/lib
-#ifeq ($(DPDK),1)
-#	DPDK_MACHINE_FLAGS = $(shell cat $(MTCP_P_FLD)/dpdk/include/cflags.txt)
-#	INCLUDES += $(DPDK_MACHINE_FLAGS) -I$(DPDK_INC) -include $(DPDK_INC)/rte_config.h
-#endif
+DPDK_INC=/include
+DPDK_LIB=/lib
+ifeq ($(DPDK),1)
+	DPDK_MACHINE_FLAGS = $(shell cat /include/cflags.txt)
+	INCLUDES += $(DPDK_MACHINE_FLAGS) -I$(DPDK_INC) -include $(DPDK_INC)/rte_config.h
+endif
 
 ifeq ($(shell uname -m),x86_64)
 	LIBS += -m64
 endif
 
-#ifeq ($(DPDK),1)
-#	DPDK_LIB_FLAGS = $(shell cat $(MTCP_P_FLD)/dpdk/lib/ldflags.txt)
-#	LIBS += -ldl -march=native -export-dynamic -L$(MTCP_P_FLD)/dpdk/lib $(DPDK_LIB_FLAGS)
-#else
-#	LIBS += -ldl -march=native -export-dynamic -L$(MTCP_P_FLD)/dpdk/lib $(DPDK_LIB_FLAGS)
-#endif
 ifeq ($(DPDK),1)
-DPDK_MACHINE_LINKER_FLAGS=$${RTE_SDK}/$${RTE_TARGET}/lib/ldflags.txt
-DPDK_MACHINE_LDFLAGS=$(shell cat ${DPDK_MACHINE_LINKER_FLAGS})
-LIBS += -g -O3 -pthread -lrt -march=native ${MTCP_FLD}/lib/libmtcp.a -lnuma -lmtcp -lpthread -lrt -ldl -lgmp -L${RTE_SDK}/${RTE_TARGET}/lib ${DPDK_MACHINE_LDFLAGS}
+	DPDK_LIB_FLAGS = $(shell cat /lib/ldflags.txt)
+	LIBS += -ldl -march=native -export-dynamic -L$(MTCP_P_FLD)/dpdk/lib $(DPDK_LIB_FLAGS)
+else
+	LIBS += -ldl -march=native -export-dynamic -L$(MTCP_P_FLD)/dpdk/lib $(DPDK_LIB_FLAGS)
 endif
 
 all:
