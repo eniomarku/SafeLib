@@ -1,6 +1,0 @@
-/* DO NOT MODIFY. THIS FILE WAS AUTO-GENERATED. */
-PAL {
-    # rider added 2020-9-16 ocall_dpdk_load_module; ocall_dpdk_init_handle; ocall_dpdk_destroy_handle; ocall_set_net_env;
-    global: DkVirtualMemoryAlloc; DkVirtualMemoryFree; DkVirtualMemoryProtect; DkThreadCreate; DkThreadDelayExecution; DkThreadYieldExecution; DkThreadExit; DkThreadResume; DkThreadSetCpuAffinity; DkThreadGetCpuAffinity; DkMutexCreate; DkNotificationEventCreate; DkSynchronizationEventCreate; DkMutexRelease; DkEventSet; DkEventClear; DkSynchronizationObjectWait; DkStreamsWaitEvents; DkStreamOpen; DkStreamRead; DkStreamWrite; DkStreamMap; DkStreamUnmap; DkStreamSetLength; DkStreamFlush; DkStreamDelete; DkSendHandle; DkReceiveHandle; DkStreamWaitForClient; DkStreamGetName; DkStreamAttributesQueryByHandle; DkStreamAttributesQuery; DkProcessCreate; DkProcessExit; DkSystemTimeQuery; DkRandomBitsRead; DkInstructionCacheFlush; DkCpuIdRetrieve; DkObjectClose; DkSetExceptionHandler; DkSegmentRegisterGet; DkSegmentRegisterSet; DkStreamChangeName; DkStreamAttributesSetByHandle; DkMemoryAvailableQuota; DkDebugAttachBinary; DkDebugDetachBinary; DkAttestationReport; DkAttestationQuote; DkSetProtectedFilesKey; DkDebugLog; pal_printf; pal_control_addr; pal_strerror; warn; ocall_dpdk_load_module; ocall_dpdk_init_handle; ocall_dpdk_destroy_handle; ocall_set_net_env;
-    local: *;
-};
