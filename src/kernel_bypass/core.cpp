@@ -13,10 +13,16 @@ UserConfig *userConfig = nullptr;
 
 int vnf::initLibvnf(int maxCores, int bufferSize, string dataStoreIP, vector<int> dataStorePorts, int dataStoreThreshold,
                bool useRemoteDataStore) {
+    printf("RIDER REPORT: 1111111-1\n");
+    fflush(stdout);
     userConfig = new UserConfig(maxCores, bufferSize,
                                 dataStoreIP, dataStorePorts,
                                 dataStoreThreshold, useRemoteDataStore);
+    printf("RIDER REPORT: 1111111-2\n");
+    fflush(stdout);
     perCoreStates = new PerCoreState[userConfig->MAX_CORES];
+    printf("RIDER REPORT: 1111111-3\n");
+    fflush(stdout);
     return 0;
 }
 /*
@@ -109,6 +115,8 @@ int createClientToDS(int coreId, string remoteIP, int remotePort) {
 }
 
 void *serverThread(void *args) {
+    printf("RIDER REPORT: serverThread libVNF function\n");
+    fflush(stdout);
     struct ServerPThreadArgument argument = *((struct ServerPThreadArgument *) args);
     int coreId = argument.coreId;
     spdlog::info("Server thread started on core {}", coreId);
@@ -119,14 +127,25 @@ void *serverThread(void *args) {
         spdlog::error("Failed to create mtcp context!");
         return nullptr;
     }
+    
+    printf("RIDER REPORT: serverThread libVNF pin 1\n");
+    fflush(stdout);
     globals.mctxLock.lock();
     perCoreStates[coreId].mctxFd = mctx;
     globals.mctxLock.unlock();
 
+    printf("RIDER REPORT: serverThread libVNF pin 1-1\n");
+    fflush(stdout);
+
     // memory pool initialization for request objects
     for (int reqObjType = 0; reqObjType < MAX_REQUEST_OBJECT_TYPES; ++reqObjType) {
+        printf("RIDER REPORT: serverThread libVNF pin 1-2\n");
+        fflush(stdout);
         perCoreStates[coreId].initMemPoolOfRequestObject(reqObjType);
     }
+    
+    printf("RIDER REPORT: serverThread libVNF pin 2\n");
+    fflush(stdout);
 
     // memory pool initialization for packets
     spdlog::info("Packets Memory Pool Size: {}", perCoreStates[coreId].packetMemPoolBlock.size());
@@ -134,6 +153,9 @@ void *serverThread(void *args) {
             &perCoreStates[coreId].packetMemPoolBlock.front(),
             perCoreStates[coreId].packetMemPoolBlock.size(),
             1024);
+    
+    printf("RIDER REPORT: serverThread libVNF pin 3\n");
+    fflush(stdout);
 
     int epFd = mtcp_epoll_create(mctx,MAX_EVENTS + 5);
     if (epFd < 0) {
@@ -143,7 +165,10 @@ void *serverThread(void *args) {
     globals.epollArrayLock.lock();
     perCoreStates[coreId].epollFd = epFd;
     globals.epollArrayLock.unlock();
-     
+    
+    
+    printf("RIDER REPORT: serverThread libVNF pin 4\n");
+    fflush(stdout);
     //listener socket creation
     int listeningSocketFd; 
     listeningSocketFd = mtcp_socket(mctx, AF_INET, SOCK_STREAM, 0);
@@ -151,17 +176,26 @@ void *serverThread(void *args) {
         spdlog::error("Failed to create listening socket!");
         return nullptr;
     }
+    
+    printf("RIDER REPORT: serverThread libVNF pin 5\n");
+    fflush(stdout);
     int ret = mtcp_setsock_nonblock(mctx, listeningSocketFd);
     if (ret < 0) {
         spdlog::error("Failed to set socket in nonblocking mode.");
         return nullptr;
     }
+    
+    printf("RIDER REPORT: serverThread libVNF pin 6\n");
+    fflush(stdout);
     struct sockaddr_in saddr;
 
     saddr.sin_family = AF_INET;
     saddr.sin_addr.s_addr = inet_addr((argument.ip).c_str());//inet_addr("192.168.100.2");//INADDR_ANY;
     saddr.sin_port = htons(argument.port);
-
+    
+    
+    printf("RIDER REPORT: serverThread libVNF pin 7\n");
+    fflush(stdout);
     ret = mtcp_bind(mctx, listeningSocketFd, (struct sockaddr *) &saddr, sizeof(struct sockaddr_in));
     if (ret < 0) {
         spdlog::error("Failed to bind to the listening socket!");
@@ -174,8 +208,11 @@ void *serverThread(void *args) {
     if (ret < 0) {
         spdlog::error("mtcp_listen() failed!");
         return nullptr;
-}
+    }
 
+    
+    printf("RIDER REPORT: serverThread libVNF pin 8\n");
+    fflush(stdout);
     struct mtcp_epoll_event ev;
     ev.events = MTCP_EPOLLIN | MTCP_EPOLLET;
     ev.data.sockid = listeningSocketFd;
@@ -188,7 +225,10 @@ void *serverThread(void *args) {
         exit(-1);
     }
     spdlog::info("Waiting for epollEvents");
-
+    
+    
+    printf("RIDER REPORT: serverThread libVNF pin 9\n");
+    fflush(stdout);
     bool _useRemoteDataStore = userConfig->USE_REMOTE_DATASTORE;
     while (!perCoreStates[coreId].isJobDone) {
         // connect to remote data store for first time
@@ -416,7 +456,10 @@ void *serverThread(void *args) {
             }
         }
     }
-
+    
+    
+    printf("RIDER REPORT: serverThread libVNF finished\n");
+    fflush(stdout);
     return NULL;
 }
 
@@ -493,6 +536,9 @@ void vnf::unsetCachedDSKeyDNE(int dsKey) {
 }
 
 ConnId vnf::initServer(string iface, string serverIp, int serverPort, string protocol) {
+
+    printf("RIDER REPORT: 3333333-0\n");
+    fflush(stdout);
     assert(userConfig != nullptr);
     signal(SIGPIPE, SIG_IGN);
     globals.serverIp = serverIp;
@@ -503,6 +549,9 @@ ConnId vnf::initServer(string iface, string serverIp, int serverPort, string pro
 }
 
 ConnId& vnf::ConnId::registerCallback(enum EventType eventType, void callback(ConnId&, int, void *, char *, int, int, int)) {
+    printf("RIDER REPORT: 2222222\n");
+    fflush(stdout);
+    
     if (*this == FIRST_TIME_CONN_ID) {
         globals.onAcceptByServerCallback[eventType] = callback;
     } else {

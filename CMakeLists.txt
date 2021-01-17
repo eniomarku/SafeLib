@@ -52,8 +52,8 @@ elseif (${STACK} STREQUAL KERNEL_BYPASS)
 
     # Include
     include_directories(include)
-    include_directories(/home/rahul2514888/trishal/mtcp-p/mtcp/include)
-    include_directories(/home/rahul2514888/trishal/mtcp-p/util/include)
+    include_directories(/home/nuc/graphene_test/mtcp/mtcp/include)
+    include_directories(/home/nuc/graphene_test/mtcp/util/include)
 
     #option(MTCP_INCLUDE_DIRS "mtcp and mtcp-util include directories" OFF)
     #set(MTCP_INCLUDE_DIRS /home/rahul2514888/trishal/mtcp-p/mtcp/include  /home/rahul2514888/trishal/mtcp-p/util/include)

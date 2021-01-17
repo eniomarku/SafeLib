@@ -64,7 +64,7 @@ void onPacketReceivedFromA(ConnId& aConnId, int reqObjId, void *requestObject, c
     requestObject = aConnId.allocReqObj(1);
 
     // connect to C as a client
-    ConnId cConnId = aConnId.createClient(mmeIp, neighbour1Ip, neighbour1Port, "tcp");
+//    ConnId cConnId = aConnId.createClient(mmeIp, neighbour1Ip, neighbour1Port, "tcp");
 
     // set values in request object
     BState *state = static_cast<BState *>(requestObject);
@@ -82,12 +82,20 @@ void onPacketReceivedFromA(ConnId& aConnId, int reqObjId, void *requestObject, c
     char value[] = "Dear A, thank you for your message, I have contacted C and sending back this message. Lots of love.";
     int valueLen = strlen(value);
     aConnId.storeData("", keyId, LOCAL, (void *) value, valueLen, NULL);
+     aConnId.unsetPktDNE((void *) state->req);
+ char *buffer = aConnId.getPktBuf();
+    memcpy((void *) buffer, value, valueLen);
+    aConnId.sendData(buffer, valueLen);
 
-    char *buffer = cConnId.getPktBuf();
-    const string message = "This message is originated from B. It shall be echoed back to B from C";
-    memcpy((void *) buffer, (void *) message.c_str(), message.size());
+    // free request object bound to A's connection, delete data from datastore and close connection in a single line
+    //aConnId.freeReqObj(1).delData("", keyId, LOCAL).closeConn();
+    aConnId.freeReqObj(1).delData("", keyId, LOCAL).closeConn();
+
+   // char *buffer = cConnId.getPktBuf();
+   // const string message = "This message is originated from B. It shall be echoed back to B from C";
+   // memcpy((void *) buffer, (void *) message.c_str(), message.size());
     // link request object, register READ callback and send data in one line
-    cConnId.linkReqObj(requestObject).registerCallback(READ, onPacketReceivedFromC).sendData(buffer, message.size());
+ //   cConnId.linkReqObj(requestObject).registerCallback(READ, onPacketReceivedFromC).sendData(buffer, message.size());
 }
 
 int main(int argc, char *argv[]) {
@@ -97,7 +105,7 @@ int main(int argc, char *argv[]) {
     dataStorePorts.push_back(7001);
     dataStorePorts.push_back(7002);
     dataStorePorts.push_back(7003);
-    initLibvnf(6, 128, "127.0.0.1", dataStorePorts, 131072, false);
+    initLibvnf(2, 128, "127.0.0.1", dataStorePorts, 131072, false);
 
     if (argc != 5) {
         exit(0);

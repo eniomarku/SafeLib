@@ -114,13 +114,20 @@ struct PerCoreState {
      * Expects reqObjType to start from 0
      * */
     void initMemPoolOfRequestObject(int reqObjType) {
+        printf("RIDER REPORT: initMemPoolOfRequestObject libVNF function reqObjType=%d, reqObjSizesInPowersOf2[reqObjType]=%d\n", reqObjType, reqObjSizesInPowersOf2[reqObjType]);
+        fflush(stdout);
         if (reqObjSizesInPowersOf2[reqObjType] != 0) {
-            reqObjMemPoolBlocks[reqObjType].resize(reqObjSizesInPowersOf2[reqObjType] * 2097152);
+            // rider added 2020-9-23 reduce memory pool size to 1/2 by adding / 2
+            reqObjMemPoolBlocks[reqObjType].resize(reqObjSizesInPowersOf2[reqObjType] * 2097152 / 2);
+            printf("RIDER REPORT: initMemPoolOfRequestObject libVNF pin 1\n");
+            fflush(stdout);
             spdlog::info("Request object type {} has memory pool size of {} bytes", reqObjType, reqObjMemPoolBlocks[reqObjType].size());
             reqObjMemPoolManagers[reqObjType].add_block(&reqObjMemPoolBlocks[reqObjType].front(),
                                                         reqObjMemPoolBlocks[reqObjType].size(),
                                                         reqObjSizesInPowersOf2[reqObjType]);
         }
+        printf("RIDER REPORT: initMemPoolOfRequestObject libVNF finished\n");
+        fflush(stdout);
     }
 
     /**
