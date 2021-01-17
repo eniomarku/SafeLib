@@ -1,0 +1,3 @@
+#define REDIS_GIT_SHA1 "0cd37ea5"
+#define REDIS_GIT_DIRTY "2728"
+#define REDIS_BUILD_ID "nuc-NUC8i7HVK-1596534013"
