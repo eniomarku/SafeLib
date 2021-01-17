@@ -2,16 +2,14 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_main-x86_64.c
- *
  * This file contains x86_64-specific functions of the PAL loader.
  */
 
 #include <asm/prctl.h>
 
 #include "api.h"
-#include "bogomips.h"
 #include "cpu.h"
+#include "linux_utils.h"
 #include "pal_linux.h"
 
 static double get_bogomips(void) {
@@ -82,6 +80,9 @@ int _DkGetCPUInfo(PAL_CPU_INFO* ci) {
 
     const size_t VENDOR_ID_SIZE = 13;
     char* vendor_id = malloc(VENDOR_ID_SIZE);
+    if (!vendor_id)
+        return -PAL_ERROR_NOMEM;
+
     cpuid(0, 0, words);
 
     FOUR_CHARS_VALUE(&vendor_id[0], words[PAL_CPUID_WORD_EBX]);
@@ -92,6 +93,10 @@ int _DkGetCPUInfo(PAL_CPU_INFO* ci) {
 
     const size_t BRAND_SIZE = 49;
     char* brand = malloc(BRAND_SIZE);
+    if (!brand) {
+        rv = -PAL_ERROR_NOMEM;
+        goto out_vendor_id;
+    }
     cpuid(0x80000002, 0, words);
     memcpy(&brand[ 0], words, sizeof(unsigned int) * PAL_CPUID_WORD_NUM);
     cpuid(0x80000003, 0, words);
@@ -102,30 +107,76 @@ int _DkGetCPUInfo(PAL_CPU_INFO* ci) {
     ci->cpu_brand = brand;
 
     /* we cannot use CPUID(0xb) because it counts even disabled-by-BIOS cores (e.g. HT cores);
-     * instead we extract info on number of online CPUs by parsing sysfs pseudo-files */
-    int cores = get_cpu_count();
-    if (cores < 0) {
-        free(vendor_id);
-        free(brand);
-        return cores;
+     * instead extract info on total number of logical cores, number of physical cores,
+     * SMT support etc. by parsing sysfs pseudo-files */
+    int online_logical_cores = get_hw_resource("/sys/devices/system/cpu/online", /*count=*/true);
+    if (online_logical_cores < 0) {
+        rv = online_logical_cores;
+        goto out_brand;
     }
-    ci->cpu_num = cores;
+    ci->online_logical_cores = online_logical_cores;
+
+    int possible_logical_cores = get_hw_resource("/sys/devices/system/cpu/possible",
+                                                 /*count=*/true);
+    /* TODO: correctly support offline cores */
+    if (possible_logical_cores > 0 && possible_logical_cores > online_logical_cores) {
+         printf("Warning: some CPUs seem to be offline; Graphene doesn't take this into account "
+                "which may lead to subpar performance\n");
+    }
+
+    int core_siblings = get_hw_resource("/sys/devices/system/cpu/cpu0/topology/core_siblings_list",
+                                        /*count=*/true);
+    if (core_siblings < 0) {
+        rv = core_siblings;
+        goto out_brand;
+    }
+
+    int smt_siblings = get_hw_resource("/sys/devices/system/cpu/cpu0/topology/thread_siblings_list",
+                                       /*count=*/true);
+    if (smt_siblings < 0) {
+        rv = smt_siblings;
+        goto out_brand;
+    }
+    ci->physical_cores_per_socket = core_siblings / smt_siblings;
+
+    /* array of "logical core -> socket" mappings */
+    int* cpu_socket = (int*)malloc(online_logical_cores * sizeof(int));
+    if (!cpu_socket) {
+        rv = -PAL_ERROR_NOMEM;
+        goto out_brand;
+    }
+
+    char filename[128];
+    for (int idx = 0; idx < online_logical_cores; idx++) {
+        snprintf(filename, sizeof(filename),
+                 "/sys/devices/system/cpu/cpu%d/topology/physical_package_id", idx);
+        cpu_socket[idx] = get_hw_resource(filename, /*count=*/false);
+        if (cpu_socket[idx] < 0) {
+            printf("Cannot read %s\n", filename);
+            rv = cpu_socket[idx];
+            goto out_phy_id;
+        }
+    }
+    ci->cpu_socket = cpu_socket;
 
     cpuid(1, 0, words);
-    ci->cpu_family   = BIT_EXTRACT_LE(words[PAL_CPUID_WORD_EAX],  8, 12);
-    ci->cpu_model    = BIT_EXTRACT_LE(words[PAL_CPUID_WORD_EAX],  4,  8);
-    ci->cpu_stepping = BIT_EXTRACT_LE(words[PAL_CPUID_WORD_EAX],  0,  4);
+    ci->cpu_family   = BIT_EXTRACT_LE(words[PAL_CPUID_WORD_EAX], 8, 12);
+    ci->cpu_model    = BIT_EXTRACT_LE(words[PAL_CPUID_WORD_EAX], 4, 8);
+    ci->cpu_stepping = BIT_EXTRACT_LE(words[PAL_CPUID_WORD_EAX], 0, 4);
 
-    if (!memcmp(vendor_id, "GenuineIntel", 12) ||
-        !memcmp(vendor_id, "AuthenticAMD", 12)) {
+    if (!memcmp(vendor_id, "GenuineIntel", 12) || !memcmp(vendor_id, "AuthenticAMD", 12)) {
         ci->cpu_family += BIT_EXTRACT_LE(words[PAL_CPUID_WORD_EAX], 20, 28);
         ci->cpu_model  += BIT_EXTRACT_LE(words[PAL_CPUID_WORD_EAX], 16, 20) << 4;
     }
 
     int flen = 0, fmax = 80;
     char* flags = malloc(fmax);
+    if (!flags) {
+        rv = -PAL_ERROR_NOMEM;
+        goto out_phy_id;
+    }
 
-    for (int i = 0 ; i < 32 ; i++) {
+    for (int i = 0; i < 32; i++) {
         if (!g_cpu_flags[i])
             continue;
 
@@ -133,6 +184,10 @@ int _DkGetCPUInfo(PAL_CPU_INFO* ci) {
             int len = strlen(g_cpu_flags[i]);
             if (flen + len + 1 > fmax) {
                 char* new_flags = malloc(fmax * 2);
+                if (!new_flags) {
+                    rv = -PAL_ERROR_NOMEM;
+                    goto out_flags;
+                }
                 memcpy(new_flags, flags, flen);
                 free(flags);
                 fmax *= 2;
@@ -153,53 +208,39 @@ int _DkGetCPUInfo(PAL_CPU_INFO* ci) {
     }
 
     return rv;
-}
-
-#if USE_ARCH_RDRAND == 1
-int _DkRandomBitsRead(void* buffer, size_t size) {
-    uint32_t rand;
-    for (size_t i = 0; i < size; i += sizeof(rand)) {
-        rand = rdrand();
-        memcpy(buffer + i, &rand, MIN(sizeof(rand), size - i));
-    }
-    return 0;
-}
-#endif
-
-int _DkSegmentRegisterSet(int reg, const void* addr) {
-    int ret = 0;
-
-    if (reg == PAL_SEGMENT_FS) {
-        ret = INLINE_SYSCALL(arch_prctl, 2, ARCH_SET_FS, addr);
-    } else if (reg == PAL_SEGMENT_GS) {
-        return -PAL_ERROR_DENIED;
-    } else {
-        return -PAL_ERROR_INVAL;
-    }
-    if (IS_ERR(ret))
-        return -PAL_ERROR_DENIED;
-
-    return 0;
+out_flags:
+    free(flags);
+out_phy_id:
+    free(cpu_socket);
+out_brand:
+    free(brand);
+out_vendor_id:
+    free(vendor_id);
+    return rv;
 }
 
 int _DkSegmentRegisterGet(int reg, void** addr) {
-    int ret;
-    unsigned long ret_addr;
-
-    if (reg == PAL_SEGMENT_FS) {
-        ret = INLINE_SYSCALL(arch_prctl, 2, ARCH_GET_FS, &ret_addr);
-    } else if (reg == PAL_SEGMENT_GS) {
-        // The GS segment is used for the internal TCB of PAL
-        return -PAL_ERROR_DENIED;
-    } else {
-        return -PAL_ERROR_INVAL;
+    switch (reg) {
+        case PAL_SEGMENT_FS:
+            return INLINE_SYSCALL(arch_prctl, 2, ARCH_GET_FS, addr);
+        case PAL_SEGMENT_GS:
+            // The GS segment is used for the internal TCB of PAL
+            return -PAL_ERROR_DENIED;
+        default:
+            return -PAL_ERROR_INVAL;
     }
+}
 
-    if (IS_ERR(ret))
-        return -PAL_ERROR_DENIED;
-
-    *addr = (void*)ret_addr;
-    return 0;
+int _DkSegmentRegisterSet(int reg, void* addr) {
+    switch (reg) {
+        case PAL_SEGMENT_FS:
+            return INLINE_SYSCALL(arch_prctl, 2, ARCH_SET_FS, addr);
+        case PAL_SEGMENT_GS:
+            // The GS segment is used for the internal TCB of PAL
+            return -PAL_ERROR_DENIED;
+        default:
+            return -PAL_ERROR_INVAL;
+    }
 }
 
 int _DkCpuIdRetrieve(unsigned int leaf, unsigned int subleaf, unsigned int values[4]) {

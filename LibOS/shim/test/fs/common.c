@@ -58,7 +58,7 @@ off_t tell_fd(const char* path, int fd) {
 }
 
 int open_output_fd(const char* path, bool rdwr) {
-    int fd = open(path, rdwr ? O_RDWR|O_CREAT : O_WRONLY|O_CREAT, 0664);
+    int fd = open(path, rdwr ? O_RDWR | O_CREAT : O_WRONLY | O_CREAT, 0664);
     if (fd < 0)
         fatal_error("Failed to open output file %s: %s\n", path, strerror(errno));
     return fd;
@@ -74,6 +74,18 @@ void write_fd(const char* path, int fd, const void* buffer, size_t size) {
             fatal_error("Failed to write file %s: %s\n", path, strerror(errno));
         size -= ret;
         offset += ret;
+    }
+}
+
+void sendfile_fd(const char* input_path, const char* output_path, int fi, int fo, size_t size) {
+    while (size > 0) {
+        ssize_t ret = sendfile(fo, fi, /*offset=*/NULL, size);
+        if (ret == -EAGAIN)
+            continue;
+        if (ret < 0)
+            fatal_error("Failed to sendfile from %s to %s: %s\n", input_path, output_path,
+                        strerror(errno));
+        size -= ret;
     }
 }
 

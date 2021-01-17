@@ -2,11 +2,8 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_socket.c
- *
- * Implementation of system call "socket", "bind", "accept4", "listen",
- * "connect", "sendto", "recvfrom", "sendmsg", "recvmsg" and "shutdown" and
- * "getsockname", "getpeername".
+ * Implementation of system calls "socket", "bind", "accept4", "listen", "connect", "sendto",
+ * "recvfrom", "sendmsg", "recvmsg" and "shutdown" and "getsockname", "getpeername".
  */
 
 #include <asm/socket.h>
@@ -23,6 +20,9 @@
 #include "shim_fs.h"
 #include "shim_handle.h"
 #include "shim_internal.h"
+#include "shim_lock.h"
+#include "shim_process.h"
+#include "shim_signal.h"
 #include "shim_table.h"
 #include "shim_utils.h"
 
@@ -46,8 +46,6 @@
 
 #define AF_UNSPEC 0
 
-static int rebase_on_lo __attribute_migratable = -1;
-
 static size_t minimal_addrlen(int domain) {
     switch (domain) {
         case AF_INET:
@@ -57,30 +55,6 @@ static size_t minimal_addrlen(int domain) {
         default:
             return sizeof(struct sockaddr);
     }
-}
-
-static int init_port_rebase(void) {
-    if (rebase_on_lo != -1)
-        return 0;
-
-    char cfg[CONFIG_MAX];
-    int rebase = 0;
-
-    if (!root_config || get_config(root_config, "net.port.rebase_on_lo", cfg, sizeof(cfg)) <= 0) {
-        rebase_on_lo = 0;
-        return 0;
-    }
-
-    for (const char* p = cfg; *p; p++) {
-        if (*p < '0' || *p > '9' || rebase > 32767) {
-            rebase_on_lo = 0;
-            return 0;
-        }
-        rebase = rebase * 10 + (*p - '0');
-    }
-
-    rebase_on_lo = rebase;
-    return 0;
 }
 
 static int inet_parse_addr(int domain, int type, const char* uri, struct addr_inet* bind,
@@ -161,26 +135,12 @@ static int unix_create_uri(char* uri, int count, enum shim_sock_state state, cha
 }
 
 static void inet_rebase_port(bool reverse, int domain, struct addr_inet* addr, bool local) {
-    init_port_rebase();
-
-    if (rebase_on_lo) {
-        if (domain == AF_INET) {
-            unsigned char* ad = (unsigned char*)&addr->addr.v4.s_addr;
-            if (!local && memcmp(ad, "\177\0\0\1", 4))
-                return;
-        }
-
-        if (domain == AF_INET6) {
-            unsigned short* ad = (void*)&addr->addr.v6.s6_addr;
-            if (!local && memcmp(ad, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\1", 16))
-                return;
-        }
-    }
-
+    __UNUSED(domain);
+    __UNUSED(local);
     if (reverse)
-        addr->port = addr->ext_port - rebase_on_lo;
+        addr->port = addr->ext_port;
     else
-        addr->ext_port = addr->port + rebase_on_lo;
+        addr->ext_port = addr->port;
 }
 
 static ssize_t inet_translate_addr(int domain, char* uri, size_t count, struct addr_inet* addr) {
@@ -192,8 +152,8 @@ static ssize_t inet_translate_addr(int domain, char* uri, size_t count, struct a
     if (domain == AF_INET6) {
         unsigned short* ad = (void*)&addr->addr.v6.s6_addr;
         return snprintf(uri, count, "[%04x:%04x:%x:%04x:%04x:%04x:%04x:%04x]:%u", __ntohs(ad[0]),
-                     __ntohs(ad[1]), __ntohs(ad[2]), __ntohs(ad[3]), __ntohs(ad[4]), __ntohs(ad[5]),
-                     __ntohs(ad[6]), __ntohs(ad[7]), addr->ext_port);
+                        __ntohs(ad[1]), __ntohs(ad[2]), __ntohs(ad[3]), __ntohs(ad[4]),
+                        __ntohs(ad[5]), __ntohs(ad[6]), __ntohs(ad[7]), addr->ext_port);
     }
 
     return -EPROTONOSUPPORT;
@@ -294,9 +254,18 @@ static ssize_t inet_create_uri(int domain, char* uri, size_t count, int sock_typ
 static inline void unix_copy_addr(struct sockaddr* saddr, struct shim_dentry* dent) {
     struct sockaddr_un* un = (struct sockaddr_un*)saddr;
     un->sun_family         = AF_UNIX;
-    size_t size;
-    const char* path = dentry_get_path(dent, true, &size);
-    memcpy(un->sun_path, path, size + 1);
+    size_t size = dentry_get_path_size(dent);
+    char path[size];
+
+    dentry_get_path(dent, path);
+
+    if (size > ARRAY_SIZE(un->sun_path)) {
+        debug("unix_copy_addr(): path too long, truncating: %s\n", path);
+        memcpy(un->sun_path, path, ARRAY_SIZE(un->sun_path) - 1);
+        un->sun_path[ARRAY_SIZE(un->sun_path) - 1] = 0;
+    } else {
+        memcpy(un->sun_path, path, size);
+    }
 }
 
 static int inet_check_addr(int domain, struct sockaddr* addr, size_t addrlen) {
@@ -327,26 +296,26 @@ static size_t inet_copy_addr(int domain, struct sockaddr* saddr, size_t saddr_le
     size_t len = 0;
 
     switch (domain) {
-      case AF_INET:
-        in = (struct sockaddr_in*)&ss;
-        in->sin_family         = AF_INET;
-        in->sin_port           = __htons(addr->port);
-        in->sin_addr           = addr->addr.v4;
+        case AF_INET:
+            in = (struct sockaddr_in*)&ss;
+            in->sin_family = AF_INET;
+            in->sin_port   = __htons(addr->port);
+            in->sin_addr   = addr->addr.v4;
 
-        len = MIN(saddr_len, sizeof(struct sockaddr_in));
-        break;
+            len = MIN(saddr_len, sizeof(struct sockaddr_in));
+            break;
 
-      case AF_INET6:
-        in6 = (struct sockaddr_in6*)&ss;
-        in6->sin6_family         = AF_INET6;
-        in6->sin6_port           = __htons(addr->port);
-        in6->sin6_addr           = addr->addr.v6;
+        case AF_INET6:
+            in6 = (struct sockaddr_in6*)&ss;
+            in6->sin6_family = AF_INET6;
+            in6->sin6_port   = __htons(addr->port);
+            in6->sin6_addr   = addr->addr.v6;
 
-        len = MIN(saddr_len, sizeof(struct sockaddr_in6));
-        break;
+            len = MIN(saddr_len, sizeof(struct sockaddr_in6));
+            break;
 
-      default:
-        __abort(); /* this function must accept only AF_INET/AF_INET6 */
+        default:
+            __abort(); /* this function must accept only AF_INET/AF_INET6 */
     }
 
     memcpy(saddr, &ss, len);
@@ -364,8 +333,8 @@ static void inet_save_addr(int domain, struct addr_inet* addr, const struct sock
 
     if (domain == AF_INET6) {
         if (saddr->sa_family == AF_INET) {
-            const struct sockaddr_in* in           = (const struct sockaddr_in*)saddr;
-            addr->port                             = __ntohs(in->sin_port);
+            const struct sockaddr_in* in = (const struct sockaddr_in*)saddr;
+            addr->port                 = __ntohs(in->sin_port);
             addr->addr.v6.s6_addr32[0] = __htonl(0);
             addr->addr.v6.s6_addr32[1] = __htonl(0);
             addr->addr.v6.s6_addr32[2] = __htonl(0x0000ffff);
@@ -373,26 +342,11 @@ static void inet_save_addr(int domain, struct addr_inet* addr, const struct sock
             addr->addr.v6.s6_addr32[3] = in->sin_addr.s_addr;
         } else {
             const struct sockaddr_in6* in6 = (const struct sockaddr_in6*)saddr;
-            addr->port                     = __ntohs(in6->sin6_port);
-            addr->addr.v6                  = in6->sin6_addr;
+            addr->port    = __ntohs(in6->sin6_port);
+            addr->addr.v6 = in6->sin6_addr;
         }
         return;
     }
-}
-
-static inline bool inet_comp_addr(int domain, const struct addr_inet* addr,
-                                  const struct sockaddr* saddr) {
-    if (domain == AF_INET) {
-        const struct sockaddr_in* in = (const struct sockaddr_in*)saddr;
-        return addr->port == __ntohs(in->sin_port) &&
-               !memcmp(&addr->addr.v4, &in->sin_addr, sizeof(struct in_addr));
-    }
-    if (domain == AF_INET6) {
-        const struct sockaddr_in6* in6 = (const struct sockaddr_in6*)saddr;
-        return addr->port == __ntohs(in6->sin6_port) &&
-               !memcmp(&addr->addr.v6, &in6->sin6_addr, sizeof(struct in6_addr));
-    }
-    return false;
 }
 
 static int create_socket_uri(struct shim_handle* hdl) {
@@ -449,7 +403,6 @@ static int hash_to_hex_string(HASHTYPE hash, char* buf, size_t size) {
     return 0;
 }
 
-
 int shim_do_bind(int sockfd, struct sockaddr* addr, int _addrlen) {
     if (_addrlen < 0)
         return -EINVAL;
@@ -458,7 +411,7 @@ int shim_do_bind(int sockfd, struct sockaddr* addr, int _addrlen) {
         return -EFAULT;
 
     struct shim_handle* hdl = get_fd_handle(sockfd, NULL, NULL);
-    int ret                 = -EINVAL;
+    int ret = -EINVAL;
     if (!hdl)
         return -EBADF;
 
@@ -485,9 +438,9 @@ int shim_do_bind(int sockfd, struct sockaddr* addr, int _addrlen) {
         struct shim_dentry* dent  = NULL;
 
         if ((ret = path_lookupat(NULL, spath, LOOKUP_CREATE, &dent, NULL)) < 0) {
-            // DEP 7/3/17: We actually want either 0 or -ENOENT, as the
-            // expected case is that the name is free (and we get the dent to
-            // populate the name)
+            /* We want either 0 or -ENOENT (dent is a valid object in both cases), as the expected
+             * case is that the name is free (and we use dent with the name already populated).
+             * FIXME: This is terrible semantics; path_lookupat() must be re-worked. */
             if (ret != -ENOENT || !dent)
                 goto out;
         }
@@ -558,6 +511,7 @@ int shim_do_bind(int sockfd, struct sockaddr* addr, int _addrlen) {
 
     hdl->pal_handle = pal_hdl;
     __process_pending_options(hdl);
+    _update_epolls(hdl);
     ret = 0;
 
 out:
@@ -589,13 +543,13 @@ static int inet_parse_addr(int domain, int type, const char* uri, struct addr_in
 
     enum { UDP, UDPSRV, TCP, TCPSRV } prefix;
 
-    if (strstartswith_static(uri, URI_PREFIX_UDP))
+    if (strstartswith(uri, URI_PREFIX_UDP))
         prefix = UDP;
-    else if (strstartswith_static(uri, URI_PREFIX_UDP_SRV))
+    else if (strstartswith(uri, URI_PREFIX_UDP_SRV))
         prefix = UDPSRV;
-    else if (strstartswith_static(uri, URI_PREFIX_TCP))
+    else if (strstartswith(uri, URI_PREFIX_TCP))
         prefix = TCP;
-    else if (strstartswith_static(uri, URI_PREFIX_TCP_SRV))
+    else if (strstartswith(uri, URI_PREFIX_TCP_SRV))
         prefix = TCPSRV;
     else
         return -EINVAL;
@@ -719,7 +673,8 @@ int shim_do_connect(int sockfd, struct sockaddr* addr, int _addrlen) {
     struct shim_sock_handle* sock = &hdl->info.sock;
     lock(&hdl->lock);
     enum shim_sock_state state = sock->sock_state;
-    int ret                    = -EINVAL;
+    int ret = -EINVAL;
+    bool pal_handle_updated = false;
 
     if (state == SOCK_CONNECTED) {
         if (addr->sa_family == AF_UNSPEC) {
@@ -728,6 +683,7 @@ int shim_do_connect(int sockfd, struct sockaddr* addr, int _addrlen) {
                 DkStreamDelete(hdl->pal_handle, 0);
                 DkObjectClose(hdl->pal_handle);
                 hdl->pal_handle = NULL;
+                pal_handle_updated = true;
             }
             debug("shim_connect: reconnect on a stream socket\n");
             ret = 0;
@@ -750,7 +706,7 @@ int shim_do_connect(int sockfd, struct sockaddr* addr, int _addrlen) {
 
         struct sockaddr_un* saddr = (struct sockaddr_un*)addr;
         char* spath               = saddr->sun_path;
-        struct shim_dentry* dent;
+        struct shim_dentry* dent  = NULL;
 
         if ((ret = path_lookupat(NULL, spath, LOOKUP_CREATE, &dent, NULL)) < 0) {
             // DEP 7/3/17: We actually want either 0 or -ENOENT, as the
@@ -785,6 +741,7 @@ int shim_do_connect(int sockfd, struct sockaddr* addr, int _addrlen) {
         DkStreamDelete(hdl->pal_handle, 0);
         DkObjectClose(hdl->pal_handle);
         hdl->pal_handle = NULL;
+        pal_handle_updated = true;
     }
 
     if (sock->domain != AF_UNIX) {
@@ -808,6 +765,7 @@ int shim_do_connect(int sockfd, struct sockaddr* addr, int _addrlen) {
     }
 
     hdl->pal_handle = pal_hdl;
+    pal_handle_updated = true;
 
     if (sock->domain == AF_UNIX) {
         struct shim_dentry* dent = sock->addr.un.dentry;
@@ -850,6 +808,10 @@ out:
         }
     }
 
+    if (pal_handle_updated) {
+        _update_epolls(hdl);
+    }
+
     unlock(&hdl->lock);
     put_handle(hdl);
     return ret;
@@ -860,7 +822,7 @@ static int __do_accept(struct shim_handle* hdl, int flags, struct sockaddr* addr
         return -ENOTSOCK;
 
     struct shim_sock_handle* sock = &hdl->info.sock;
-    int ret;
+    int ret = 0;
     PAL_HANDLE accepted = NULL;
 
     if (sock->sock_type != SOCK_STREAM) {
@@ -881,15 +843,31 @@ static int __do_accept(struct shim_handle* hdl, int flags, struct sockaddr* addr
 
     lock(&hdl->lock);
 
+    PAL_HANDLE handle = hdl->pal_handle;
     if (sock->sock_state != SOCK_LISTENED) {
-        debug("shim_accpet: invalid socket\n");
+        debug("shim_accept: invalid socket\n");
         ret = -EINVAL;
         goto out;
     }
+    unlock(&hdl->lock);
 
-    accepted = DkStreamWaitForClient(hdl->pal_handle);
+    /* NOTE: DkStreamWaitForClient() is blocking so we need to unlock before it and lock again
+     * afterwards; we rely on DkStreamWaitForClient() being thread-safe and that `handle` is not
+     * freed during the wait. */
+    accepted = DkStreamWaitForClient(handle);
     if (!accepted) {
         ret = -PAL_ERRNO();
+    }
+
+    lock(&hdl->lock);
+    if (ret < 0) {
+       goto out;
+    }
+
+    assert(hdl->pal_handle == handle);
+    if (sock->sock_state != SOCK_LISTENED) {
+        debug("shim_accept: socket changed while waiting for a client connection\n");
+        ret = -ECONNABORTED;
         goto out;
     }
 
@@ -1004,9 +982,6 @@ int shim_do_accept4(int fd, struct sockaddr* addr, int* addrlen, int flags) {
 
 static ssize_t do_sendmsg(int fd, struct iovec* bufs, int nbufs, int flags,
                           const struct sockaddr* addr, int addrlen) {
-    // Issue #752 - https://github.com/oscarlab/graphene/issues/752
-    __UNUSED(flags);
-
     struct shim_handle* hdl = get_fd_handle(fd, NULL, NULL);
     if (!hdl)
         return -EBADF;
@@ -1015,21 +990,31 @@ static ssize_t do_sendmsg(int fd, struct iovec* bufs, int nbufs, int flags,
     if (hdl->type != TYPE_SOCK)
         goto out;
 
+    if (flags & ~(MSG_NOSIGNAL | MSG_DONTWAIT)) {
+        debug("sendmsg()/sendmmsg()/sendto(): unknown flag (only MSG_NOSIGNAL and MSG_DONTWAIT"
+              " are supported).\n");
+        ret = -EOPNOTSUPP;
+        goto out;
+    }
+
     struct shim_sock_handle* sock = &hdl->info.sock;
 
-    ret = -EFAULT;
-    if (addr && test_user_memory((void*)addr, addrlen, false))
-        goto out;
-
-    if (!bufs || test_user_memory(bufs, sizeof(*bufs) * nbufs, false))
-        goto out;
-
-    for (int i = 0; i < nbufs; i++) {
-        if (!bufs[i].iov_base || test_user_memory(bufs[i].iov_base, bufs[i].iov_len, false))
+    if (addr) {
+        if (addrlen < 0 || (size_t)addrlen < minimal_addrlen(sock->domain)) {
+            ret = -EINVAL;
             goto out;
+        }
     }
 
     lock(&hdl->lock);
+
+    if (flags & MSG_DONTWAIT) {
+        if (!(hdl->flags & O_NONBLOCK)) {
+            debug("Warning: MSG_DONTWAIT on blocking socket is ignored, may lead to a write that"
+                  " unexpectedly blocks.\n");
+        }
+        flags &= ~MSG_DONTWAIT;
+    }
 
     PAL_HANDLE pal_hdl = hdl->pal_handle;
     char* uri          = NULL;
@@ -1067,6 +1052,7 @@ static ssize_t do_sendmsg(int fd, struct iovec* bufs, int nbufs, int flags,
             }
 
             hdl->pal_handle = pal_hdl;
+            _update_epolls(hdl);
         }
 
         if (addr && addr->sa_family != sock->domain) {
@@ -1085,9 +1071,7 @@ static ssize_t do_sendmsg(int fd, struct iovec* bufs, int nbufs, int flags,
         inet_rebase_port(false, sock->domain, &addr_buf, false);
         size_t prefix_len = static_strlen(URI_PREFIX_UDP);
         memcpy(uri, URI_PREFIX_UDP, prefix_len + 1);
-        if ((ret = inet_translate_addr(sock->domain,
-                                       uri + prefix_len,
-                                       SOCK_URI_SIZE - prefix_len,
+        if ((ret = inet_translate_addr(sock->domain, uri + prefix_len, SOCK_URI_SIZE - prefix_len,
                                        &addr_buf)) < 0) {
             lock(&hdl->lock);
             goto out_locked;
@@ -1097,16 +1081,21 @@ static ssize_t do_sendmsg(int fd, struct iovec* bufs, int nbufs, int flags,
     }
 
     int bytes = 0;
-    ret       = 0;
+    ret = 0;
 
     for (int i = 0; i < nbufs; i++) {
         PAL_NUM pal_ret = DkStreamWrite(pal_hdl, 0, bufs[i].iov_len, bufs[i].iov_base, uri);
 
         if (pal_ret == PAL_STREAM_ERROR) {
-            if (PAL_ERRNO() == EPIPE) {
-                struct shim_thread* cur = get_cur_thread();
-                assert(cur);
-                (void)do_kill_proc(cur->tid, cur->tgid, SIGPIPE, /*use_ipc=*/false);
+            if (PAL_ERRNO() == EPIPE && !(flags & MSG_NOSIGNAL)) {
+                siginfo_t info = {
+                    .si_signo = SIGPIPE,
+                    .si_pid = g_process.pid,
+                    .si_code = SI_USER,
+                };
+                if (kill_current_proc(&info) < 0) {
+                    debug("do_sendmsg: failed to deliver a signal\n");
+                }
             }
 
             ret = (PAL_NATIVE_ERRNO() == PAL_ERROR_STREAMEXIST) ? -ECONNABORTED : -PAL_ERRNO();
@@ -1136,6 +1125,14 @@ out:
 
 ssize_t shim_do_sendto(int sockfd, const void* buf, size_t len, int flags,
                        const struct sockaddr* addr, int addrlen) {
+    if (addr && test_user_memory((void*)addr, addrlen, /*write=*/false)) {
+        return -EFAULT;
+    }
+
+    if (!buf || test_user_memory((void*)buf, len, /*write=*/false)) {
+        return -EFAULT;
+    }
+
     struct iovec iovbuf;
     iovbuf.iov_base = (void*)buf;
     iovbuf.iov_len  = len;
@@ -1143,17 +1140,63 @@ ssize_t shim_do_sendto(int sockfd, const void* buf, size_t len, int flags,
     return do_sendmsg(sockfd, &iovbuf, 1, flags, addr, addrlen);
 }
 
+static int check_msghdr(struct msghdr* msg, bool is_recv) {
+    if (msg->msg_namelen < 0) {
+        return -EINVAL;
+    }
+
+    if (test_user_memory(msg->msg_name, msg->msg_namelen, /*write=*/is_recv)) {
+        return -EFAULT;
+    }
+
+    size_t size;
+    if (__builtin_mul_overflow(sizeof(*msg->msg_iov), msg->msg_iovlen, &size)) {
+        return -EMSGSIZE;
+    }
+
+    if (test_user_memory(msg->msg_iov, size, /*write=*/false)) {
+        return -EFAULT;
+    }
+
+    struct iovec* bufs = msg->msg_iov;
+    for (size_t i = 0; i < msg->msg_iovlen; i++) {
+        if (test_user_memory(bufs[i].iov_base, bufs[i].iov_len, /*write=*/is_recv)) {
+            return -EFAULT;
+        }
+    }
+
+    return 0;
+}
+
 ssize_t shim_do_sendmsg(int sockfd, struct msghdr* msg, int flags) {
+    if (!msg || test_user_memory(msg, sizeof(*msg), /*write=*/false)) {
+        return -EFAULT;
+    }
+
+    int ret = check_msghdr(msg, /*is_recv=*/false);
+    if (ret < 0) {
+        return ret;
+    }
+
     return do_sendmsg(sockfd, msg->msg_iov, msg->msg_iovlen, flags, msg->msg_name,
                       msg->msg_namelen);
 }
 
 ssize_t shim_do_sendmmsg(int sockfd, struct mmsghdr* msg, unsigned int vlen, int flags) {
-    if (test_user_memory(msg, vlen, /*write=*/true))
+    if (test_user_memory(msg, sizeof(*msg) * vlen, /*write=*/true)) {
         return -EFAULT;
+    }
+    for (size_t i = 0; i < vlen; i++) {
+        struct msghdr* m = &msg[i].msg_hdr;
+
+        int ret = check_msghdr(m, /*is_recv=*/false);
+        if (ret < 0) {
+            return ret;
+        }
+    }
 
     ssize_t total = 0;
-    for (size_t i = 0; i * sizeof(struct mmsghdr) < vlen; i++) {
+    for (size_t i = 0; i < vlen; i++) {
         struct msghdr* m = &msg[i].msg_hdr;
 
         ssize_t bytes =
@@ -1184,42 +1227,34 @@ static ssize_t do_recvmsg(int fd, struct iovec* bufs, size_t nbufs, int flags,
     struct shim_sock_handle* sock = &hdl->info.sock;
 
     if (addr) {
-        ret = -EINVAL;
-        if (!addrlen || test_user_memory(addrlen, sizeof(*addrlen), /*write=*/true))
+        if (*addrlen < 0 || (size_t)*addrlen < minimal_addrlen(sock->domain)) {
+            ret = -EINVAL;
             goto out;
-
-        if (*addrlen < 0 || (size_t)*addrlen < minimal_addrlen(sock->domain))
-            goto out;
-
-        if (test_user_memory(addr, *addrlen, /*write=*/true))
-            goto out;
+        }
     }
-
-    size_t bufs_size;
-    if (__builtin_mul_overflow(sizeof(*bufs), nbufs, &bufs_size)) {
-        ret = -EMSGSIZE;
-        goto out;
-    }
-
-    ret = -EFAULT;
-    if (!bufs || test_user_memory(bufs, bufs_size, /*write=*/false))
-        goto out;
 
     size_t expected_size = 0;
     for (size_t i = 0; i < nbufs; i++) {
-        if (!bufs[i].iov_base || test_user_memory(bufs[i].iov_base, bufs[i].iov_len,
-                                                  /*write=*/true))
-            goto out;
         expected_size += bufs[i].iov_len;
     }
 
-    if (flags & ~MSG_PEEK) {
-        debug("recvmsg()/recvmmsg()/recvfrom(): unknown flag (only MSG_PEEK is supported).\n");
+    if (flags & ~(MSG_PEEK | MSG_DONTWAIT)) {
+        debug("recvmsg()/recvmmsg()/recvfrom(): unknown flag (only MSG_PEEK and MSG_DONTWAIT are"
+              " supported).\n");
         ret = -EOPNOTSUPP;
         goto out;
     }
 
     lock(&hdl->lock);
+
+    if (flags & MSG_DONTWAIT) {
+        if (!(hdl->flags & O_NONBLOCK)) {
+            debug("Warning: MSG_DONTWAIT on blocking socket is ignored, may lead to a read that"
+                  " unexpectedly blocks.\n");
+        }
+        flags &= ~MSG_DONTWAIT;
+    }
+
     peek_buffer        = sock->peek_buffer;
     sock->peek_buffer  = NULL;
     PAL_HANDLE pal_hdl = hdl->pal_handle;
@@ -1309,10 +1344,12 @@ static ssize_t do_recvmsg(int fd, struct iovec* bufs, size_t nbufs, int flags,
             /* some data left to read from peek buffer */
             assert(total_bytes < peek_buffer->end - peek_buffer->start);
             iov_bytes = MIN(bufs[i].iov_len, peek_buffer->end - peek_buffer->start - total_bytes);
-            memcpy(bufs[i].iov_base, &peek_buffer->buf[peek_buffer->start + total_bytes], iov_bytes);
+            memcpy(bufs[i].iov_base, &peek_buffer->buf[peek_buffer->start + total_bytes],
+                   iov_bytes);
             uri = peek_buffer->uri;
         } else {
-            PAL_NUM pal_ret = DkStreamRead(pal_hdl, 0, bufs[i].iov_len, bufs[i].iov_base, uri, uri ? SOCK_URI_SIZE : 0);
+            PAL_NUM pal_ret = DkStreamRead(pal_hdl, 0, bufs[i].iov_len, bufs[i].iov_base, uri,
+                                           uri ? SOCK_URI_SIZE : 0);
             if (pal_ret == PAL_STREAM_ERROR) {
                 ret = PAL_NATIVE_ERRNO() == PAL_ERROR_STREAMNOTEXIST
                       ? -ECONNABORTED
@@ -1334,7 +1371,8 @@ static ssize_t do_recvmsg(int fd, struct iovec* bufs, size_t nbufs, int flags,
                 if (uri) {
                     struct addr_inet conn;
 
-                    if ((ret = inet_parse_addr(sock->domain, sock->sock_type, uri, &conn, NULL)) < 0) {
+                    if ((ret = inet_parse_addr(sock->domain, sock->sock_type, uri, &conn, NULL))
+                            < 0) {
                         lock(&hdl->lock);
                         goto out_locked;
                     }
@@ -1406,6 +1444,24 @@ out:
 
 ssize_t shim_do_recvfrom(int sockfd, void* buf, size_t len, int flags, struct sockaddr* addr,
                          int* addrlen) {
+    if (addr) {
+        if (test_user_memory(addrlen, sizeof(*addrlen), /*write=*/true)) {
+            return -EFAULT;
+        }
+
+        if (*addrlen < 0) {
+            return -EINVAL;
+        }
+
+        if (test_user_memory(addr, *addrlen, /*write=*/true)) {
+            return -EFAULT;
+        }
+    }
+
+    if (test_user_memory(buf, len, /*write=*/true)) {
+        return -EFAULT;
+    }
+
     struct iovec iovbuf;
     iovbuf.iov_base = (void*)buf;
     iovbuf.iov_len  = len;
@@ -1414,16 +1470,33 @@ ssize_t shim_do_recvfrom(int sockfd, void* buf, size_t len, int flags, struct so
 }
 
 ssize_t shim_do_recvmsg(int sockfd, struct msghdr* msg, int flags) {
+    if (test_user_memory(msg, sizeof(*msg), /*write=*/true)) {
+        return -EFAULT;
+    }
+
+    int ret = check_msghdr(msg, /*is_recv=*/true);
+    if (ret < 0) {
+        return ret;
+    }
+
     return do_recvmsg(sockfd, msg->msg_iov, msg->msg_iovlen, flags, msg->msg_name,
                       &msg->msg_namelen);
 }
 
 ssize_t shim_do_recvmmsg(int sockfd, struct mmsghdr* msg, unsigned int vlen, int flags,
                          struct __kernel_timespec* timeout) {
-    if (test_user_memory(msg, vlen, /*write=*/true))
+    if (test_user_memory(msg, sizeof(*msg) * vlen, /*write=*/true))
         return -EFAULT;
 
-    ssize_t total = 0;
+    for (size_t i = 0; i < vlen; i++) {
+        struct msghdr* m = &msg[i].msg_hdr;
+
+        int ret = check_msghdr(m, /*is_recv=*/true);
+        if (ret < 0) {
+            return ret;
+        }
+    }
+
     // Issue # 753 - https://github.com/oscarlab/graphene/issues/753
     /* TODO(donporter): timeout properly. For now, explicitly return an error. */
     if (timeout) {
@@ -1431,7 +1504,8 @@ ssize_t shim_do_recvmmsg(int sockfd, struct mmsghdr* msg, unsigned int vlen, int
         return -EOPNOTSUPP;
     }
 
-    for (size_t i = 0; i * sizeof(struct mmsghdr) < vlen; i++) {
+    ssize_t total = 0;
+    for (size_t i = 0; i < vlen; i++) {
         struct msghdr* m = &msg[i].msg_hdr;
 
         ssize_t bytes =
@@ -1592,8 +1666,8 @@ struct __kernel_linger {
 
 static void __populate_addr_with_defaults(PAL_STREAM_ATTR* attr) {
     /* Linux default recv/send buffer sizes for new sockets */
-    attr->socket.receivebuf     = 212992;
-    attr->socket.sendbuf        = 212992;
+    attr->socket.receivebuf = 212992;
+    attr->socket.sendbuf    = 212992;
 
     attr->socket.linger         = 0;
     attr->socket.receivetimeout = 0;
@@ -1969,8 +2043,8 @@ out:
     return ret;
 
 unknown_level:
-    ret = -EOPNOTSUPP;  /* Kernel seems to return this value despite `man` saying that it can
-                         * return only ENOPROTOOPT. */
+    ret = -EOPNOTSUPP; /* Kernel seems to return this value despite `man` saying that it can
+                        * return only ENOPROTOOPT. */
     goto out;
 unknown_opt:
     ret = -ENOPROTOOPT;

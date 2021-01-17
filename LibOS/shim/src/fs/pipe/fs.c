@@ -2,27 +2,27 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * fs.c
- *
- * This file contains codes for implementation of 'pipe' filesystem.
+ * This file contains code for implementation of 'pipe' filesystem.
  */
-
-#define __KERNEL__
 
 #include <asm/fcntl.h>
 #include <asm/mman.h>
 #include <asm/unistd.h>
 #include <errno.h>
 #include <linux/fcntl.h>
-#include <linux/stat.h>
 
-#include <pal.h>
-#include <pal_debug.h>
-#include <pal_error.h>
-#include <shim_fs.h>
-#include <shim_handle.h>
-#include <shim_internal.h>
-#include <shim_thread.h>
+#include "pal.h"
+#include "pal_debug.h"
+#include "pal_error.h"
+#include "perm.h"
+#include "shim_fs.h"
+#include "shim_handle.h"
+#include "shim_internal.h"
+#include "shim_lock.h"
+#include "shim_process.h"
+#include "shim_signal.h"
+#include "shim_thread.h"
+#include "stat.h"
 
 static ssize_t pipe_read(struct shim_handle* hdl, void* buf, size_t count) {
     if (!hdl->info.pipe.ready_for_ops)
@@ -45,9 +45,14 @@ static ssize_t pipe_write(struct shim_handle* hdl, const void* buf, size_t count
     if (bytes == PAL_STREAM_ERROR) {
         int err = PAL_ERRNO();
         if (err == EPIPE) {
-            struct shim_thread* cur = get_cur_thread();
-            assert(cur);
-            (void)do_kill_proc(cur->tid, cur->tgid, SIGPIPE, /*use_ipc=*/false);
+            siginfo_t info = {
+                .si_signo = SIGPIPE,
+                .si_pid = g_process.pid,
+                .si_code = SI_USER,
+            };
+            if (kill_current_proc(&info) < 0) {
+                debug("pipe_write: failed to deliver a signal\n");
+            }
         }
         return -err;
     }
@@ -78,7 +83,7 @@ static int pipe_hstat(struct shim_handle* hdl, struct stat* stat) {
     stat->st_atime   = (time_t)0;          /* access time */
     stat->st_mtime   = (time_t)0;          /* last modification */
     stat->st_ctime   = (time_t)0;          /* last status change */
-    stat->st_mode    = S_IRUSR | S_IWUSR | S_IFIFO;
+    stat->st_mode    = PERM_rw_______ | S_IFIFO;
 
     return 0;
 }

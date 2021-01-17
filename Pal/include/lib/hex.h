@@ -6,10 +6,11 @@
 #ifndef HEX_H
 #define HEX_H
 
-#include <api.h>
-#include <assert.h>
 #include <stddef.h>
 #include <stdint.h>
+
+#include "api.h"
+#include "assert.h"
 
 /* This function is a helper for debug printing.
  * It accepts a pointer to a numerical value, and
@@ -23,9 +24,9 @@ static inline char* __bytes2hexstr(void* hex, size_t size, char* str, size_t len
     __UNUSED(len);
     assert(len >= size * 2 + 1);
 
-    for (size_t i = 0 ; i < size ; i++) {
-        unsigned char h = ((unsigned char *) hex)[i];
-        str[i * 2] = ch[h / 16];
+    for (size_t i = 0; i < size; i++) {
+        unsigned char h = ((unsigned char*)hex)[i];
+        str[i * 2]     = ch[h / 16];
         str[i * 2 + 1] = ch[h % 16];
     }
 
@@ -33,8 +34,10 @@ static inline char* __bytes2hexstr(void* hex, size_t size, char* str, size_t len
     return str;
 }
 
-#define IS_INDEXABLE(arg) (sizeof((arg)[0]))
-#define IS_ARRAY(arg) (IS_INDEXABLE(arg) > 0 && (((void *) &(arg)) == ((void *) (arg))))
+#define IS_CHAR_ARRAY(arg) (_Generic((arg), char*: 1, default: 0) && \
+                            _Generic(&(arg), char**: 0, default: 1))
+#define IS_UINT8_ARRAY(arg) (_Generic((arg), uint8_t*: 1, default: 0) && \
+                             _Generic(&(arg), uint8_t**: 0, default: 1))
 
 static inline int8_t hex2dec(char c) {
     if (c >= 'A' && c <= 'F')
@@ -51,8 +54,9 @@ static inline int8_t hex2dec(char c) {
  * BYTES2HEXSTR converts an array into a hexadecimal string and fills into a
  * given buffer. The buffer size is given as an extra argument.
  */
-#define BYTES2HEXSTR(array, str, len) ({                        \
-    static_assert(IS_ARRAY(array), "`array` must be an array"); \
+#define BYTES2HEXSTR(array, str, len) ({                         \
+    static_assert(IS_CHAR_ARRAY(array) || IS_UINT8_ARRAY(array), \
+                  "`array` must be a char or uint8_t array");    \
     __bytes2hexstr((array), sizeof(array), str, len);})
 
 /*

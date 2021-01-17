@@ -1,14 +1,15 @@
 /* SPDX-License-Identifier: LGPL-3.0-or-later */
-/* Copyright (C) 2014 Stony Brook University */
-
-/*
- * shim_table.c
- *
- * This file contains the system call table used by application libraries.
+/* Copyright (C) 2014 Stony Brook University
+ * Copyright (C) 2020 Intel Corporation
+ *                    Michał Kowalczyk <mkow@invisiblethingslab.com>
  */
 
-#include <shim_internal.h>
-#include <shim_table.h>
+/*
+ * This file contains the system call table.
+ */
+
+#include "shim_internal.h"
+#include "shim_table.h"
 
 void debug_unsupp(int num) {
     debug("Unsupported system call %d\n", num);
@@ -325,11 +326,33 @@ shim_fp shim_table[LIBOS_SYSCALL_BOUND] = {
     (shim_fp)__shim_sendmmsg,
     (shim_fp)__shim_setns,
     (shim_fp)__shim_getcpu,
-
-    [LIBOS_SYSCALL_BASE] = (shim_fp)NULL,
-
-    (shim_fp)__shim_msgpersist,
-    (shim_fp)__shim_benchmark_rpc,
-    (shim_fp)__shim_send_rpc,
-    (shim_fp)__shim_recv_rpc,
+    (shim_fp)__shim_process_vm_readv,
+    (shim_fp)__shim_process_vm_writev,
+    (shim_fp)__shim_kcmp,
+    (shim_fp)__shim_finit_module,
+    (shim_fp)__shim_sched_setattr,
+    (shim_fp)__shim_sched_getattr,
+    (shim_fp)__shim_renameat2,
+    (shim_fp)__shim_seccomp,
+    (shim_fp)__shim_getrandom,
+    (shim_fp)__shim_memfd_create,
+    (shim_fp)__shim_kexec_file_load,
+    (shim_fp)__shim_bpf,
+    (shim_fp)__shim_execveat,
+    (shim_fp)__shim_userfaultfd,
+    (shim_fp)__shim_membarrier,
+    (shim_fp)__shim_mlock2,
+    (shim_fp)__shim_copy_file_range,
+    (shim_fp)__shim_preadv2,
+    (shim_fp)__shim_pwritev2,
+    (shim_fp)__shim_pkey_mprotect,
+    (shim_fp)__shim_pkey_alloc,
+    (shim_fp)__shim_pkey_free,
+    (shim_fp)__shim_statx,
+    (shim_fp)__shim_io_pgetevents,
+    (shim_fp)__shim_rseq,
+    (shim_fp)__shim_pidfd_send_signal,
+    (shim_fp)__shim_io_uring_setup,
+    (shim_fp)__shim_io_uring_enter,
+    (shim_fp)__shim_io_uring_register,
 };

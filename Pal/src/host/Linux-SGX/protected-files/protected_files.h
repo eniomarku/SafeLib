@@ -14,18 +14,21 @@
 #include <stdint.h>
 
 /*! Size of the AES-GCM encryption key */
-#define PF_KEY_SIZE  16
+#define PF_KEY_SIZE 16
 
 /*! Size of IV for AES-GCM */
-#define PF_IV_SIZE   12
+#define PF_IV_SIZE 12
 
 /*! Size of MAC fields */
-#define PF_MAC_SIZE  16
+#define PF_MAC_SIZE 16
 
 typedef uint8_t pf_iv_t[PF_IV_SIZE];
 typedef uint8_t pf_mac_t[PF_MAC_SIZE];
 typedef uint8_t pf_key_t[PF_KEY_SIZE];
 typedef uint8_t pf_keyid_t[32]; /* key derivation material */
+
+extern pf_key_t g_pf_wrap_key;
+extern bool g_pf_wrap_key_set;
 
 typedef enum _pf_status_t {
     PF_STATUS_SUCCESS              = 0,
@@ -114,9 +117,8 @@ typedef void (*pf_debug_f)(const char* msg);
  * \param [out] mac MAC computed for \a input and \a aad
  * \return PF status
  */
-typedef pf_status_t (*pf_aes_gcm_encrypt_f)(const pf_key_t* key, const pf_iv_t* iv,
-                                            const void* aad, size_t aad_size,
-                                            const void* input, size_t input_size,
+typedef pf_status_t (*pf_aes_gcm_encrypt_f)(const pf_key_t* key, const pf_iv_t* iv, const void* aad,
+                                            size_t aad_size, const void* input, size_t input_size,
                                             void* output, pf_mac_t* mac);
 
 /*!
@@ -132,9 +134,8 @@ typedef pf_status_t (*pf_aes_gcm_encrypt_f)(const pf_key_t* key, const pf_iv_t* 
  * \param [in] mac Expected MAC
  * \return PF status
  */
-typedef pf_status_t (*pf_aes_gcm_decrypt_f)(const pf_key_t* key, const pf_iv_t* iv,
-                                            const void* aad, size_t aad_size,
-                                            const void* input, size_t input_size,
+typedef pf_status_t (*pf_aes_gcm_decrypt_f)(const pf_key_t* key, const pf_iv_t* iv, const void* aad,
+                                            size_t aad_size, const void* input, size_t input_size,
                                             void* output, const pf_mac_t* mac);
 
 /*!

@@ -1,8 +1,5 @@
-PAL Host ABI
+PAL host ABI
 ============
-
-What is Graphene's PAL Host ABI
--------------------------------
 
 PAL Host ABI is the interface used by Graphene to interact with its host. It is translated into
 the host's native ABI (e.g. system calls for UNIX) by a layer called the Platform Adaptation Layer
@@ -16,7 +13,7 @@ three primary principles, to guarantee functionality, security, and portability:
 
 Most of the PAL Host ABI is adapted from the Drawbridge library OS.
 
-PAL as Loader
+PAL as loader
 -------------
 
 Regardless of the actual implementation, we require PAL to be able to load ELF-format binaries
@@ -28,41 +25,26 @@ executables must resolve them afterwards.
 After loading the binaries, PAL needs to load and interpret the manifest files. The manifest syntax
 is described in :doc:`../manifest-syntax`.
 
-Manifest and Executable Loading Rules
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Manifest and executable loading
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The PAL loader supports multiple ways of locating the manifest and executable. To run a program
-in Graphene properly, the PAL loader generally requires both a manifest and an executable,
-although it is possible to load with only one of them. The user shall specify either the manifest
-or the executable to load in the command line, and the PAL loader will try to locate the other
-based on the file name or content.
+To run a program in Graphene properly, the PAL loader generally requires both a
+manifest and an executable. The user shall specify the executable to load in
+the command line, and the PAL loader will try to locate the manifest based on
+the file name.
 
 Precisely, the loading rules for the manifest and executable are as follows:
 
-#. The first argument given to the PAL loader (e.g., `pal-Linux`,
-   `pal-Linux-SGX`, or the cross-platform wrapper, `pal-loader`) can be either
-   a manifest file or an executable.
-#. If an executable is given to the command line, the loader will search for the
+#. The first argument given to :program:`pal_loader` has to be an executable.
+#. The loader will search for the
    manifest in the following order: the same file name as the executable with
-   a `.manifest` or `.manifest.sgx` extension, a `manifest` file without any
-   extension, or no manifest at all.
-#. If a manifest is given to the command line, and the manifest contains
-   a `loader.exec` rule, then the rule is used to determine the executable. The
-   loader should exit if the executable file doesn't exist.
-#. If a manifest is given to the command line, and the manifest does *not*
-   contain a `loader.exec rule`, then the manifest *may* be used to infer the
-   executable. The potential executable file has the same file name as the
-   manifest file except it doesn't have the `.manifest` or `.manifest.sgx`
-   extension.
-#. If a manifest is given to the command line, and no executable file can be
-   found either based on any `loader.exec` rule or inferring from the manifest
-   file, then no executable is used for the execution.
+   a ``.manifest`` or ``.manifest.sgx`` extension, or ``manifest`` file
+   without any extension.
 
-
-Data Types and Variables
+Data types and variables
 ------------------------
 
-Data Types
+Data types
 ^^^^^^^^^^
 
 PAL handles
@@ -117,7 +99,7 @@ Basic types
    :project: pal
    :members:
 
-Graphene Control Block
+Graphene control block
 ^^^^^^^^^^^^^^^^^^^^^^
 
 The control block in Graphene is a structure that provides static information
@@ -156,7 +138,7 @@ The PAL APIs contain a |~| number of functions that can be called from the
 library OS.
 
 
-Memory Allocation
+Memory allocation
 ^^^^^^^^^^^^^^^^^
 
 The ABI includes three calls to allocate, free, and modify the permission bits
@@ -179,7 +161,7 @@ memory.
    :project: pal
 
 
-Process Creation
+Process creation
 ^^^^^^^^^^^^^^^^
 
 The ABI includes one call to create a child process and one call to terminate
@@ -195,8 +177,8 @@ creation.
    :project: pal
 
 
-Stream Creation/Connection/Open
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Stream creation/connect/open
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The stream ABI includes nine calls to open, read, write, map, unmap,
 truncate, flush, delete and wait for I/O streams and three calls to
@@ -291,7 +273,7 @@ Flags used for stream manipulation
    :project: pal
 
 
-Thread Creation
+Thread creation
 ^^^^^^^^^^^^^^^
 
 The ABI supports multithreading through five calls to create, sleep, yield the
@@ -314,7 +296,7 @@ seven calls to create, signal, and block on synchronization objects.
    :project: pal
 
 
-Exception Handling
+Exception handling
 ^^^^^^^^^^^^^^^^^^
 
 .. doxygenenum:: PAL_EVENT
@@ -330,9 +312,6 @@ Exception Handling
    :project: pal
 
 .. doxygenfunction:: DkSetExceptionHandler
-   :project: pal
-
-.. doxygenfunction:: DkExceptionReturn
    :project: pal
 
 
@@ -380,13 +359,19 @@ cryptographically-strong random bits, flush portions of instruction caches,
 increment and decrement the reference counts on objects shared between threads,
 and to obtain an attestation report and quote.
 
+.. doxygenfunction:: DkDebugLog
+   :project: pal
+
 .. doxygenfunction:: DkSystemTimeQuery
    :project: pal
 
 .. doxygenfunction:: DkRandomBitsRead
    :project: pal
 
-.. doxygenfunction:: DkSegmentRegister
+.. doxygenfunction:: DkSegmentRegisterGet
+   :project: pal
+
+.. doxygenfunction:: DkSegmentRegisterSet
    :project: pal
 
 .. doxygenenum:: PAL_SEGMENT

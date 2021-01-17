@@ -2,12 +2,11 @@
 /* Copyright (C) 2019 Intel Corporation */
 
 /*
- * db_eventfd.c
- *
  * This file contains operations to handle streams with URIs that have "eventfd:".
  */
 
 #include <asm/fcntl.h>
+#include <asm/ioctls.h>
 #include <asm/poll.h>
 #include <linux/time.h>
 #include <linux/types.h>
@@ -48,7 +47,7 @@ static int eventfd_pal_open(PAL_HANDLE* handle, const char* type, const char* ur
     __UNUSED(access);
     __UNUSED(share);
 
-    if ((strcmp_static(type, URI_TYPE_EVENTFD) != 0) || (*uri != '\0')) {
+    if (strcmp(type, URI_TYPE_EVENTFD) != 0 || *uri != '\0') {
         return -PAL_ERROR_INVAL;
     }
 

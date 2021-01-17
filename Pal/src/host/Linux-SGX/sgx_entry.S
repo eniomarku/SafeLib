@@ -9,6 +9,8 @@
 	.type sgx_ecall, @function
 
 sgx_ecall:
+	.cfi_startproc
+
 	# put entry address in RDX
 	leaq .Lsgx_entry(%rip), %rdx
 
@@ -16,11 +18,17 @@ sgx_ecall:
 
 .Ldo_ecall_callee_save:
 	pushq %rbx
+	.cfi_adjust_cfa_offset 8
 	pushq %rbp
+	.cfi_adjust_cfa_offset 8
 	pushq %r12
+	.cfi_adjust_cfa_offset 8
 	pushq %r13
+	.cfi_adjust_cfa_offset 8
 	pushq %r14
+	.cfi_adjust_cfa_offset 8
 	pushq %r15
+	.cfi_adjust_cfa_offset 8
 
 .Ldo_ecall:
 	# increment per-thread EENTER counter for stats
@@ -38,19 +46,63 @@ sgx_ecall:
 	# currently only ECALL_THREAD_RESET returns
 .Lafter_resume:
 	popq %r15
+	.cfi_adjust_cfa_offset -8
 	popq %r14
+	.cfi_adjust_cfa_offset -8
 	popq %r13
+	.cfi_adjust_cfa_offset -8
 	popq %r12
+	.cfi_adjust_cfa_offset -8
 	popq %rbp
+	.cfi_adjust_cfa_offset -8
 	popq %rbx
+	.cfi_adjust_cfa_offset -8
 	retq
+	.cfi_endproc
 
 	.global async_exit_pointer
 	.type async_exit_pointer, @function
 
 async_exit_pointer:
+	.cfi_startproc
+	.cfi_undefined %rip
+
 	# increment per-thread AEX counter for stats
 	lock incq %gs:PAL_TCB_URTS_AEX_CNT
+
+#ifdef DEBUG
+	# Save ERESUME parameters
+	pushq %rax
+	.cfi_adjust_cfa_offset 8
+	pushq %rbx
+	.cfi_adjust_cfa_offset 8
+	pushq %rcx
+	.cfi_adjust_cfa_offset 8
+
+	# Align stack (required by System V AMD64 ABI)
+	movq %rsp, %rbp
+	.cfi_def_cfa_register %rbp
+	andq $~0xF, %rsp
+
+	# Call sgx_profile_sample with %rdi = TCS
+	movq %rbx, %rdi
+	call sgx_profile_sample
+
+	# Restore stack
+	movq %rbp, %rsp
+	.cfi_def_cfa_register %rsp
+
+	# Restore ERESUME parameters
+	popq %rcx
+	.cfi_adjust_cfa_offset -8
+	popq %rbx
+	.cfi_adjust_cfa_offset -8
+	popq %rax
+	.cfi_adjust_cfa_offset -8
+#endif
+
+	.cfi_endproc
+
 	# fall-through to ERESUME
 
 	.global eresume_pointer

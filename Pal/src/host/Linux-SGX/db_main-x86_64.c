@@ -2,13 +2,12 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_main-x86_64.c
- *
  * This file contains x86_64-specific functions of the PAL loader.
  */
 
 #include "api.h"
-#include "bogomips.h"
+#include "cpu.h"
+#include "linux_utils.h"
 #include "pal.h"
 #include "pal_debug.h"
 #include "pal_internal.h"
@@ -116,14 +115,16 @@ uint64_t get_tsc_hz(void) {
     return 0;
 }
 
-int _DkGetCPUInfo (PAL_CPU_INFO* ci) {
+int _DkGetCPUInfo(PAL_CPU_INFO* ci) {
     unsigned int words[PAL_CPUID_WORD_NUM];
     int rv = 0;
 
     const size_t VENDOR_ID_SIZE = 13;
     char* vendor_id = malloc(VENDOR_ID_SIZE);
-    _DkCpuIdRetrieve(0, 0, words);
+    if (!vendor_id)
+        return -PAL_ERROR_NOMEM;
 
+    _DkCpuIdRetrieve(0, 0, words);
     FOUR_CHARS_VALUE(&vendor_id[0], words[PAL_CPUID_WORD_EBX]);
     FOUR_CHARS_VALUE(&vendor_id[4], words[PAL_CPUID_WORD_EDX]);
     FOUR_CHARS_VALUE(&vendor_id[8], words[PAL_CPUID_WORD_ECX]);
@@ -131,12 +132,16 @@ int _DkGetCPUInfo (PAL_CPU_INFO* ci) {
     ci->cpu_vendor = vendor_id;
     // Must be an Intel CPU
     if (memcmp(vendor_id, "GenuineIntel", 12)) {
-      free(vendor_id);
-      return -PAL_ERROR_INVAL;
+        rv = -PAL_ERROR_INVAL;
+        goto out_vendor_id;
     }
 
     const size_t BRAND_SIZE = 49;
     char* brand = malloc(BRAND_SIZE);
+    if (!brand) {
+        rv = -PAL_ERROR_NOMEM;
+        goto out_vendor_id;
+    }
     _DkCpuIdRetrieve(0x80000002, 0, words);
     memcpy(&brand[ 0], words, sizeof(unsigned int) * PAL_CPUID_WORD_NUM);
     _DkCpuIdRetrieve(0x80000003, 0, words);
@@ -146,9 +151,9 @@ int _DkGetCPUInfo (PAL_CPU_INFO* ci) {
     brand[BRAND_SIZE - 1] = '\0';
     ci->cpu_brand = brand;
 
-    /* we cannot use CPUID(0xb) because it counts even disabled-by-BIOS cores (e.g. HT cores);
-     * instead, this is passed in via g_pal_sec at start-up time. */
-    ci->cpu_num = g_pal_sec.num_cpus;
+    ci->online_logical_cores = g_pal_sec.online_logical_cores;
+    ci->physical_cores_per_socket = g_pal_sec.physical_cores_per_socket;
+    ci->cpu_socket = g_pal_sec.cpu_socket;
 
     _DkCpuIdRetrieve(1, 0, words);
     ci->cpu_family   = BIT_EXTRACT_LE(words[PAL_CPUID_WORD_EAX],  8, 12) +
@@ -159,8 +164,12 @@ int _DkGetCPUInfo (PAL_CPU_INFO* ci) {
 
     int flen = 0, fmax = 80;
     char* flags = malloc(fmax);
+    if (!flags) {
+        rv = -PAL_ERROR_NOMEM;
+        goto out_brand;
+    }
 
-    for (int i = 0 ; i < 32 ; i++) {
+    for (int i = 0; i < 32; i++) {
         if (!g_cpu_flags[i])
             continue;
 
@@ -168,6 +177,10 @@ int _DkGetCPUInfo (PAL_CPU_INFO* ci) {
             int len = strlen(g_cpu_flags[i]);
             if (flen + len + 1 > fmax) {
                 char* new_flags = malloc(fmax * 2);
+                if (!new_flags) {
+                    rv = -PAL_ERROR_NOMEM;
+                    goto out_flags;
+                }
                 memcpy(new_flags, flags, flen);
                 free(flags);
                 fmax *= 2;
@@ -184,9 +197,17 @@ int _DkGetCPUInfo (PAL_CPU_INFO* ci) {
 
     ci->cpu_bogomips = get_bogomips();
     if (ci->cpu_bogomips == 0.0) {
-        SGX_DBG(DBG_E, "Warning: bogomips could not be retrieved, passing 0.0 to the application\n");
+        SGX_DBG(DBG_E,
+                "Warning: bogomips could not be retrieved, passing 0.0 to the application\n");
     }
 
+    return rv;
+out_flags:
+    free(flags);
+out_brand:
+    free(brand);
+out_vendor_id:
+    free(vendor_id);
     return rv;
 }
 
@@ -199,21 +220,29 @@ size_t _DkRandomBitsRead(void* buffer, size_t size) {
     return 0;
 }
 
-int _DkSegmentRegisterSet(int reg, const void* addr) {
-    /* GS is internally used, denied any access to it */
-    if (reg != PAL_SEGMENT_FS)
-        return -PAL_ERROR_DENIED;
-
-    SET_ENCLAVE_TLS(fsbase, (void*)addr);
-    wrfsbase((uint64_t)addr);
-    return 0;
+int _DkSegmentRegisterGet(int reg, void** addr) {
+    switch (reg) {
+        case PAL_SEGMENT_FS:
+            *addr = (void*)GET_ENCLAVE_TLS(fsbase);
+            return 0;
+        case PAL_SEGMENT_GS:
+            /* GS is internally used, deny any access to it */
+            return -PAL_ERROR_DENIED;
+        default:
+            return -PAL_ERROR_INVAL;
+    }
 }
 
-int _DkSegmentRegisterGet(int reg, void** addr) {
-    /* GS is internally used, denied any access to it */
-    if (reg != PAL_SEGMENT_FS)
-        return -PAL_ERROR_DENIED;
-
-    *addr = (void*)GET_ENCLAVE_TLS(fsbase);
-    return 0;
+int _DkSegmentRegisterSet(int reg, void* addr) {
+    switch (reg) {
+        case PAL_SEGMENT_FS:
+            SET_ENCLAVE_TLS(fsbase, addr);
+            wrfsbase((uint64_t)addr);
+            return 0;
+        case PAL_SEGMENT_GS:
+            /* GS is internally used, deny any access to it */
+            return -PAL_ERROR_DENIED;
+        default:
+            return -PAL_ERROR_INVAL;
+    }
 }

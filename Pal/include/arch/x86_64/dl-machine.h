@@ -2,11 +2,8 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * dl-machine.h
- *
- * This files contain architecture-specific implementation of ELF dynamic
- * relocation function.
- * The source code is imported and modified from the GNU C Library.
+ * This file contains architecture-specific implementation of ELF dynamic relocation functions.
+ * The source code was imported from the GNU C Library and modified.
  */
 
 #ifndef DL_MACHINE_H
@@ -14,10 +11,9 @@
 
 #define ELF_MACHINE_NAME "x86_64"
 
-#include <sysdeps/generic/ldsodefs.h>
-
 #include "pal_internal.h"
 #include "pal_rtld.h"
+#include "sysdeps/generic/ldsodefs.h"
 
 /* The x86-64 never uses Elf64_Rel relocations.  */
 #define ELF_MACHINE_NO_REL 1

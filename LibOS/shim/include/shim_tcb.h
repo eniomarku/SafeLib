@@ -1,20 +1,19 @@
 #ifndef _SHIM_TCB_H_
 #define _SHIM_TCB_H_
 
-#include <assert.h>
-
 #include "api.h"
+#include "assert.h"
 #include "atomic.h"
 #include "pal.h"
-
 #include "shim_tcb-arch.h"
 
 #define SHIM_TCB_CANARY 0xdeadbeef
 
 struct shim_context {
-    struct shim_regs *      regs;
-    uint64_t                fs_base;
-    struct atomic_int       preempt;
+    struct shim_regs* regs;
+    struct shim_ext_context ext_ctx;
+    uint64_t          tls_base;
+    struct atomic_int preempt;
 };
 
 static inline unsigned long shim_context_get_sp(struct shim_context* sc) {
@@ -41,7 +40,6 @@ struct shim_tcb {
     shim_tcb_t*         self;
     struct shim_thread* tp;
     struct shim_context context;
-    unsigned int        tid;
     int                 pal_errno;
     struct debug_buf*   debug_buf;
     void*               vma_cache;
@@ -50,15 +48,16 @@ struct shim_tcb {
      * If a segfault occurs with the range [start, end],
      * the code addr is set to cont_addr to alert the caller. */
     struct {
-        void * start, * end;
-        void * cont_addr;
+        void* start;
+        void* end;
+        void* cont_addr;
         bool has_fault;
     } test_range;
 };
 
 static inline void __shim_tcb_init(shim_tcb_t* shim_tcb) {
-    shim_tcb->canary = SHIM_TCB_CANARY;
-    shim_tcb->self = shim_tcb;
+    shim_tcb->canary    = SHIM_TCB_CANARY;
+    shim_tcb->self      = shim_tcb;
     shim_tcb->vma_cache = NULL;
 }
 
@@ -78,10 +77,10 @@ static inline bool shim_tcb_check_canary(void) {
     return SHIM_TCB_GET(canary) == SHIM_TCB_CANARY;
 }
 
-static inline void update_fs_base(unsigned long fs_base) {
+static inline void update_tls_base(unsigned long tls_base) {
     shim_tcb_t* shim_tcb = shim_get_tcb();
-    shim_tcb->context.fs_base = fs_base;
-    shim_arch_update_fs_base(fs_base);
+    shim_tcb->context.tls_base = tls_base;
+    shim_arch_update_tls_base(tls_base);
     assert(shim_tcb_check_canary());
 }
 

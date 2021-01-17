@@ -1,18 +1,23 @@
 /* SPDX-License-Identifier: LGPL-3.0-or-later */
 /* Copyright (C) 2014 Stony Brook University */
 
-/*!
- * \file pal-arch.h
- *
+/*
  * This file contains definition of x86_64-specific aspects of PAL.
  */
+
+#ifndef PAL_H
+// TODO: fix this
+#error This header is usable only inside pal.h (due to a cyclic dependency).
+#endif
 
 #ifndef PAL_ARCH_H
 #define PAL_ARCH_H
 
+#include <assert.h>
 #include <stdint.h>
 
 #include "cpu.h"
+#include "pal.h"
 
 #define PAGE_SIZE       (1 << 12)
 #define PRESET_PAGESIZE PAGE_SIZE
@@ -21,21 +26,26 @@ typedef struct pal_tcb PAL_TCB;
 
 #define PAL_LIBOS_TCB_SIZE 256
 
+#define STACK_PROTECTOR_CANARY_DEFAULT  0xbadbadbadbadUL
+
 typedef struct pal_tcb {
     struct pal_tcb* self;
+    /* random per-thread canary used by GCC's stack protector; must be at %gs:[0x8]
+     * because we specify `-mstack-protector-guard-reg=%gs -mstack-protector-guard-offset=8` */
+    uint64_t stack_protector_canary;
     /* uint64_t for alignment */
     uint64_t libos_tcb[(PAL_LIBOS_TCB_SIZE + sizeof(uint64_t) - 1) / sizeof(uint64_t)];
     /* data private to PAL implementation follows this struct. */
 } PAL_TCB;
 
+static_assert(offsetof(PAL_TCB, stack_protector_canary) == 0x8,
+              "unexpected offset of stack_protector_canary in PAL_TCB struct");
+
 #include "pal_host-arch.h"
 
-static inline PAL_TCB * pal_get_tcb (void)
-{
-    PAL_TCB * tcb;
-    __asm__ ("movq %%gs:%c1,%q0"
-             : "=r" (tcb)
-             : "i" (offsetof(struct pal_tcb, self)));
+static inline PAL_TCB* pal_get_tcb(void) {
+    PAL_TCB* tcb;
+    __asm__("movq %%gs:%c1, %0" : "=r"(tcb) : "i"(offsetof(struct pal_tcb, self)) : "memory");
     return tcb;
 }
 
@@ -53,9 +63,9 @@ union pal_csgsfs {
  * Because self-contained definition is needed for Pal definition,
  * same layout is defined with PAL prefix.
  */
-#define PAL_FP_XSTATE_MAGIC1        0x46505853U
-#define PAL_FP_XSTATE_MAGIC2        0x46505845U
-#define PAL_FP_XSTATE_MAGIC2_SIZE   (sizeof(PAL_FP_XSTATE_MAGIC2))
+#define PAL_FP_XSTATE_MAGIC1      0x46505853U
+#define PAL_FP_XSTATE_MAGIC2      0x46505845U
+#define PAL_FP_XSTATE_MAGIC2_SIZE (sizeof(PAL_FP_XSTATE_MAGIC2))
 
 enum PAL_XFEATURE {
     PAL_XFEATURE_FP,
@@ -72,22 +82,22 @@ enum PAL_XFEATURE {
     PAL_XFEATURE_MAX,
 };
 
-#define PAL_XFEATURE_MASK_FP                (1UL << PAL_XFEATURE_FP)
-#define PAL_XFEATURE_MASK_SSE               (1UL << PAL_XFEATURE_SSE)
-#define PAL_XFEATURE_MASK_YMM               (1UL << PAL_XFEATURE_YMM)
-#define PAL_XFEATURE_MASK_BNDREGS           (1UL << PAL_XFEATURE_BNDREGS)
-#define PAL_XFEATURE_MASK_BNDCSR            (1UL << PAL_XFEATURE_BNDCSR)
-#define PAL_XFEATURE_MASK_OPMASK            (1UL << PAL_XFEATURE_OPMASK)
-#define PAL_XFEATURE_MASK_ZMM_Hi256         (1UL << PAL_XFEATURE_ZMM_Hi256)
-#define PAL_XFEATURE_MASK_Hi16_ZMM          (1UL << PAL_XFEATURE_Hi16_ZMM)
-#define PAL_XFEATURE_MASK_PT                (1UL << PAL_XFEATURE_PT)
-#define PAL_XFEATURE_MASK_PKRU              (1UL << PAL_XFEATURE_PKRU)
+#define PAL_XFEATURE_MASK_FP        (1UL << PAL_XFEATURE_FP)
+#define PAL_XFEATURE_MASK_SSE       (1UL << PAL_XFEATURE_SSE)
+#define PAL_XFEATURE_MASK_YMM       (1UL << PAL_XFEATURE_YMM)
+#define PAL_XFEATURE_MASK_BNDREGS   (1UL << PAL_XFEATURE_BNDREGS)
+#define PAL_XFEATURE_MASK_BNDCSR    (1UL << PAL_XFEATURE_BNDCSR)
+#define PAL_XFEATURE_MASK_OPMASK    (1UL << PAL_XFEATURE_OPMASK)
+#define PAL_XFEATURE_MASK_ZMM_Hi256 (1UL << PAL_XFEATURE_ZMM_Hi256)
+#define PAL_XFEATURE_MASK_Hi16_ZMM  (1UL << PAL_XFEATURE_Hi16_ZMM)
+#define PAL_XFEATURE_MASK_PT        (1UL << PAL_XFEATURE_PT)
+#define PAL_XFEATURE_MASK_PKRU      (1UL << PAL_XFEATURE_PKRU)
 
-#define PAL_XFEATURE_MASK_FPSSE             (PAL_XFEATURE_MASK_FP \
-                                             | PAL_XFEATURE_MASK_SSE)
-#define PAL_XFEATURE_MASK_AVX512            (PAL_XFEATURE_MASK_OPMASK \
-                                             | PAL_XFEATURE_MASK_ZMM_Hi256 \
-                                             | PAL_XFEATURE_MASK_Hi16_ZMM)
+#define PAL_XFEATURE_MASK_FPSSE     (PAL_XFEATURE_MASK_FP \
+                                     | PAL_XFEATURE_MASK_SSE)
+#define PAL_XFEATURE_MASK_AVX512    (PAL_XFEATURE_MASK_OPMASK \
+                                     | PAL_XFEATURE_MASK_ZMM_Hi256 \
+                                     | PAL_XFEATURE_MASK_Hi16_ZMM)
 
 typedef struct {
     uint32_t magic1;        /*!< PAL_FP_XSTATE_MAGIC1 */
@@ -186,7 +196,12 @@ static inline bool pal_context_has_user_pagefault(PAL_CONTEXT* context) {
 
 /* PAL_CPU_INFO holds /proc/cpuinfo data */
 typedef struct PAL_CPU_INFO_ {
-    PAL_NUM cpu_num;
+    /* Number of logical cores available in the host */
+    PAL_NUM online_logical_cores;
+    /* Number of physical cores in a socket (physical package) */
+    PAL_NUM physical_cores_per_socket;
+    /* array of "logical core -> socket" mappings; has online_logical_cores elements */
+    int* cpu_socket;
     PAL_STR cpu_vendor;
     PAL_STR cpu_brand;
     PAL_NUM cpu_family;

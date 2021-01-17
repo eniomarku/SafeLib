@@ -35,7 +35,7 @@ GRAPHENEDEBUG = none
 endif
 
 .PHONY: all
-all: $(INSTALL_DIR)/sbin/nginx nginx.manifest pal_loader config testdata
+all: $(INSTALL_DIR)/sbin/nginx nginx.manifest config testdata | nginx pal_loader
 ifeq ($(SGX),1)
 all: nginx.manifest.sgx nginx.sig nginx.token
 endif
@@ -91,7 +91,7 @@ nginx-trusted-libs: nginx-deps
 	for F in `cat nginx-deps`; do \
 		P=`ldd $$HTTPD_LIBS | grep $$F | awk '{print $$3; exit}'`; \
 		N=`echo $$F | tr --delete '-'`; \
-		echo -n "sgx.trusted_files.$$N = file:$$P\\\\n"; \
+		echo -n "sgx.trusted_files.$$N = \\\"file:$$P\\\"\\\\n"; \
 	done > $@
 
 nginx.manifest: nginx.manifest.template nginx-trusted-libs
@@ -109,6 +109,7 @@ nginx.manifest.sgx: nginx.manifest $(INSTALL_DIR)/sbin/nginx \
 		$(INSTALL_DIR)/conf/nginx-graphene.conf \
 		$(TEST_DATA)
 	$(GRAPHENEDIR)/Pal/src/host/Linux-SGX/signer/pal-sgx-sign \
+		-exec nginx \
 		-libpal $(GRAPHENEDIR)/Runtime/libpal-Linux-SGX.so \
 		-key $(SGX_SIGNER_KEY) \
 		-manifest $< -output $@
@@ -118,7 +119,9 @@ nginx.sig: nginx.manifest.sgx
 nginx.token: nginx.sig
 	$(GRAPHENEDIR)/Pal/src/host/Linux-SGX/signer/pal-sgx-get-token -output $@ -sig $<
 
-# Extra executables
+nginx: $(INSTALL_DIR)/sbin/nginx
+	ln -s $< $@
+
 pal_loader:
 	ln -s $(GRAPHENEDIR)/Runtime/pal_loader $@
 
@@ -170,11 +173,11 @@ start-native-server: all
 
 .PHONY: start-graphene-server
 start-graphene-server: all
-	./pal_loader nginx.manifest -c conf/nginx-graphene.conf
+	./pal_loader ./nginx -c conf/nginx-graphene.conf
 
 .PHONY: clean
 clean:
-	$(RM) *.manifest *.manifest.sgx *.token *.sig pal_loader OUTPUT result-* nginx-ldd tmp
+	$(RM) *.manifest *.manifest.sgx *.token *.sig nginx pal_loader OUTPUT result-* nginx-ldd tmp
 
 .PHONY: distclean
 distclean: clean

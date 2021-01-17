@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 import os
-import unittest
+import re
 import shutil
+import signal
 import subprocess
+import unittest
 
 from regression import (
     HAS_SGX,
@@ -45,8 +47,7 @@ class TC_01_Bootstrap(RegressionTestCase):
         with open('argv_test_input', 'wb') as f:
             f.write(result.stdout)
         try:
-            manifest = self.get_manifest('argv_from_file')
-            stdout, _ = self.run_binary([manifest, 'WRONG', 'ARGUMENTS'])
+            stdout, _ = self.run_binary(['argv_from_file', 'WRONG', 'ARGUMENTS'])
             self.assertIn('# of arguments: %d\n' % len(args), stdout)
             for i, arg in enumerate(args):
                 self.assertIn('argv[%d] = %s\n' % (i, arg), stdout)
@@ -60,10 +61,9 @@ class TC_01_Bootstrap(RegressionTestCase):
             'some weir:d\nvar_name': ' even we\nirder\tvalue',
         }
         manifest_envs = {'LD_LIBRARY_PATH': '/lib'}
-        manifest = self.get_manifest('env_from_host')
-        stdout, _ = self.run_binary([manifest], env=host_envs)
+        stdout, _ = self.run_binary(['env_from_host'], env=host_envs)
         self.assertIn('# of envs: %d\n' % (len(host_envs) + len(manifest_envs)), stdout)
-        for i, (key, val) in enumerate({**host_envs, **manifest_envs}.items()):
+        for _, (key, val) in enumerate({**host_envs, **manifest_envs}.items()):
             # We don't enforce any specific order of envs, so we skip checking the index.
             self.assertIn('] = %s\n' % (key + '=' + val), stdout)
 
@@ -76,10 +76,9 @@ class TC_01_Bootstrap(RegressionTestCase):
         with open('env_test_input', 'wb') as f:
             f.write(result.stdout)
         try:
-            manifest = self.get_manifest('env_from_file')
-            stdout, _ = self.run_binary([manifest], env=host_envs)
+            stdout, _ = self.run_binary(['env_from_file'], env=host_envs)
             self.assertIn('# of envs: %d\n' % (len(envs) + len(manifest_envs)), stdout)
-            for i, arg in enumerate(envs + manifest_envs):
+            for _, arg in enumerate(envs + manifest_envs):
                 # We don't enforce any specific order of envs, so we skip checking the index.
                 self.assertIn('] = %s\n' % arg, stdout)
         finally:
@@ -112,22 +111,8 @@ class TC_01_Bootstrap(RegressionTestCase):
 
         # 2 page child binary
         self.assertIn(
-            '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 '
-            '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 ',
+            '0' * 89 + ' ' +
+            ('0' * 93 + ' ') * 15,
             stdout)
 
     def test_201_exec_same(self):
@@ -150,11 +135,7 @@ class TC_01_Bootstrap(RegressionTestCase):
         self.assertIn('child exited with status: 0', stdout)
         self.assertIn('test completed successfully', stdout)
 
-    def test_204_system(self):
-        stdout, _ = self.run_binary(['system'], timeout=60)
-        self.assertIn('hello from system', stdout)
-
-    def test_205_exec_fork(self):
+    def test_204_exec_fork(self):
         stdout, _ = self.run_binary(['exec_fork'], timeout=60)
         self.assertNotIn('Handled SIGCHLD', stdout)
         self.assertIn('Set up handler for SIGCHLD', stdout)
@@ -187,10 +168,13 @@ class TC_01_Bootstrap(RegressionTestCase):
             self.run_binary(['exit'])
 
     def test_401_exit_group(self):
-        try:
-            self.run_binary(['exit_group'])
-        except subprocess.CalledProcessError as e:
-            self.assertTrue(1 <= e.returncode and e.returncode <= 4)
+        for thread_idx in range(4):
+            exit_code = 100 + thread_idx
+            try:
+                self.run_binary(['exit_group', str(thread_idx), str(exit_code)])
+                self.fail('exit_group returned 0 instead of {}'.format(exit_code))
+            except subprocess.CalledProcessError as e:
+                self.assertEqual(e.returncode, exit_code)
 
     def test_402_signalexit(self):
         with self.expect_returncode(134):
@@ -215,8 +199,7 @@ class TC_01_Bootstrap(RegressionTestCase):
     @unittest.skipUnless(HAS_SGX, 'This test relies on SGX-specific manifest options.')
     def test_501_init_fail2(self):
         try:
-            manifest = self.get_manifest('init_fail2')
-            self.run_binary([manifest], timeout=60)
+            self.run_binary(['init_fail2'], timeout=60)
             self.fail('expected to return nonzero (and != 42)')
         except subprocess.CalledProcessError as e:
             self.assertNotEqual(e.returncode, 42, 'expected returncode != 42')
@@ -229,11 +212,43 @@ class TC_01_Bootstrap(RegressionTestCase):
 
     @unittest.skipUnless(HAS_SGX, 'This test is only meaningful on SGX PAL')
     def test_601_multi_pthread_exitless(self):
-        manifest = self.get_manifest('multi_pthread_exitless')
-        stdout, _ = self.run_binary([manifest], timeout=60)
+        stdout, _ = self.run_binary(['multi_pthread_exitless'], timeout=60)
 
         # Multiple thread creation
         self.assertIn('128 Threads Created', stdout)
+
+    def test_602_fp_multithread(self):
+        stdout, _ = self.run_binary(['fp_multithread'])
+        self.assertIn('FE_TONEAREST   child: 42.5 = 42.0, -42.5 = -42.0', stdout)
+        self.assertIn('FE_TONEAREST  parent: 42.5 = 42.0, -42.5 = -42.0', stdout)
+        self.assertIn('FE_UPWARD      child: 42.5 = 43.0, -42.5 = -42.0', stdout)
+        self.assertIn('FE_UPWARD     parent: 42.5 = 43.0, -42.5 = -42.0', stdout)
+        self.assertIn('FE_DOWNWARD    child: 42.5 = 42.0, -42.5 = -43.0', stdout)
+        self.assertIn('FE_DOWNWARD   parent: 42.5 = 42.0, -42.5 = -43.0', stdout)
+        self.assertIn('FE_TOWARDZERO  child: 42.5 = 42.0, -42.5 = -42.0', stdout)
+        self.assertIn('FE_TOWARDZERO parent: 42.5 = 42.0, -42.5 = -42.0', stdout)
+
+    def test_700_debug_log_inline(self):
+        stdout, _ = self.run_binary(['debug_log_inline'])
+        self._verify_debug_log(stdout)
+
+    def test_701_debug_log_file(self):
+        log_path = 'tmp/debug_log_file.log'
+        if os.path.exists(log_path):
+            os.remove(log_path)
+
+        self.run_binary(['debug_log_file'])
+
+        with open(log_path) as log_file:
+            log = log_file.read()
+
+        self._verify_debug_log(log)
+
+    def _verify_debug_log(self, log: str):
+        self.assertIn('Host:', log)
+        self.assertIn('Shim process initialized', log)
+        self.assertIn('--- shim_exit_group', log)
+
 
 @unittest.skipUnless(HAS_SGX,
     'This test is only meaningful on SGX PAL because only SGX catches raw '
@@ -251,28 +266,28 @@ class TC_02_OpenMP(RegressionTestCase):
     'only relevant to SGX.')
 class TC_03_FileCheckPolicy(RegressionTestCase):
     def test_000_strict_success(self):
-        manifest = self.get_manifest('file_check_policy_strict')
-        stdout, _ = self.run_binary([manifest, 'trusted_testfile'])
+        stdout, _ = self.run_binary(['file_check_policy_strict', 'trusted_testfile'])
 
         self.assertIn('file_check_policy succeeded', stdout)
 
     def test_001_strict_fail(self):
-        manifest = self.get_manifest('file_check_policy_strict')
         with self.expect_returncode(2):
-            self.run_binary([manifest, 'unknown_testfile'])
+            self.run_binary(['file_check_policy_strict', 'unknown_testfile'])
 
     def test_002_allow_all_but_log_success(self):
-        manifest = self.get_manifest('file_check_policy_allow_all_but_log')
-        stdout, stderr = self.run_binary([manifest, 'unknown_testfile'])
+        stdout, stderr = self.run_binary(['file_check_policy_allow_all_but_log',
+                                          'unknown_testfile'])
 
-        self.assertIn('Allowing access to an unknown file due to file_check_policy settings: file:unknown_testfile', stderr)
+        self.assertIn('Allowing access to an unknown file due to file_check_policy settings: '
+                      'file:unknown_testfile', stderr)
         self.assertIn('file_check_policy succeeded', stdout)
 
     def test_003_allow_all_but_log_fail(self):
-        manifest = self.get_manifest('file_check_policy_allow_all_but_log')
-        stdout, stderr = self.run_binary([manifest, 'trusted_testfile'])
+        stdout, stderr = self.run_binary(['file_check_policy_allow_all_but_log',
+                                          'trusted_testfile'])
 
-        self.assertNotIn('Allowing access to an unknown file due to file_check_policy settings: file:trusted_testfile', stderr)
+        self.assertNotIn('Allowing access to an unknown file due to file_check_policy settings: '
+                         'file:trusted_testfile', stderr)
         self.assertIn('file_check_policy succeeded', stdout)
 
 @unittest.skipUnless(HAS_SGX,
@@ -410,14 +425,18 @@ class TC_30_Syscall(RegressionTestCase):
         self.assertIn('mmap test 8 passed', stdout)
 
     def test_052_large_mmap(self):
-        stdout, _ = self.run_binary(['large_mmap'], timeout=480)
+        try:
+            stdout, _ = self.run_binary(['large_mmap'], timeout=480)
 
-        # Ftruncate
-        self.assertIn('large_mmap: ftruncate OK', stdout)
+            # Ftruncate
+            self.assertIn('large_mmap: ftruncate OK', stdout)
 
-        # Large mmap
-        self.assertIn('large_mmap: mmap 1 completed OK', stdout)
-        self.assertIn('large_mmap: mmap 2 completed OK', stdout)
+            # Large mmap
+            self.assertIn('large_mmap: mmap 1 completed OK', stdout)
+            self.assertIn('large_mmap: mmap 2 completed OK', stdout)
+        finally:
+            # This test generates a 4 GB file, don't leave it in FS.
+            os.remove('testfile')
 
     def test_053_mprotect_file_fork(self):
         stdout, _ = self.run_binary(['mprotect_file_fork'])
@@ -429,6 +448,10 @@ class TC_30_Syscall(RegressionTestCase):
 
         self.assertIn('TEST OK', stdout)
 
+    def test_055_madvise(self):
+        stdout, _ = self.run_binary(['madvise'])
+        self.assertIn('TEST OK', stdout)
+
     @unittest.skip('sigaltstack isn\'t correctly implemented')
     def test_060_sigaltstack(self):
         stdout, _ = self.run_binary(['sigaltstack'])
@@ -436,13 +459,13 @@ class TC_30_Syscall(RegressionTestCase):
         # Sigaltstack Test
         self.assertIn('OK on sigaltstack in main thread before alarm', stdout)
         self.assertIn('&act == 0x', stdout)
-        self.assertIn('sig 14 count 1 goes off with sp=0x', stdout)
+        self.assertIn('sig %d count 1 goes off with sp=0x' % signal.SIGALRM, stdout)
         self.assertIn('OK on signal stack', stdout)
         self.assertIn('OK on sigaltstack in handler', stdout)
-        self.assertIn('sig 14 count 2 goes off with sp=0x', stdout)
+        self.assertIn('sig %d count 2 goes off with sp=0x' % signal.SIGALRM, stdout)
         self.assertIn('OK on signal stack', stdout)
         self.assertIn('OK on sigaltstack in handler', stdout)
-        self.assertIn('sig 14 count 3 goes off with sp=0x', stdout)
+        self.assertIn('sig %d count 3 goes off with sp=0x' % signal.SIGALRM, stdout)
         self.assertIn('OK on signal stack', stdout)
         self.assertIn('OK on sigaltstack in handler', stdout)
         self.assertIn('OK on sigaltstack in main thread', stdout)
@@ -464,7 +487,7 @@ class TC_30_Syscall(RegressionTestCase):
 
     def test_090_sighandler_reset(self):
         stdout, _ = self.run_binary(['sighandler_reset'])
-        self.assertIn('Got signal 17', stdout)
+        self.assertIn('Got signal %d' % signal.SIGCHLD, stdout)
         self.assertIn('Handler was invoked 1 time(s).', stdout)
 
     def test_091_sigaction_per_process(self):
@@ -478,14 +501,34 @@ class TC_30_Syscall(RegressionTestCase):
         except subprocess.CalledProcessError as e:
             # FIXME: It's unclear what Graphene process should return when the app
             # inside dies due to a signal.
-            self.assertTrue(e.returncode in [13, 141])
+            self.assertTrue(e.returncode in [signal.SIGPIPE, 128 + signal.SIGPIPE])
             stdout = e.stdout.decode()
-            self.assertIn('Got signal 13', stdout)
+            self.assertIn('Got signal %d' % signal.SIGPIPE, stdout)
             self.assertIn('Got 1 SIGPIPE signal(s)', stdout)
             self.assertIn('Could not write to pipe: Broken pipe', stdout)
 
-    def test_093_signal_multithread(self):
+    @unittest.skipUnless(ON_X86, "x86-specific")
+    def test_093_sighandler_divbyzero(self):
+        stdout, _ = self.run_binary(['sighandler_divbyzero'])
+        self.assertIn('Got signal %d' % signal.SIGFPE, stdout)
+        self.assertIn('Got 1 SIGFPE signal(s)', stdout)
+        self.assertIn('TEST OK', stdout)
+
+    def test_094_signal_multithread(self):
         stdout, _ = self.run_binary(['signal_multithread'])
+        self.assertIn('TEST OK', stdout)
+
+    def test_100_get_set_groups(self):
+        stdout, _ = self.run_binary(['groups'])
+        self.assertIn('child OK', stdout)
+        self.assertIn('parent OK', stdout)
+
+    def test_101_sched_set_get_cpuaffinity(self):
+        stdout, _ = self.run_binary(['sched_set_get_affinity'])
+        self.assertIn('TEST OK', stdout)
+
+    def test_102_pthread_set_get_affinity(self):
+        stdout, _ = self.run_binary(['pthread_set_get_affinity', '1000'])
         self.assertIn('TEST OK', stdout)
 
 @unittest.skipUnless(HAS_SGX,
@@ -501,6 +544,7 @@ class TC_31_SyscallSGX(RegressionTestCase):
 
 class TC_40_FileSystem(RegressionTestCase):
     def test_000_proc(self):
+        (DT_DIR, DT_REG) = (4, 8,)
         stdout, _ = self.run_binary(['proc_common'])
         self.assertIn('/proc/1/..', stdout)
         self.assertIn('/proc/1/cwd', stdout)
@@ -514,14 +558,14 @@ class TC_40_FileSystem(RegressionTestCase):
         self.assertIn('/proc/self/root', stdout)
         self.assertIn('/proc/self/fd', stdout)
         self.assertIn('/proc/self/maps', stdout)
-        self.assertIn('/proc/.', stdout)
-        self.assertIn('/proc/1', stdout)
-        self.assertIn('/proc/2', stdout)
-        self.assertIn('/proc/3', stdout)
-        self.assertIn('/proc/4', stdout)
-        self.assertIn('/proc/self', stdout)
-        self.assertIn('/proc/meminfo', stdout)
-        self.assertIn('/proc/cpuinfo', stdout)
+        self.assertIn('/proc/., type: {0}'.format(DT_DIR), stdout)
+        self.assertIn('/proc/1, type: {0}'.format(DT_DIR), stdout)
+        self.assertIn('/proc/2, type: {0}'.format(DT_DIR), stdout)
+        self.assertIn('/proc/3, type: {0}'.format(DT_DIR), stdout)
+        self.assertIn('/proc/4, type: {0}'.format(DT_DIR), stdout)
+        self.assertIn('/proc/self, type: {0}'.format(DT_DIR), stdout)
+        self.assertIn('/proc/meminfo, type: {0}'.format(DT_REG), stdout)
+        self.assertIn('/proc/cpuinfo, type: {0}'.format(DT_REG), stdout)
         self.assertIn('symlink /proc/self/exec resolves to /proc_common', stdout)
         self.assertIn('/proc/2/cwd/proc_common.c', stdout)
         self.assertIn('/lib/libpthread.so', stdout)
@@ -540,6 +584,10 @@ class TC_40_FileSystem(RegressionTestCase):
         self.assertIn('/dev/stderr', stdout)
         self.assertIn('Four bytes from /dev/urandom', stdout)
 
+    def test_002_device(self):
+        stdout, _ = self.run_binary(['device'])
+        self.assertIn('TEST OK', stdout)
+
     def test_010_path(self):
         stdout, _ = self.run_binary(['proc_path'])
         self.assertIn('proc path test success', stdout)
@@ -557,6 +605,71 @@ class TC_40_FileSystem(RegressionTestCase):
     def test_040_str_close_leak(self):
         stdout, _ = self.run_binary(['str_close_leak'], timeout=60)
         self.assertIn("Success", stdout)
+
+
+class TC_50_GDB(RegressionTestCase):
+    def setUp(self):
+        if not self.has_debug():
+            self.skipTest('test runs only when Graphene is compiled with DEBUG=1')
+
+    def find(self, name, stdout):
+        match = re.search('<{0} start>(.*)<{0} end>'.format(name), stdout, re.DOTALL)
+        self.assertTrue(match, '{} not found in GDB output'.format(name))
+        return match.group(1).strip()
+
+    def test_000_gdb_backtrace(self):
+        # pylint: disable=fixme
+        #
+        # To run this test manually, use:
+        # GDB=1 GDB_SCRIPT=debug.gdb ./pal_loader debug
+        #
+        # TODO: strengthen this test after SGX includes enclave entry.
+        #
+        # While the stack trace in SGX is unbroken, it currently starts at _start inside
+        # enclave, instead of including eclave entry.
+
+        stdout, _ = self.run_gdb(['debug'], 'debug.gdb')
+
+        backtrace_1 = self.find('backtrace 1', stdout)
+        self.assertIn(' main () at debug.c', backtrace_1)
+        self.assertIn(' _start ()', backtrace_1)
+        self.assertNotIn('??', backtrace_1)
+
+        backtrace_2 = self.find('backtrace 2', stdout)
+        self.assertIn(' dev_write (', backtrace_2)
+        self.assertIn(' func () at debug.c', backtrace_2)
+        self.assertIn(' main () at debug.c', backtrace_2)
+        self.assertIn(' _start ()', backtrace_2)
+        self.assertNotIn('??', backtrace_2)
+
+        if HAS_SGX:
+            backtrace_3 = self.find('backtrace 3', stdout)
+            self.assertIn(' sgx_ocall_write (', backtrace_3)
+            self.assertIn(' dev_write (', backtrace_3)
+            self.assertIn(' func () at debug.c', backtrace_3)
+            self.assertIn(' main () at debug.c', backtrace_3)
+            self.assertIn(' _start ()', backtrace_3)
+            self.assertNotIn('??', backtrace_3)
+
+    @unittest.skipUnless(ON_X86, 'x86-specific')
+    def test_010_regs_x86_64(self):
+        # To run this test manually, use:
+        # GDB=1 GDB_SCRIPT=debug_regs-x86_64.gdb ./pal_loader debug_regs-x86_64
+
+        stdout, _ = self.run_gdb(['debug_regs-x86_64'], 'debug_regs-x86_64.gdb')
+
+        rdx = self.find('RDX', stdout)
+        self.assertEqual(rdx, '$1 = 0x1000100010001000')
+
+        rdx_result = self.find('RDX result', stdout)
+        self.assertEqual(rdx_result, '$2 = 0x2000200020002000')
+
+        xmm0 = self.find('XMM0', stdout)
+        self.assertEqual(xmm0, '$3 = 0x30003000300030003000300030003000')
+
+        xmm0_result = self.find('XMM0 result', stdout)
+        self.assertEqual(xmm0_result, '$4 = 0x4000400040004000')
+
 
 class TC_80_Socket(RegressionTestCase):
     def test_000_getsockopt(self):
@@ -601,9 +714,22 @@ class TC_80_Socket(RegressionTestCase):
         self.assertIn('pselect() on write event returned 1 file descriptors', stdout)
         self.assertIn('pselect() on read event returned 1 file descriptors', stdout)
 
+    def test_060_getsockname(self):
+        stdout, _ = self.run_binary(['getsockname'])
+        self.assertIn('getsockname: Got socket name with static port OK', stdout)
+        self.assertIn('getsockname: Got socket name with arbitrary port OK', stdout)
+
     def test_090_pipe(self):
         stdout, _ = self.run_binary(['pipe'], timeout=60)
         self.assertIn('read on pipe: Hello from write end of pipe!', stdout)
+
+    def test_091_pipe_nonblocking(self):
+        stdout, _ = self.run_binary(['pipe_nonblocking'])
+        self.assertIn('TEST OK', stdout)
+
+    def test_092_pipe_ocloexec(self):
+        stdout, _ = self.run_binary(['pipe_ocloexec'])
+        self.assertIn('TEST OK', stdout)
 
     def test_095_mkfifo(self):
         stdout, _ = self.run_binary(['mkfifo'], timeout=60)

@@ -1,13 +1,12 @@
 /* SPDX-License-Identifier: LGPL-3.0-or-later */
 /* Copyright (C) 2014 Stony Brook University */
 
-#include <api.h>
-#include <pal_error.h>
-#include <pal_internal.h>
-#include <pal_security.h>
-#include <spinlock.h>
-
+#include "api.h"
 #include "enclave_ocalls.h"
+#include "pal_error.h"
+#include "pal_internal.h"
+#include "pal_security.h"
+#include "spinlock.h"
 
 static spinlock_t g_malloc_lock = INIT_SPINLOCK_UNLOCKED;
 static size_t g_page_size = PRESET_PAGESIZE;
@@ -20,9 +19,9 @@ static size_t g_page_size = PRESET_PAGESIZE;
 
 static inline void* __malloc(int size) {
     void* addr = NULL;
-
-    ocall_mmap_untrusted(-1, 0, size, PROT_READ | PROT_WRITE, &addr);
-    return addr;
+    int ret = ocall_mmap_untrusted(&addr, size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE,
+                                   /*fd=*/-1, /*offset=*/0);
+    return IS_ERR(ret) ? NULL : addr;
 }
 
 #define system_malloc(size) __malloc(size)

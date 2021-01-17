@@ -5,10 +5,12 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <sys/types.h>
+
 #include "linux_types.h"
 #include "pal.h"
 #include "sgx_arch.h"
 #include "sgx_attest.h"
+#include "sgx_rtld.h"
 
 /*
  * GCC's structure padding may cause leaking from uninialized
@@ -40,6 +42,8 @@ enum {
     OCALL_MKDIR,
     OCALL_GETDENTS,
     OCALL_RESUME_THREAD,
+    OCALL_SCHED_SETAFFINITY,
+    OCALL_SCHED_GETAFFINITY,
     OCALL_CLONE_THREAD,
     OCALL_CREATE_PROCESS,
     OCALL_FUTEX,
@@ -56,9 +60,21 @@ enum {
     OCALL_POLL,
     OCALL_RENAME,
     OCALL_DELETE,
-    OCALL_LOAD_DEBUG,
+    OCALL_UPDATE_DEBUGGER,
+    OCALL_REPORT_MMAP,
     OCALL_EVENTFD,
     OCALL_GET_QUOTE,
+	// rider added 2020-9-16 for dpdk ocall
+    OCALL_DPDK_LOAD_MODULE,
+    OCALL_DPDK_INIT_HANDLE,
+    OCALL_DPDK_DESTROY_HANDLE,
+    OCALL_SET_NET_ENV,
+    // OCALL_DPDK_INITIALIZE,
+    // OCALL_DPDK_START_DEVICE,
+    // OCALL_DPDK_ACQUIRE,
+    // OCALL_DPDK_STOP,
+    // OCALL_DPDK_SHUTDOWN,
+    //
     OCALL_NR,
 };
 
@@ -68,16 +84,17 @@ typedef struct {
 } ms_ocall_exit_t;
 
 typedef struct {
+    void* ms_addr;
+    size_t ms_size;
+    int ms_prot;
+    int ms_flags;
     int ms_fd;
-    uint64_t ms_offset;
-    uint64_t ms_size;
-    unsigned short ms_prot;
-    void * ms_mem;
+    off_t ms_offset;
 } ms_ocall_mmap_untrusted_t;
 
 typedef struct {
-    const void * ms_mem;
-    uint64_t ms_size;
+    const void* ms_addr;
+    size_t ms_size;
 } ms_ocall_munmap_untrusted_t;
 
 typedef struct {
@@ -87,7 +104,7 @@ typedef struct {
 } ms_ocall_cpuid_t;
 
 typedef struct {
-    const char * ms_pathname;
+    const char* ms_pathname;
     int ms_flags;
     unsigned short ms_mode;
 } ms_ocall_open_t;
@@ -98,13 +115,13 @@ typedef struct {
 
 typedef struct {
     int ms_fd;
-    void * ms_buf;
+    void* ms_buf;
     unsigned int ms_count;
 } ms_ocall_read_t;
 
 typedef struct {
     int ms_fd;
-    const void * ms_buf;
+    const void* ms_buf;
     unsigned int ms_count;
 } ms_ocall_write_t;
 
@@ -151,23 +168,35 @@ typedef struct {
 } ms_ocall_ftruncate_t;
 
 typedef struct {
-    const char * ms_pathname;
+    const char* ms_pathname;
     unsigned short ms_mode;
 } ms_ocall_mkdir_t;
 
 typedef struct {
     int ms_fd;
-    struct linux_dirent64 * ms_dirp;
-    unsigned int ms_size;
+    struct linux_dirent64* ms_dirp;
+    size_t ms_size;
 } ms_ocall_getdents_t;
 
 typedef struct {
     unsigned int ms_pid;
-    const char * ms_uri;
+    const char* ms_uri;
     int ms_stream_fd;
-    int ms_nargs;
-    const char * ms_args[];
+    size_t ms_nargs;
+    const char* ms_args[];
 } ms_ocall_create_process_t;
+
+typedef struct {
+    void* ms_tcs;
+    size_t ms_cpumask_size;
+    void* ms_cpu_mask;
+} ms_ocall_sched_setaffinity_t;
+
+typedef struct {
+    void* ms_tcs;
+    size_t ms_cpumask_size;
+    void* ms_cpu_mask;
+} ms_ocall_sched_getaffinity_t;
 
 typedef struct {
     uint32_t* ms_futex;
@@ -257,13 +286,24 @@ typedef struct {
 } ms_ocall_poll_t;
 
 typedef struct {
-    const char * ms_oldpath;
-    const char * ms_newpath;
+    const char* ms_oldpath;
+    const char* ms_newpath;
 } ms_ocall_rename_t;
 
 typedef struct {
-    const char * ms_pathname;
+    const char* ms_pathname;
 } ms_ocall_delete_t;
+
+typedef struct {
+    struct debug_map* _Atomic* ms_debug_map;
+} ms_ocall_update_debugger_t;
+
+typedef struct {
+    const char* ms_filename;
+    uint64_t ms_addr;
+    uint64_t ms_len;
+    uint64_t ms_offset;
+} ms_ocall_report_mmap_t;
 
 typedef struct {
     unsigned int ms_initval;
@@ -271,6 +311,7 @@ typedef struct {
 } ms_ocall_eventfd_t;
 
 typedef struct {
+    bool              ms_is_epid;
     sgx_spid_t        ms_spid;
     bool              ms_linkable;
     sgx_report_t      ms_report;
@@ -278,5 +319,55 @@ typedef struct {
     char*             ms_quote;
     size_t            ms_quote_len;
 } ms_ocall_get_quote_t;
+
+// rider added structs 2020-8-18 for dpdk ocall
+typedef struct {
+} ms_ocall_dpdk_load_module_t;
+
+typedef struct {
+    void * ms_ctxt_ptr;
+} ms_ocall_dpdk_init_handle_t;
+
+typedef struct {
+    void * ms_ctxt_ptr;
+} ms_ocall_dpdk_destroy_handle_t;
+
+typedef struct {
+    char * ms_dev_name_list;
+    char * ms_port_stat_list;
+    void * ms_global_config_ptr;
+} ms_ocall_set_net_env_t;
+
+// typedef struct {
+// 	char* ms_config_name;
+// 	int ms_config_snaplen;
+// 	unsigned int ms_config_timeout;
+// 	uint32_t ms_config_flags;
+// 	int ms_config_mode;
+// 	char* ms_dpdk_args;
+// 	int ms_debug;
+// 	int ms_dpdk_queues;
+// 	void** ms_ctxt_ptr;
+// 	char* ms_errbuf;
+// 	size_t ms_errlen;
+// } ms_ocall_dpdk_initialize_t;
+
+// typedef struct {
+// 	void* ms_handle;
+// 	void* ms_dev;
+// } ms_ocall_dpdk_start_device_t;
+
+// typedef struct {
+// 	void* ms_handle;
+// } ms_ocall_dpdk_acquire_t;
+
+// typedef struct {
+// 	void* ms_handle;
+// } ms_ocall_dpdk_stop_t;
+
+// typedef struct {
+// 	void* ms_handle;
+// } ms_ocall_dpdk_shutdown_t;
+//
 
 #pragma pack(pop)

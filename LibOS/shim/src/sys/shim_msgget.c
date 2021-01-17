@@ -2,9 +2,7 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_msgget.c
- *
- * Implementation of system call "msgget", "msgsnd", "msgrcv" and "msgctl".
+ * Implementation of system calls "msgget", "msgsnd", "msgrcv" and "msgctl".
  *
  * XXX(borysp): I'm pretty sure there are possible deadlocks in this code. Sometimes it first takes
  * `msgq_list_lock` and then `hdl->lock`, sometimes other way round. Someone will have to rewrite
@@ -12,16 +10,20 @@
  */
 
 #include <errno.h>
-#include <list.h>
-#include <pal.h>
-#include <pal_error.h>
-#include <shim_handle.h>
-#include <shim_internal.h>
-#include <shim_ipc.h>
-#include <shim_sysv.h>
-#include <shim_table.h>
-#include <shim_unistd.h>
-#include <shim_utils.h>
+
+#include "list.h"
+#include "pal.h"
+#include "pal_error.h"
+#include "perm.h"
+#include "shim_handle.h"
+#include "shim_internal.h"
+#include "shim_ipc.h"
+#include "shim_lock.h"
+#include "shim_sysv.h"
+#include "shim_table.h"
+#include "shim_types.h"
+#include "shim_utils.h"
+#include "stat.h"
 
 #define MSGQ_HASH_LEN  8
 #define MSGQ_HASH_NUM  (1 << MSGQ_HASH_LEN)
@@ -36,7 +38,6 @@ static LISTP_TYPE(shim_msg_handle) msgq_key_hlist[MSGQ_HASH_NUM];
 static LISTP_TYPE(shim_msg_handle) msgq_qid_hlist[MSGQ_HASH_NUM];
 static struct shim_lock msgq_list_lock;
 
-static int __load_msg_persist(struct shim_msg_handle* msgq, bool readmsg);
 static int __store_msg_persist(struct shim_msg_handle* msgq);
 
 #define MSG_TO_HANDLE(msghdl) container_of((msghdl), struct shim_handle, info.msg)
@@ -272,14 +273,14 @@ int shim_do_msgget(key_t key, int msgflg) {
 
     if (msgflg & IPC_CREAT) {
         do {
-            msgid = allocate_sysv(0, 0);
+            msgid = allocate_ipc_id(0, 0);
             if (!msgid)
-                ipc_sysv_lease_send(NULL);
+                ipc_lease_send();
         } while (!msgid);
 
         if (key != IPC_PRIVATE) {
             if ((ret = ipc_sysv_tellkey_send(NULL, 0, &k, msgid, 0)) < 0) {
-                release_sysv(msgid);
+                release_ipc_id(msgid);
                 return ret;
             }
         }
@@ -293,7 +294,7 @@ int shim_do_msgget(key_t key, int msgflg) {
 
         msgid = ret;
 
-        if ((ret = ipc_sysv_query_send(msgid)) < 0)
+        if ((ret = ipc_query_send(msgid)) < 0)
             return ret;
 
         add_msg_handle(key, msgid, false);
@@ -307,7 +308,7 @@ static int connect_msg_handle(int msqid, struct shim_msg_handle** msgqp) {
     int ret;
 
     if (!msgq) {
-        if ((ret = ipc_sysv_query_send(msqid)) < 0)
+        if ((ret = ipc_query_send(msqid)) < 0)
             return ret;
 
         if (!msgq) {
@@ -323,24 +324,6 @@ static int connect_msg_handle(int msqid, struct shim_msg_handle** msgqp) {
         return -EIDRM;
 
     *msgqp = msgq;
-    return 0;
-}
-
-int recover_msg_ownership(struct shim_msg_handle* msgq) {
-    struct shim_handle* hdl = MSG_TO_HANDLE(msgq);
-    lock(&hdl->lock);
-    assert(!msgq->owned);
-    int ret = __load_msg_persist(msgq, true);
-
-    if (ret < 0) {
-        ret = (ret == -ENOENT) ? -EIDRM : ret;
-        goto out;
-    }
-
-    msgq->owned = true;
-    DkEventSet(msgq->event);
-out:
-    unlock(&hdl->lock);
     return 0;
 }
 
@@ -548,17 +531,6 @@ eagain:
     return -EAGAIN;
 }
 
-#if MIGRATE_SYSV_MSG == 1
-static int msg_balance_migrate(struct shim_handle* hdl, struct sysv_client* client);
-
-static struct sysv_balance_policy msg_policy = {
-    .score_decay       = MSG_SCORE_DECAY,
-    .score_max         = MSG_SCORE_MAX,
-    .balance_threshold = MSG_BALANCE_THRESHOLD,
-    .migrate           = &msg_balance_migrate,
-};
-#endif
-
 int add_sysv_msg(struct shim_msg_handle* msgq, long type, size_t size, const void* data,
                  struct sysv_client* src) {
     struct shim_handle* hdl = MSG_TO_HANDLE(msgq);
@@ -583,10 +555,6 @@ int add_sysv_msg(struct shim_msg_handle* msgq, long type, size_t size, const voi
     if ((ret = __store_msg_qobjs(msgq, mtype, size, data)) < 0)
         goto out_locked;
 
-#if MIGRATE_SYSV_MSG == 1
-    if (msgq->owned)
-        __balance_sysv_score(&msg_policy, hdl, msgq->scores, MAX_SYSV_CLIENTS, src, MSG_SND_SCORE);
-#endif
     DkEventSet(msgq->event);
     ret = 0;
 out_locked:
@@ -643,25 +611,11 @@ int get_sysv_msg(struct shim_msg_handle* msgq, long type, size_t size, void* dat
         goto out_locked;
     }
 
-#if MIGRATE_SYSV_MSG == 1
-    if (msgq->owned) {
-        __balance_sysv_score(&msg_policy, hdl, msgq->scores, MAX_SYSV_CLIENTS, src, MSG_RCV_SCORE);
-
-        if (!msgq->owned && src) {
-            struct shim_ipc_info* owner = msgq->owner;
-            assert(owner);
-            ret = ipc_sysv_movres_send(src, owner->vmid, qstrgetstr(&owner->uri), msgq->lease,
-                                       msgq->msqid, SYSV_MSGQ);
-            goto out_locked;
-        }
-    }
-#endif
-
     if (!msgq->owned) {
         if (src) {
             struct shim_ipc_info* owner = msgq->owner;
             ret = owner ? ipc_sysv_movres_send(src, owner->vmid, qstrgetstr(&owner->uri),
-                                               msgq->lease, msgq->msqid, SYSV_MSGQ)
+                                               msgq->msqid, SYSV_MSGQ)
                         : -ECONNREFUSED;
             goto out_locked;
         }
@@ -731,7 +685,7 @@ static int __store_msg_persist(struct shim_msg_handle* msgq) {
     char fileuri[20];
     snprintf(fileuri, 20, URI_PREFIX_FILE "msgq.%08x", msgq->msqid);
 
-    PAL_HANDLE file = DkStreamOpen(fileuri, PAL_ACCESS_RDWR, 0600, PAL_CREATE_TRY, 0);
+    PAL_HANDLE file = DkStreamOpen(fileuri, PAL_ACCESS_RDWR, PERM_rw_______, PAL_CREATE_TRY, 0);
     if (!file) {
         ret = -PAL_ERRNO();
         goto out;
@@ -743,9 +697,8 @@ static int __store_msg_persist(struct shim_msg_handle* msgq) {
     if (DkStreamSetLength(file, expected_size))
         goto err_file;
 
-    void* mem =
-        (void*)DkStreamMap(file, NULL, PAL_PROT_READ | PAL_PROT_WRITE, 0,
-                           ALLOC_ALIGN_UP(expected_size));
+    void* mem = (void*)DkStreamMap(file, NULL, PAL_PROT_READ | PAL_PROT_WRITE, 0,
+                                   ALLOC_ALIGN_UP(expected_size));
     if (!mem) {
         ret = -EFAULT;
         goto err_file;
@@ -791,7 +744,7 @@ static int __store_msg_persist(struct shim_msg_handle* msgq) {
         }
 
     msgq->owned = false;
-    ret         = 0;
+    ret = 0;
     goto out;
 
 err_file:
@@ -802,73 +755,6 @@ out:
     // To wake up any receiver waiting on local message which must
     // now be requested from new owner.
     DkEventSet(msgq->event);
-    return ret;
-}
-
-static int __load_msg_persist(struct shim_msg_handle* msgq, bool readmsg) {
-    int ret = 0;
-
-    char fileuri[20];
-    snprintf(fileuri, 20, URI_PREFIX_FILE "msgq.%08x", msgq->msqid);
-
-    PAL_HANDLE file = DkStreamOpen(fileuri, PAL_ACCESS_RDONLY, 0, 0, 0);
-
-    if (!file)
-        return -EIDRM;
-
-    struct msg_handle_backup mback;
-
-    size_t bytes = DkStreamRead(file, 0, sizeof(struct msg_handle_backup), &mback, NULL, 0);
-
-    if (bytes == PAL_STREAM_ERROR) {
-        ret = -PAL_ERRNO();
-        goto out;
-    }
-    if (bytes < sizeof(struct msg_handle_backup)) {
-        ret = -EFAULT;
-        goto out;
-    }
-
-    msgq->perm = mback.perm;
-
-    if (!readmsg || !mback.nmsgs)
-        goto done;
-
-    int expected_size = sizeof(struct msg_handle_backup) + sizeof(struct msg_backup) * mback.nmsgs +
-                        mback.currentsize;
-
-    void* mem = (void*)DkStreamMap(file, NULL, PAL_PROT_READ, 0, ALLOC_ALIGN_UP(expected_size));
-
-    if (!mem) {
-        ret = -PAL_ERRNO();
-        goto out;
-    }
-
-    mem += sizeof(struct msg_handle_backup);
-
-    struct msg_type* mtype = NULL;
-    for (int i = 0; i < mback.nmsgs; i++) {
-        struct msg_backup* m = mem;
-        mem += sizeof(struct msg_backup) + m->size;
-
-        debug("load msg: type=%ld, size=%d\n", m->type, m->size);
-
-        if (!mtype || mtype->type != m->type)
-            mtype = __add_msg_type(m->type, &msgq->types, &msgq->ntypes, &msgq->maxtypes);
-
-        if ((ret = __store_msg_qobjs(msgq, mtype, m->size, m->data)) < 0)
-            goto out;
-    };
-
-    DkStreamUnmap(mem, ALLOC_ALIGN_UP(expected_size));
-
-done:
-    DkStreamDelete(file, 0);
-    ret = 0;
-    goto out;
-
-out:
-    DkObjectClose(file);
     return ret;
 }
 
@@ -894,89 +780,3 @@ int store_all_msg_persist(void) {
     unlock(&msgq_list_lock);
     return 0;
 }
-
-int shim_do_msgpersist(int msqid, int cmd) {
-    struct shim_msg_handle* msgq;
-    struct shim_handle* hdl;
-    int ret = -EINVAL;
-
-    if (!create_lock_runtime(&msgq_list_lock)) {
-        return -ENOMEM;
-    }
-
-    switch (cmd) {
-        case MSGPERSIST_STORE:
-            msgq = get_msg_handle_by_id(msqid);
-            if (!msgq)
-                return -EINVAL;
-
-            hdl = MSG_TO_HANDLE(msgq);
-            lock(&hdl->lock);
-            ret = __store_msg_persist(msgq);
-            unlock(&hdl->lock);
-            put_msg_handle(msgq);
-            break;
-
-        case MSGPERSIST_LOAD:
-            lock(&msgq_list_lock);
-            ret = __add_msg_handle(0, msqid, false, &msgq);
-            if (!ret)
-                ret = __load_msg_persist(msgq, true);
-            unlock(&msgq_list_lock);
-            put_msg_handle(msgq);
-            break;
-    }
-
-    return ret;
-}
-
-#if MIGRATE_SYSV_MSG == 1
-static int msg_balance_migrate(struct shim_handle* hdl, struct sysv_client* src) {
-    struct shim_msg_handle* msgq = &hdl->info.msg;
-    int ret                      = 0;
-
-    debug("trigger msg queue balancing, migrate to process %u\n", src->vmid);
-
-    if ((ret = __store_msg_persist(msgq)) < 0)
-        return 0;
-
-    struct shim_ipc_info* info = lookup_ipc_info(src->vmid);
-    if (!info)
-        goto failed;
-
-    ipc_sysv_sublease_send(src->vmid, msgq->msqid, qstrgetstr(&info->uri), &msgq->lease);
-
-    ret = ipc_sysv_msgmov_send(src->port, src->vmid, msgq->msqid, msgq->lease, msgq->scores,
-                               MAX_SYSV_CLIENTS);
-    if (ret < 0)
-        goto failed_info;
-
-    msgq->owner = info;
-
-    for (struct msg_type* mtype = msgq->types; mtype < &msgq->types[msgq->ntypes]; mtype++) {
-        struct msg_req* req = mtype->reqs;
-        mtype->reqs = mtype->req_tail = NULL;
-        while (req) {
-            struct msg_req* next = req->next;
-
-            ipc_sysv_movres_send(&req->dest, info->vmid, qstrgetstr(&info->uri), msgq->lease,
-                                 msgq->msqid, SYSV_MSGQ);
-
-            put_ipc_port(req->dest.port);
-            __free_msg_qobj(msgq, req);
-            req = next;
-        }
-    }
-
-    ret = 0;
-    DkEventSet(msgq->event);
-    goto out;
-
-failed_info:
-    put_ipc_info(info);
-failed:
-    ret = __load_msg_persist(msgq, true);
-out:
-    return ret;
-}
-#endif

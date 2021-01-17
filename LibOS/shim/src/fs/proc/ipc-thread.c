@@ -1,21 +1,21 @@
-#define __KERNEL__
-
 #include <asm/fcntl.h>
 #include <asm/mman.h>
 #include <asm/unistd.h>
 #include <errno.h>
 #include <linux/fcntl.h>
-#include <linux/stat.h>
 
-#include <pal.h>
-#include <pal_error.h>
-#include <shim_fs.h>
-#include <shim_handle.h>
-#include <shim_internal.h>
-#include <shim_ipc.h>
-#include <shim_table.h>
-#include <shim_thread.h>
-#include <shim_utils.h>
+#include "pal.h"
+#include "pal_error.h"
+#include "perm.h"
+#include "shim_fs.h"
+#include "shim_handle.h"
+#include "shim_internal.h"
+#include "shim_ipc.h"
+#include "shim_lock.h"
+#include "shim_table.h"
+#include "shim_thread.h"
+#include "shim_utils.h"
+#include "stat.h"
 
 static int parse_ipc_thread_name(const char* name, IDTYPE* pidptr, const char** next,
                                  size_t* next_len, const char** nextnext) {
@@ -57,8 +57,8 @@ static int parse_ipc_thread_name(const char* name, IDTYPE* pidptr, const char** 
 
 static int find_ipc_thread_link(const char* name, struct shim_qstr* link,
                                 struct shim_dentry** dentptr) {
-    const char *next;
-    const char *nextnext;
+    const char* next;
+    const char* nextnext;
     size_t next_len;
     IDTYPE pid;
 
@@ -224,7 +224,7 @@ static int proc_ipc_thread_dir_mode(const char* name, mode_t* mode) {
         for (size_t i = 0; i < pid_status_cache->nstatus; i++)
             if (pid_status_cache->status[i].pid == pid) {
                 unlock(&status_lock);
-                *mode = 0500;
+                *mode = PERM_r_x______;
                 return 0;
             }
 
@@ -250,7 +250,7 @@ static int proc_ipc_thread_dir_stat(const char* name, struct stat* buf) {
             if (pid_status_cache->status[i].pid == pid) {
                 memset(buf, 0, sizeof(struct stat));
                 buf->st_dev = buf->st_ino = 1;
-                buf->st_mode              = 0500 | S_IFDIR;
+                buf->st_mode              = PERM_r_x______ | S_IFDIR;
                 buf->st_uid               = 0; /* XXX */
                 buf->st_gid               = 0; /* XXX */
                 buf->st_size              = 4096;
@@ -262,13 +262,11 @@ static int proc_ipc_thread_dir_stat(const char* name, struct stat* buf) {
     return -ENOENT;
 }
 
-int get_all_pid_status(struct pid_status** status);
-
 static int proc_list_ipc_thread(const char* name, struct shim_dirent** buf, int len) {
     // Only one valid name
     __UNUSED(name);
     struct pid_status_cache* status = NULL;
-    int ret                         = 0;
+    int ret = 0;
 
     if (!create_lock_runtime(&status_lock)) {
         return -ENOMEM;
@@ -377,14 +375,8 @@ const struct pseudo_fs_ops fs_ipc_thread = {
 const struct pseudo_dir dir_ipc_thread = {
     .size = 3,
     .ent  = {
-              { .name   = "cwd",
-                .fs_ops = &fs_ipc_thread_link,
-                .type   = LINUX_DT_LNK },
-              { .name   = "exe",
-                .fs_ops = &fs_ipc_thread_link,
-                .type   = LINUX_DT_LNK },
-              { .name   = "root",
-                .fs_ops = &fs_ipc_thread_link,
-                .type   = LINUX_DT_LNK },
-        }
+        {.name = "cwd",  .fs_ops = &fs_ipc_thread_link, .type = LINUX_DT_LNK},
+        {.name = "exe",  .fs_ops = &fs_ipc_thread_link, .type = LINUX_DT_LNK},
+        {.name = "root", .fs_ops = &fs_ipc_thread_link, .type = LINUX_DT_LNK},
+    }
 };

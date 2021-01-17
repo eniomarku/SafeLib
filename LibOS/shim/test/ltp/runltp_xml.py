@@ -6,6 +6,7 @@ import abc
 import argparse
 import asyncio
 import configparser
+import fnmatch
 import logging
 import os
 import pathlib
@@ -49,6 +50,10 @@ argparser.add_argument('cmdfile', metavar='FILENAME',
     type=argparse.FileType('r'),
     nargs='?',
     help='cmdfile (default: stdin)')
+
+argparser.add_argument('--output-file', '-O', metavar='FILENAME',
+    type=argparse.FileType('w'),
+    help='write XML report to a file (use - for stdout)')
 
 argparser.set_defaults(
     config=None,
@@ -212,13 +217,16 @@ class TestRunner:
         if self.cfgsection.getboolean('skip', fallback=False):
             raise Skip('skipped via config', loglevel=logging.INFO)
 
+        for name, section in self.suite.match_sections(self.tag):
+            if section.getboolean('skip', fallback=False):
+                raise Skip('skipped via fnmatch section {}'.format(name), loglevel=logging.INFO)
+
         if any(c in self.cmd for c in ';|&'):
             # This is a shell command which would spawn multiple processes.
             # We don't run those in unit tests.
             if 'must-pass' in self.cfgsection:
                 raise Error('invalid shell command with must-pass')
-            else:
-                raise Skip('invalid shell command')
+            raise Skip('invalid shell command')
 
     def get_executable_name(self):
         '''Return the executable name, or :py:obj:`None` if the test will not
@@ -304,12 +312,10 @@ class TestRunner:
                 returncode = await self._run_cmd()
 
             must_pass = self.cfgsection.getintset('must-pass')
-            if must_pass is None:
-                if returncode != 0:
-                    raise Fail('returncode={}'.format(returncode))
-                return
-
-            self._parse_test_output(must_pass)
+            if must_pass is not None:
+                self._parse_test_output(must_pass)
+            elif returncode != 0:
+                raise Fail('returncode={}'.format(returncode))
 
         except AbnormalTestResult as result:
             result.apply_to(self)
@@ -323,8 +329,6 @@ class TestRunner:
         This is normally done only for a test that has non-empty ``must-pass``
         config directive.
         '''
-        # pylint: disable=too-many-branches
-
         notfound = must_pass.copy()
         passed = set()
         failed = set()
@@ -406,9 +410,8 @@ class TestRunner:
                 raise Error('binary did not provide any subtests, see stdout '
                     '(returncode={returncode}, must-pass=[{must_pass}])'.format(
                         **self.props))
-            else:
-                raise Skip('binary without subtests, see stdout '
-                        '(returncode={returncode})'.format(**self.props))
+            raise Skip('binary without subtests, see stdout '
+                       '(returncode={returncode})'.format(**self.props))
 
         if maybe_unneeded_must_pass and not notfound:
             # all subtests passed and must-pass specified exactly all subtests
@@ -432,6 +435,10 @@ class TestSuite:
     '''
     def __init__(self, config):
         self.config = config
+        self.fnmatch_names = [
+            name for name in config
+            if is_fnmatch_pattern(name)
+        ]
         self.sgx = self.config.getboolean(config.default_section, 'sgx')
 
         self.loader = [
@@ -455,6 +462,15 @@ class TestSuite:
         self.queue = []
         self.xml = etree.Element('testsuite')
         self.time = 0
+
+    def match_sections(self, name):
+        '''
+        Find all fnmatch (wildcard) sections that match a given name.
+        '''
+
+        for fnmatch_name in self.fnmatch_names:
+            if fnmatch.fnmatch(name, fnmatch_name):
+                yield fnmatch_name, self.config[fnmatch_name]
 
     def add_test(self, tag, cmd):
         '''Instantiate appropriate :py:class:`TestRunner` and add it to the
@@ -515,18 +531,31 @@ class TestSuite:
         Args:
             stream: a file-like object
         '''
-        stream.write(etree.tostring(self.xml, pretty_print=True))
+        stream.write(etree.tostring(self.xml, pretty_print=True).decode('ascii'))
 
     def log_summary(self):
+        tests = self._get('tests')
+        failures = self._get('failures')
+        errors = self._get('errors')
+        skipped = self._get('skipped')
+        passed = tests - (failures + errors + skipped)
         _log.warning('LTP finished'
-            ' tests=%d failures=%d errors=%d skipped=%d returncode=%d',
-            self._get('tests'), self._get('failures'), self._get('errors'),
-            self._get('skipped'), self.returncode)
+            ' tests=%d passed=%d failures=%d errors=%d skipped=%d returncode=%d',
+            tests, passed, failures, errors, skipped, self.returncode)
 
     async def execute(self):
         '''Execute the suite'''
-        await asyncio.gather(*(runner.execute() for runner in self.queue))
+        # Spawn tasks first, then run asyncio.gather(), so that they are not started in a random
+        # order under Python 3.6 (see: https://stackoverflow.com/a/60856811).
+        # Note that we still need to sort the results afterwards.
+        loop = asyncio.get_event_loop()
+        tasks = [loop.create_task(runner.execute()) for runner in self.queue]
+        await asyncio.gather(*tasks)
+        self.sort_xml()
 
+    def sort_xml(self):
+        '''Sort test results by name'''
+        self.xml[:] = sorted(self.xml, key=lambda test: test.get('name'))
 
 def _getintset(value):
     return set(int(i) for i in value.strip().split())
@@ -554,7 +583,22 @@ def load_config(files):
         with file:
             config.read_file(file)
 
+    for name, proxy in config.items():
+        if is_fnmatch_pattern(name):
+            for key in proxy:
+                if key != 'skip' and proxy[key] != config.defaults().get(key):
+                    raise ValueError(
+                        'fnmatch sections like {!r} can only contain "skip", not {!r}'.format(
+                            name, key))
+
     return config
+
+def is_fnmatch_pattern(name):
+    '''
+    Check if a name is a fnmatch pattern.
+    '''
+
+    return bool(set(name) & set('*?[]!'))
 
 def main(args=None):
     logging.basicConfig(
@@ -588,7 +632,9 @@ def main(args=None):
         loop.run_until_complete(suite.execute())
     finally:
         loop.close()
-    suite.write_report(sys.stdout.buffer)
+
+    if args.output_file:
+        suite.write_report(args.output_file)
     suite.log_summary()
     return suite.returncode
 

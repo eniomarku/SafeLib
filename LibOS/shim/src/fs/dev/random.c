@@ -8,6 +8,7 @@
  */
 
 #include "shim_fs.h"
+#include "stat.h"
 
 static ssize_t dev_random_read(struct shim_handle* hdl, void* buf, size_t count) {
     __UNUSED(hdl);
@@ -49,13 +50,13 @@ static int dev_random_open(struct shim_handle* hdl, const char* name, int flags)
     __UNUSED(name);
     __UNUSED(flags);
 
-    struct shim_dev_ops ops = {.read     = &dev_random_read,
-                               .write    = &dev_random_write,
-                               .mode     = &dev_random_mode,
-                               .stat     = &dev_random_stat,
-                               .hstat    = &dev_random_hstat};
+    struct shim_dev_ops ops = {.read  = &dev_random_read,
+                               .write = &dev_random_write,
+                               .mode  = &dev_random_mode,
+                               .stat  = &dev_random_stat,
+                               .hstat = &dev_random_hstat};
 
-    memcpy(&hdl->info.dev.dev_ops, &ops, sizeof(ops));
+    hdl->info.dev.dev_ops = ops;
     return 0;
 }
 

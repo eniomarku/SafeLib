@@ -3,10 +3,10 @@ RUNTIME_DIR = $(CURDIR)/../../../Runtime
 include ../../../Scripts/Makefile.configs
 
 CFLAGS += -fPIC -Winline -Wwrite-strings \
-	  -fmerge-all-constants -Wstrict-prototypes -Wtrampolines \
+	  -fmerge-all-constants -Wstrict-prototypes $(call cc-option,-Wtrampolines) \
 	  -Werror=implicit-function-declaration \
 	  $(cc-option, -Wnull-dereference) \
-	  -fno-stack-protector -fno-builtin -Wno-inline \
+	  -fno-builtin -Wno-inline \
 	  -I../include \
 	  -I../include/arch/$(ARCH) \
 	  -I../../../Pal/include \
@@ -18,12 +18,30 @@ CFLAGS += -fPIC -Winline -Wwrite-strings \
 
 CFLAGS += -Wextra
 
-ASFLAGS += -Wa,--noexecstack -x assembler-with-cpp -I../include
+# use TLS-based stack protector of GCC (we rely on the fact that LibOS reuses the same TCB as its
+# underlying PAL which must have a canary in its PAL_TCB at offset 0x8, so no additional enabling
+# is required in the LibOS code);
+# not all compilers support mstack-protector-guard, so use stack protector only if supported
+CFLAGS += -fno-stack-protector
+ifeq ($(ARCH),x86_64)
+CFLAGS += $(call cc-option, -fstack-protector-strong -mstack-protector-guard=tls \
+	                        -mstack-protector-guard-reg=%gs -mstack-protector-guard-offset=8)
+endif
+
+# Some of the code uses alignof on expressions, which is a GNU extension.
+# Silence Clang - it complains but does support it.
+CFLAGS += $(cc-option,-Wno-gnu-alignof-expression)
+
+# TODO: This is due to use of packed structs in IPC code, which triggers "taking address of a packed
+# member" warning in Clang and newer GCC. That code needs to be rewritten.
+CFLAGS += -Wno-address-of-packed-member
+
+ASFLAGS += -Wa,--noexecstack -x assembler-with-cpp -I../include -I../include/arch/$(ARCH)
 
 LDFLAGS += -shared -nostdlib -z combreloc -z relro -z now -z defs \
 	  -rpath-link=$(abspath $(RUNTIME_DIR))
 
-files_to_build = libsysdb.a libsysdb.so libsysdb_debug.so
+files_to_build = libsysdb.a libsysdb.so
 files_to_install = $(addprefix $(RUNTIME_DIR)/,$(files_to_build))
 
 defs	= -DIN_SHIM
@@ -44,6 +62,7 @@ objs = \
 	start-$(ARCH).o \
 	syscallas-$(ARCH).o \
 	bookkeep/shim_handle.o \
+	bookkeep/shim_process.o \
 	bookkeep/shim_signal.o \
 	bookkeep/shim_thread.o \
 	bookkeep/shim_vma.o \
@@ -72,10 +91,10 @@ objs = \
 	ipc/shim_ipc_child.o \
 	ipc/shim_ipc_helper.o \
 	ipc/shim_ipc_pid.o \
+	ipc/shim_ipc_ranges.o \
 	ipc/shim_ipc_sysv.o \
 	sys/shim_access.o \
 	sys/shim_alarm.o \
-	sys/shim_benchmark.o \
 	sys/shim_brk.o \
 	sys/shim_clone.o \
 	sys/shim_dup.o \
@@ -89,7 +108,9 @@ objs = \
 	sys/shim_futex.o \
 	sys/shim_getcwd.o \
 	sys/shim_getpid.o \
+	sys/shim_getrandom.o \
 	sys/shim_getrlimit.o \
+	sys/shim_getuid.o \
 	sys/shim_ioctl.o \
 	sys/shim_mmap.o \
 	sys/shim_msgget.o \
@@ -106,7 +127,6 @@ objs = \
 	sys/shim_uname.o \
 	sys/shim_wait.o \
 	sys/shim_wrappers.o \
-	utils/md5.o \
 	utils/printf.o \
 	utils/strobjs.o \
 	vdso/vdso-data.o
@@ -119,6 +139,10 @@ all_objs = \
 graphene_lib = .lib/graphene-lib.a
 pal_lib = $(RUNTIME_DIR)/libpal-$(PAL_HOST).so
 
+ifeq ($(ARCH),x86_64)
+	CFLAGS += -mfxsr -mxsave
+endif
+
 ifeq ($(findstring x86_64,$(SYS))$(findstring linux,$(SYS)),x86_64linux)
 all: $(files_to_build) $(files_to_install)
 else
@@ -128,15 +152,9 @@ endif
 $(files_to_install): $(RUNTIME_DIR)/%: %
 	$(call cmd,ln_sfr)
 
-LDFLAGS-libsysdb.so += --version-script shim.map -T shim-$(ARCH).lds
+LDFLAGS-libsysdb.so += --version-script shim.map -T shim-$(ARCH).lds --eh-frame-hdr
 libsysdb.so: $(objs) $(filter %.map %.lds,$(LDFLAGS-$@)) \
 	     $(graphene_lib) $(pal_lib) shim.map shim-$(ARCH).lds
-	$(call cmd,ld_so_o)
-
-LDFLAGS-libsysdb_debug.so += --version-script shim-debug.map -T shim-$(ARCH).lds
-libsysdb_debug.so: $(filter-out syscallas-$(ARCH).o,$(objs)) \
-		   $(filter %.map %.lds,$(LDFLAGS-$@)) \
-		   $(graphene_lib) $(pal_lib) shim-debug.map shim-$(ARCH).lds
 	$(call cmd,ld_so_o)
 
 .PHONY: graphene_lib_recurse

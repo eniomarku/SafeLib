@@ -2,21 +2,18 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_mutex.c
- *
- * This file contains APIs that provide operations of (futex based) mutexes.
- * Based on "Mutexes and Condition Variables using Futexes"
- * (http://locklessinc.com/articles/mutex_cv_futex)
+ * This file contains APIs that provide operations of (futex based) mutexes. Based on "Mutexes and
+ * Condition Variables using Futexes" (http://locklessinc.com/articles/mutex_cv_futex)
  */
 
 #include <asm/errno.h>
-#include <atomic.h>
 #include <limits.h>
 #include <linux/futex.h>
 #include <linux/time.h>
 #include <unistd.h>
 
 #include "api.h"
+#include "atomic.h"
 #include "cpu.h"
 #include "pal.h"
 #include "pal_defs.h"

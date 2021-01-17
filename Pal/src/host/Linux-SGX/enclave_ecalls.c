@@ -1,11 +1,14 @@
+#include "enclave_ecalls.h"
+
+#include <stdalign.h>
+
+#include "api.h"
+#include "ecall_types.h"
+#include "pal_internal.h"
 #include "pal_linux.h"
 #include "pal_security.h"
-#include "pal_internal.h"
-#include <api.h>
-
-#include "ecall_types.h"
-#include "enclave_ecalls.h"
 #include "rpc_queue.h"
+#include "sgx_arch.h"
 
 #define SGX_CAST(type, item) ((type)(item))
 
@@ -61,7 +64,7 @@ void handle_ecall(long ecall_index, void* ecall_args, void* exit_target, void* e
 
     if (!g_enclave_top) {
         g_enclave_base = enclave_base_addr;
-        g_enclave_top = enclave_base_addr + GET_ENCLAVE_TLS(enclave_size);
+        g_enclave_top  = enclave_base_addr + GET_ENCLAVE_TLS(enclave_size);
     }
 
     /* disallow malicious URSP (that points into the enclave) */
@@ -85,23 +88,34 @@ void handle_ecall(long ecall_index, void* ecall_args, void* exit_target, void* e
             return;
         }
 
-        ms_ecall_enclave_start_t * ms =
-                (ms_ecall_enclave_start_t *) ecall_args;
+        ms_ecall_enclave_start_t* ms = (ms_ecall_enclave_start_t*)ecall_args;
 
         if (!ms || !sgx_is_completely_outside_enclave(ms, sizeof(*ms))) {
             return;
         }
 
-        if (verify_and_init_rpc_queue(ms->rpc_queue))
+        if (verify_and_init_rpc_queue(READ_ONCE(ms->rpc_queue)))
             return;
 
-        /* xsave size must be initialized early */
-        init_xsave_size(ms->ms_sec_info->enclave_attributes.xfrm);
+        struct pal_sec* pal_sec = READ_ONCE(ms->ms_sec_info);
+        if (!pal_sec || !sgx_is_completely_outside_enclave(pal_sec, sizeof(*pal_sec)))
+            return;
+
+        /* xsave size must be initialized early, from a trusted source (EREPORT result) */
+        // TODO: This eats 1KB of a stack frame which lives for the whole lifespan of this enclave.
+        //       We should move it somewhere else and deallocate right after use.
+        __sgx_mem_aligned sgx_target_info_t target_info;
+        alignas(128) char report_data[64] = {0};
+        __sgx_mem_aligned sgx_report_t report;
+        memset(&report, 0, sizeof(report));
+        memset(&target_info, 0, sizeof(target_info));
+        sgx_report(&target_info, &report_data, &report);
+        init_xsave_size(report.body.attributes.xfrm);
 
         /* pal_linux_main is responsible to check the passed arguments */
-        pal_linux_main(ms->ms_args, ms->ms_args_size,
-                       ms->ms_env, ms->ms_env_size,
-                       ms->ms_sec_info);
+        pal_linux_main(READ_ONCE(ms->ms_libpal_uri), READ_ONCE(ms->ms_libpal_uri_len),
+                       READ_ONCE(ms->ms_args), READ_ONCE(ms->ms_args_size), READ_ONCE(ms->ms_env),
+                       READ_ONCE(ms->ms_env_size), pal_sec);
     } else {
         // ENCLAVE_START already called (maybe successfully, maybe not), so
         // only valid ecall is THREAD_START.

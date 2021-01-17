@@ -2,10 +2,8 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_exception.c
- *
- * This file contains APIs to set up handlers of exceptions issued by the
- * host, and the methods to pass the exceptions to the upcalls.
+ * This file contains APIs to set up handlers of exceptions issued by the host, and the methods to
+ * pass the exceptions to the upcalls.
  */
 
 #include <errno.h>
@@ -18,7 +16,7 @@
 #include "pal_error.h"
 #include "pal_internal.h"
 
-PAL_EVENT_HANDLER g_handlers[PAL_EVENT_NUM_BOUND] = { 0 };
+PAL_EVENT_HANDLER g_handlers[PAL_EVENT_NUM_BOUND] = {0};
 
 PAL_EVENT_HANDLER _DkGetExceptionHandler(PAL_NUM event) {
     return __atomic_load_n(&g_handlers[event], __ATOMIC_ACQUIRE);
@@ -35,10 +33,6 @@ DkSetExceptionHandler(PAL_EVENT_HANDLER handler, PAL_NUM event) {
 
     __atomic_store_n(&g_handlers[event], handler, __ATOMIC_RELEASE);
     LEAVE_PAL_CALL_RETURN(PAL_TRUE);
-}
-
-void DkExceptionReturn(PAL_PTR event) {
-    _DkExceptionReturn(event);
 }
 
 /* This does not return */

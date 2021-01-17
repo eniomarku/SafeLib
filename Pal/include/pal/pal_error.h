@@ -2,8 +2,6 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * pal_error.h
- *
  * This file contains definitions of PAL error codes.
  */
 
@@ -64,6 +62,7 @@ typedef enum _pal_error_t {
 #define PAL_ERROR_CRYPTO_END PAL_ERROR_CRYPTO_INVALID_DH_STATE
 } pal_error_t;
 
+/* err - positive value of error code */
 const char* pal_strerror(int err);
 
 #endif

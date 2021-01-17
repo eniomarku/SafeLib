@@ -22,6 +22,8 @@
 	.type enclave_entry, @function
 
 enclave_entry:
+	.cfi_startproc
+
 	# On EENTER, RAX is the current SSA index (aka CSSA), RBX is the address of
 	# TCS, RCX is the address of IP following EENTER. Other regs are not trusted.
 
@@ -466,11 +468,18 @@ enclave_entry:
 	leaq _DkExceptionHandler(%rip), %rdi
 	movq %rdi, SGX_GPR_RIP(%rbx)
 
+	# dump the XSAVE region (XMM/YMM/etc part of context); SGX saves it at the
+	# very beginning of the SSA frame; note that __restore_xregs / __save_xregs
+	# clobber RDX so need to stash it in RBX
 	movq %rdx, %rbx
-	leaq SGX_CPU_CONTEXT_SIZE + 8(%rsi), %rdi
+	movq %gs:SGX_SSA, %rdi
 	leaq 1f(%rip), %r11
-	jmp __save_xregs
+	jmp __restore_xregs
 1:
+	leaq SGX_CPU_CONTEXT_SIZE + 8(%rsi), %rdi
+	leaq 2f(%rip), %r11
+	jmp __save_xregs
+2:
 	movq %rbx, %rdx
 
 .Leexit_exception:
@@ -481,6 +490,8 @@ enclave_entry:
 	# exit address in RDX, mov it to RBX
 	movq %rdx, %rbx
 	jmp .Lclear_and_eexit
+
+	.cfi_endproc
 
 	.global sgx_ocall
 	.type sgx_ocall, @function
@@ -611,9 +622,16 @@ sgx_ocall:
 	.global __morestack
 	.type __morestack, @function
 __morestack:
-#endif
 
 	.cfi_startproc
+
+	# Parse trusted stack frame from (saved) RBP.
+	.cfi_def_cfa %rbp, 0
+	.cfi_offset %rip, 8
+	.cfi_offset %rbp, 0
+#else
+	.cfi_startproc
+#endif
 
 	# Clear "extended" state (FPU aka x87, SSE, AVX, ...).
 
@@ -682,7 +700,10 @@ __morestack:
 
 	# Check if there was a signal
 	cmpq $0, %rsi
-	jne .Lexternal_event
+	je .Lno_external_event
+	cmpq $PAL_EVENT_NUM_BOUND, %rsi
+	jb .Lexternal_event
+.Lno_external_event:
 	movq %rsp, %rdi # %rdi = sgx_cpu_context_t* uc
 	movq %rsp, %rsi
 	addq $SGX_CPU_CONTEXT_SIZE, %rsi # %rsi = PAL_XREGS_STATE* xregs_state

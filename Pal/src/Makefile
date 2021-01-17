@@ -1,4 +1,3 @@
-export PAL_DIR = $(CURDIR)
 export RUNTIME_DIR = $(CURDIR)/../../Runtime
 
 include ../../Scripts/Makefile.configs
@@ -12,7 +11,6 @@ pal_lib =
 pal_lib_deps =
 pal_lib_post =
 pal_static =
-pal_gdb =
 
 HOST_DIR = host/$(PAL_HOST)
 LIB_DIR = $(HOST_DIR)/.lib
@@ -30,6 +28,14 @@ CFLAGS += \
 	-I../include/arch/$(ARCH)/$(PAL_HOST) \
 	-I../include/lib
 
+# use TLS-based stack protector of GCC (all PALs must have a canary in its PAL_TCB at offset 0x8);
+# not all compilers support mstack-protector-guard, so use stack protector only if supported
+CFLAGS += -fno-stack-protector
+ifeq ($(ARCH),x86_64)
+CFLAGS += $(call cc-option, -fstack-protector-strong -mstack-protector-guard=tls \
+	                        -mstack-protector-guard-reg=%gs -mstack-protector-guard-offset=8)
+endif
+
 PAL_HOST_MACRO = $(shell echo $(PAL_HOST) | tr '[:lower:]' '[:upper:]' | tr '-' '_')
 
 # Build Targets:
@@ -40,8 +46,7 @@ PAL_HOST_MACRO = $(shell echo $(PAL_HOST) | tr '[:lower:]' '[:upper:]' | tr '-' 
 files_to_build = $(pal_lib) $(pal_lib_post) $(pal_static) \
 		 $(pal_loader)
 
-defs	= -DIN_PAL -DHOST_TYPE="$(PAL_HOST)" -D$(PAL_HOST_MACRO) -DPAL_DIR=$(PAL_DIR) \
-	  -DRUNTIME_DIR=$(RUNTIME_DIR)
+defs	= -DIN_PAL -DHOST_TYPE="$(PAL_HOST)" -D$(PAL_HOST_MACRO)
 CFLAGS += $(defs)
 objs = \
 	db_events.o \
@@ -65,7 +70,6 @@ host_lib = $(HOST_DIR)/libpal-$(PAL_HOST).a
 # Install Targets (all in RUNTIME_DIR):
 #       pal-{Host Name}:       loader for PAL (as an executable)
 #       libpal-{Host Name}.so: dynamic-linking library
-#       pal_gdb-{Host Name}:   debugger for PAL (as an executable)
 
 ifneq ($(pal_loader),)
 	runtime_loader += $(RUNTIME_DIR)/pal-$(PAL_HOST)
@@ -75,11 +79,7 @@ ifneq ($(pal_lib),)
 	runtime_lib += $(RUNTIME_DIR)/libpal-$(PAL_HOST)$(suffix $(pal_lib))
 endif
 
-ifneq ($(pal_gdb),)
-	runtime_gdb += $(RUNTIME_DIR)/pal_gdb-$(PAL_HOST)
-endif
-
-files_to_install = $(runtime_loader) $(runtime_lib) $(runtime_sec) $(runtime_gdb)
+files_to_install = $(runtime_loader) $(runtime_lib) $(runtime_sec)
 
 
 ###########################
@@ -119,11 +119,6 @@ $(runtime_lib): $(pal_lib)
 	$(call cmd,ln_sfr)
 endif
 
-ifneq ($(pal_gdb),)
-$(runtime_gdb): $(pal_gdb)
-	$(call cmd,ln_sfr)
-endif
-
 ifneq ($(pal_lib_post),)
 $(pal_lib_post): $(pal_lib)
 	@$(MAKE) -C $(HOST_DIR) $@
@@ -133,7 +128,7 @@ $(pal_static): $(addprefix $(OBJ_DIR)/,$(objs)) \
 	       $(host_lib) $(graphene_lib)
 	$(call cmd,ar_a_o)
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: %.c $(graphene_lib)
 	@mkdir -p $(OBJ_DIR)
 	$(call cmd,cc_o_c)
 

@@ -2,6 +2,11 @@ include ../../Scripts/Makefile.configs
 include ../../Scripts/Makefile.rules
 include ../src/host/$(PAL_HOST)/Makefile.am
 
+# FIXME: currently disable GCC's stack protector in the common libs because they are linked with
+#        different libraries/executables including those that do not provide __stack_chk_fail(),
+#        e.g. PAL regression tests (in particular, avl_tree_test.c)
+CFLAGS += -fno-stack-protector
+
 CFLAGS += \
 	-I../include \
 	-I../include/arch/$(ARCH) \
@@ -90,7 +95,7 @@ crypto/mbedtls/CMakeLists.txt: crypto/$(MBEDTLS_SRC) crypto/$(MBEDCRYPTO_SRC) cr
 	mv crypto/mbedtls/mbed-crypto-mbedcrypto-3.1.0 crypto/mbedtls/crypto
 	cd crypto/mbedtls && patch -p1 < ../mbedtls-$(MBEDTLS_VERSION).diff || exit 255
 	mkdir crypto/mbedtls/install
-	cd crypto/mbedtls && perl ./scripts/config.pl set MBEDTLS_CMAC_C && make CFLAGS="" SHARED=1 DESTDIR=install install .
+	cd crypto/mbedtls && perl ./scripts/config.pl set MBEDTLS_CMAC_C && $(MAKE) CFLAGS="" SHARED=1 DESTDIR=install install .
 	$(RM) crypto/mbedtls/include/mbedtls/config.h
 	$(RM) crypto/mbedtls/crypto/include/mbedtls/config.h
 
@@ -104,20 +109,23 @@ $(filter-out crypto/mbedtls/crypto/library/aes.c,$(patsubst %.o,%.c,$(crypto_mbe
 objs += \
 	avl_tree.o \
 	crypto/udivmodti4.o \
-	graphene/config.o \
 	graphene/path.o \
 	network/hton.o \
 	network/inet_pton.o \
 	stdlib/printfmt.o \
 	string/atoi.o \
+	string/ctype.o \
 	string/memcmp.o \
 	string/memcpy.o \
 	string/memset.o \
 	string/strchr.o \
 	string/strcmp.o \
-	string/strendswith.o \
 	string/strlen.o \
-	string/strstr.o
+	string/strspn.o \
+	string/strstr.o \
+	string/toml_utils.o \
+	string/utils.o \
+	toml.o
 
 $(addprefix $(target),crypto/adapters/mbedtls_adapter.o crypto/adapters/mbedtls_dh.o crypto/adapters/mbedtls_encoding.o): crypto/mbedtls/crypto/library/aes.c
 
@@ -138,7 +146,7 @@ $(target)graphene-lib.a: $(addprefix $(target),$(objs))
 	@mkdir -p $(dir $@)
 	$(call cmd,ar_a_o)
 
-$(target)%.o: %.c
+$(target)%.o: %.c toml.patched
 	@mkdir -p $(dir $@)
 	$(call cmd,cc_o_c)
 
@@ -152,6 +160,22 @@ UTHASH_CHECKSUM ?= ba9af0e8c902108cc40be8e742ff4fcbb0e93062d91aefd6070b70d4e067c
 ../include/lib/uthash.h:
 	../../Scripts/download --output $@ --url $(UTHASH_URI) --sha256 $(UTHASH_CHECKSUM)
 
+TOML_H_URI ?= https://raw.githubusercontent.com/cktan/tomlc99/5be06807ad5f2230cad99e15380c4f4076c9dd83/toml.h
+TOML_H_CHECKSUM ?= e79d6d272576561e1b46ee001b0dd6b554330843e6fc7c658a548c659f282ac5
+TOML_C_URI ?= https://raw.githubusercontent.com/cktan/tomlc99/5be06807ad5f2230cad99e15380c4f4076c9dd83/toml.c
+TOML_C_CHECKSUM ?= c21a546ab767a7e40d4f65df179d70357059c15e4439e1980d791625655fbbc6
+
+toml.h:
+	../../Scripts/download --output $@ --url $(TOML_H_URI) --sha256 $(TOML_H_CHECKSUM)
+
+toml.c:
+	../../Scripts/download --output $@ --url $(TOML_C_URI) --sha256 $(TOML_C_CHECKSUM)
+
+toml.patched: toml.h toml.c
+	patch -p1 -l < toml.patch || exit 255
+	cp toml.h ../include/lib/toml.h
+	touch $@
+
 .PHONY: clean
 clean:
 	$(RM) $(objs) graphene-lib.a
@@ -160,3 +184,4 @@ clean:
 distclean: clean
 	$(RM) -r crypto/$(MBEDTLS_SRC) crypto/$(MBEDCRYPTO_SRC) crypto/mbedtls
 	$(RM) ../include/lib/uthash.h
+	$(RM) ../include/lib/toml.h toml.h toml.c toml.patched

@@ -2,13 +2,12 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_syscalls.c
- *
- * This file contain functions to allocate / free a fixed-size string object.
+ * This file contains functions to allocate / free a fixed-size string object.
  */
 
-#include <shim_internal.h>
-#include <shim_utils.h>
+#include "shim_internal.h"
+#include "shim_lock.h"
+#include "shim_utils.h"
 
 static struct shim_lock str_mgr_lock;
 
@@ -42,11 +41,6 @@ struct shim_str* get_str_obj(void) {
 int free_str_obj(struct shim_str* str) {
     if (str == NULL)
         return 0;
-
-    if (memory_migrated(str)) {
-        memset(str, 0, sizeof(struct shim_str));
-        return 0;
-    }
 
     free_mem_obj_to_mgr(str_mgr, str);
     return 0;

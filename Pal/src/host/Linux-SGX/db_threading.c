@@ -2,13 +2,22 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_threading.c
- *
- * This file contain APIs to create, exit and yield a thread.
+ * This file contains APIs to create, exit and yield a thread.
  */
+
+#include <stddef.h> /* linux/signal.h misses this dependency (for size_t), at least on Ubuntu 16.04.
+                     * We must include it ourselves before including linux/signal.h.
+                     */
+
+#include <linux/mman.h>
+#include <linux/sched.h>
+#include <linux/signal.h>
+#include <linux/types.h>
+#include <linux/wait.h>
 
 #include "api.h"
 #include "ecall_types.h"
+#include "list.h"
 #include "pal.h"
 #include "pal_debug.h"
 #include "pal_defs.h"
@@ -18,21 +27,13 @@
 #include "pal_linux_defs.h"
 #include "pal_linux_error.h"
 
-#include <linux/mman.h>
-#include <linux/sched.h>
-#include <linux/signal.h>
-#include <linux/types.h>
-#include <linux/wait.h>
-
-#include <list.h>
-
 static PAL_LOCK g_thread_list_lock = LOCK_INIT;
 DEFINE_LISTP(pal_handle_thread);
 static LISTP_TYPE(pal_handle_thread) g_thread_list = LISTP_INIT;
 
 struct thread_param {
-    int (*callback) (void *);
-    const void * param;
+    int (*callback)(void*);
+    const void* param;
 };
 
 extern void* g_enclave_base;
@@ -43,14 +44,17 @@ extern void* g_enclave_base;
  * uniqueness is not required; the tid is only used for debugging. We could
  * ensure uniqueness if needed in the future
  */
-static PAL_IDX pal_assign_tid(void)
-{
-    static struct atomic_int tid = ATOMIC_INIT(0);
+static PAL_IDX pal_assign_tid(void) {
+    /* tid 1 is assigned to the first thread; see pal_linux_main() */
+    static struct atomic_int tid = ATOMIC_INIT(1);
     return __atomic_add_fetch(&tid.counter, 1, __ATOMIC_SEQ_CST);
 }
 
-void pal_start_thread (void)
-{
+/* Initialization wrapper of a newly-created thread. This function finds a newly-created thread in
+ * g_thread_list, initializes its TCB/TLS, and jumps into the callback-to-run. Graphene uses GCC's
+ * stack protector that looks for a canary at gs:[0x8], but this function starts with a default
+ * canary and then updates it to a random one, so we disable stack protector here. */
+__attribute__((__optimize__("-fno-stack-protector"))) void pal_start_thread(void) {
     struct pal_handle_thread *new_thread = NULL, *tmp;
 
     _DkInternalLock(&g_thread_list_lock);
@@ -58,7 +62,8 @@ void pal_start_thread (void)
         if (!tmp->tcs) {
             new_thread = tmp;
             new_thread->tid = pal_assign_tid();
-            new_thread->tcs = g_enclave_base + GET_ENCLAVE_TLS(tcs_offset);
+            __atomic_store_n(&new_thread->tcs, (g_enclave_base + GET_ENCLAVE_TLS(tcs_offset)),
+                             __ATOMIC_RELEASE);
             break;
         }
     _DkInternalUnlock(&g_thread_list_lock);
@@ -66,17 +71,22 @@ void pal_start_thread (void)
     if (!new_thread)
         return;
 
-    struct thread_param * thread_param =
-            (struct thread_param *) new_thread->param;
-    int (*callback) (void *) = thread_param->callback;
-    const void * param = thread_param->param;
+    struct thread_param* thread_param = (struct thread_param*)new_thread->param;
+    int (*callback)(void*) = thread_param->callback;
+    const void* param = thread_param->param;
     free(thread_param);
     new_thread->param = NULL;
+
     SET_ENCLAVE_TLS(thread, new_thread);
     SET_ENCLAVE_TLS(ready_for_exceptions, 1UL);
+
+    /* each newly-created thread (including the first thread) has its own random stack canary */
+    uint64_t stack_protector_canary;
+    _DkRandomBitsRead(&stack_protector_canary, sizeof(stack_protector_canary));
+    pal_set_tcb_stack_canary(stack_protector_canary);
     PAL_TCB* pal_tcb = pal_get_tcb();
     memset(&pal_tcb->libos_tcb, 0, sizeof(pal_tcb->libos_tcb));
-    callback((void *) param);
+    callback((void*)param);
     _DkThreadExit(/*clear_child_tid=*/NULL);
     /* UNREACHABLE */
 }
@@ -84,9 +94,7 @@ void pal_start_thread (void)
 /* _DkThreadCreate for internal use. Create an internal thread
    inside the current process. The arguments callback and param
    specify the starting function and parameters */
-int _DkThreadCreate (PAL_HANDLE * handle, int (*callback) (void *),
-                     const void * param)
-{
+int _DkThreadCreate(PAL_HANDLE* handle, int (*callback)(void*), const void* param) {
     PAL_HANDLE new_thread = malloc(HANDLE_SIZE(thread));
     SET_HANDLE_TYPE(new_thread, thread);
     /*
@@ -96,10 +104,10 @@ int _DkThreadCreate (PAL_HANDLE * handle, int (*callback) (void *),
     new_thread->thread.tid = 0;
     new_thread->thread.tcs = NULL;
     INIT_LIST_HEAD(&new_thread->thread, list);
-    struct thread_param * thread_param = malloc(sizeof(struct thread_param));
+    struct thread_param* thread_param = malloc(sizeof(struct thread_param));
     thread_param->callback = callback;
-    thread_param->param = param;
-    new_thread->thread.param = (void *) thread_param;
+    thread_param->param    = param;
+    new_thread->thread.param = (void*)thread_param;
 
     _DkInternalLock(&g_thread_list_lock);
     LISTP_ADD_TAIL(&new_thread->thread, &g_thread_list, list);
@@ -108,6 +116,11 @@ int _DkThreadCreate (PAL_HANDLE * handle, int (*callback) (void *),
     int ret = ocall_clone_thread();
     if (IS_ERR(ret))
         return unix_to_pal_error(ERRNO(ret));
+
+    /* There can be subtle race between the parent and child so hold the parent until child updates
+       its tcs. */
+    while (!__atomic_load_n(&new_thread->thread.tcs, __ATOMIC_ACQUIRE))
+        CPU_RELAX();
 
     *handle = new_thread;
     return 0;
@@ -120,8 +133,7 @@ int _DkThreadDelayExecution(uint64_t* duration_us) {
 
 /* PAL call DkThreadYieldExecution. Yield the execution
    of the current thread. */
-void _DkThreadYieldExecution (void)
-{
+void _DkThreadYieldExecution(void) {
     ocall_sleep(NULL);
 }
 
@@ -133,10 +145,10 @@ noreturn void _DkThreadExit(int* clear_child_tid) {
      * note that we don't do it now (because this thread still occupies SGX
      * TCS slot) but during handle_thread_reset in assembly code */
     SET_ENCLAVE_TLS(clear_child_tid, clear_child_tid);
-    static_assert(sizeof(*clear_child_tid) == 4,  "unexpected clear_child_tid size");
+    static_assert(sizeof(*clear_child_tid) == 4, "unexpected clear_child_tid size");
 
     /* main thread is not part of the g_thread_list */
-    if(exiting_thread != &pal_control.first_thread->thread) {
+    if (exiting_thread != &pal_control.first_thread->thread) {
         _DkInternalLock(&g_thread_list_lock);
         LISTP_DEL(exiting_thread, &g_thread_list, list);
         _DkInternalUnlock(&g_thread_list_lock);
@@ -145,9 +157,18 @@ noreturn void _DkThreadExit(int* clear_child_tid) {
     ocall_exit(0, /*is_exitgroup=*/false);
 }
 
-int _DkThreadResume (PAL_HANDLE threadHandle)
-{
+int _DkThreadResume(PAL_HANDLE threadHandle) {
     int ret = ocall_resume_thread(threadHandle->thread.tcs);
+    return IS_ERR(ret) ? unix_to_pal_error(ERRNO(ret)) : ret;
+}
+
+int _DkThreadSetCpuAffinity(PAL_HANDLE thread, PAL_NUM cpumask_size, PAL_PTR cpu_mask) {
+    int ret = ocall_sched_setaffinity(thread->thread.tcs, cpumask_size, cpu_mask);
+    return IS_ERR(ret) ? unix_to_pal_error(ERRNO(ret)) : ret;
+}
+
+int _DkThreadGetCpuAffinity(PAL_HANDLE thread, PAL_NUM cpumask_size, PAL_PTR cpu_mask) {
+    int ret = ocall_sched_getaffinity(thread->thread.tcs, cpumask_size, cpu_mask);
     return IS_ERR(ret) ? unix_to_pal_error(ERRNO(ret)) : ret;
 }
 

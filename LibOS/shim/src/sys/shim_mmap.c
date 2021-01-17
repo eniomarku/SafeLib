@@ -1,11 +1,11 @@
 /* SPDX-License-Identifier: LGPL-3.0-or-later */
 /* Copyright (C) 2014 Stony Brook University
  * Copyright (C) 2020 Invisible Things Lab
+ * Copyright (C) 2020 Intel Corporation
+ *                    Michał Kowalczyk <mkow@invisiblethingslab.com>
  */
 
 /*
- * shim_mmap.c
- *
  * Implementation of system calls "mmap", "munmap" and "mprotect".
  */
 
@@ -23,9 +23,9 @@
 #include "shim_vma.h"
 
 #ifdef MAP_32BIT /* x86_64-specific */
-#define MAP_32BIT_IF_SUPPORTED  MAP_32BIT
+#define MAP_32BIT_IF_SUPPORTED MAP_32BIT
 #else
-#define MAP_32BIT_IF_SUPPORTED  0
+#define MAP_32BIT_IF_SUPPORTED 0
 #endif
 
 #define LEGACY_MAP_MASK (MAP_SHARED             \
@@ -48,7 +48,7 @@
 
 void* shim_do_mmap(void* addr, size_t length, int prot, int flags, int fd, off_t offset) {
     struct shim_handle* hdl = NULL;
-    long ret                = 0;
+    long ret = 0;
 
     if (!(flags & MAP_FIXED) && addr)
         addr = ALLOC_ALIGN_DOWN_PTR(addr);
@@ -144,7 +144,8 @@ void* shim_do_mmap(void* addr, size_t length, int prot, int flags, int fd, off_t
         }
     } else {
         /* We know that `addr + length` does not overflow (`access_ok` above). */
-        if (addr && ((uintptr_t)addr + length <= (uintptr_t)PAL_CB(user_address.end))) {
+        if (addr && (uintptr_t)PAL_CB(user_address.start) <= (uintptr_t)addr
+                && (uintptr_t)addr + length <= (uintptr_t)PAL_CB(user_address.end)) {
             ret = bkeep_mmap_any_in_range(PAL_CB(user_address.start), (char*)addr + length, length,
                                           prot, flags, hdl, offset, NULL, &addr);
         } else {
@@ -202,8 +203,8 @@ out_handle:
 }
 
 int shim_do_mprotect(void* addr, size_t length, int prot) {
-    if (prot & ~(PROT_NONE | PROT_READ | PROT_WRITE | PROT_EXEC | PROT_GROWSDOWN | PROT_GROWSUP
-                    | PROT_SEM)) {
+    if (prot & ~(PROT_NONE | PROT_READ | PROT_WRITE | PROT_EXEC | PROT_GROWSDOWN | PROT_GROWSUP |
+                 PROT_SEM)) {
         return -EINVAL;
     }
 
@@ -230,7 +231,6 @@ int shim_do_mprotect(void* addr, size_t length, int prot) {
     if (!IS_ALLOC_ALIGNED(length))
         length = ALLOC_ALIGN_UP(length);
 
-
     if (!access_ok(addr, length)) {
         return -EINVAL;
     }
@@ -244,7 +244,7 @@ int shim_do_mprotect(void* addr, size_t length, int prot) {
     }
 
     if (prot & PROT_GROWSDOWN) {
-        struct shim_vma_info vma_info = { 0 };
+        struct shim_vma_info vma_info = {0};
         if (lookup_vma(addr, &vma_info) >= 0) {
             addr = vma_info.addr;
             if (vma_info.file) {
@@ -323,7 +323,6 @@ int shim_do_mincore(void* addr, size_t len, unsigned char* vec) {
     return 0;
 }
 
-
 int shim_do_mbind(void* start, unsigned long len, int mode, unsigned long* nmask,
                   unsigned long maxnode, int flags) {
     /* dummy implementation, always return success */
@@ -334,4 +333,77 @@ int shim_do_mbind(void* start, unsigned long len, int mode, unsigned long* nmask
     __UNUSED(maxnode);
     __UNUSED(flags);
     return 0;
+}
+
+static bool madvise_behavior_valid(int behavior) {
+    switch (behavior) {
+        case MADV_DOFORK:
+        case MADV_DONTFORK:
+        case MADV_NORMAL:
+        case MADV_SEQUENTIAL:
+        case MADV_RANDOM:
+        case MADV_REMOVE:
+        case MADV_WILLNEED:
+        case MADV_DONTNEED:
+        case MADV_FREE:
+        case MADV_MERGEABLE:
+        case MADV_UNMERGEABLE:
+        case MADV_HUGEPAGE:
+        case MADV_NOHUGEPAGE:
+        case MADV_DONTDUMP:
+        case MADV_DODUMP:
+        case MADV_WIPEONFORK:
+        case MADV_KEEPONFORK:
+        case MADV_SOFT_OFFLINE:
+        case MADV_HWPOISON:
+            return true;
+    }
+    return false;
+}
+
+long shim_do_madvise(unsigned long start, size_t len_in, int behavior) {
+    if (!madvise_behavior_valid(behavior))
+        return -EINVAL;
+
+    if (!IS_ALIGNED_POW2(start, PAGE_SIZE))
+        return -EINVAL;
+
+    size_t len = ALIGN_UP(len_in, PAGE_SIZE);
+    if (len < len_in)
+        return -EINVAL; // overflow when rounding up
+
+    if (!access_ok((void*)start, len))
+        return -EINVAL;
+
+    if (len == 0)
+        return 0;
+
+    switch (behavior) {
+        case MADV_NORMAL:
+        case MADV_RANDOM:
+        case MADV_SEQUENTIAL:
+        case MADV_WILLNEED:
+        case MADV_FREE:
+        case MADV_SOFT_OFFLINE:
+        case MADV_MERGEABLE:
+        case MADV_UNMERGEABLE:
+        case MADV_HUGEPAGE:
+        case MADV_NOHUGEPAGE:
+            return 0; // Doing nothing is semantically correct for these modes.
+
+        case MADV_DONTFORK:
+        case MADV_DOFORK:
+        case MADV_WIPEONFORK:
+        case MADV_KEEPONFORK:
+        case MADV_HWPOISON:
+        case MADV_DONTDUMP:
+        case MADV_DODUMP:
+        case MADV_REMOVE:
+            return -ENOSYS; // Not implemented
+
+        case MADV_DONTNEED: {
+            return madvise_dontneed_range(start, start + len);
+        }
+    }
+    return -EINVAL;
 }

@@ -13,6 +13,26 @@ To run a single testcase, execute the following commands::
 
 In this way, one can debug one particular syscall testcase.
 
+To get more information, you can:
+
+- Enable debugging output: edit ``/install/testcases/bin/manifest`` to set
+  ``loader.debug_type = "inline"``. Note that you will need to revert this
+  change for ``make regression`` to work correctly. This will also not work when
+  running under SGX, because the manifest needs to be re-signed afterwards.
+
+- Use GDB: ``./pal_loader GDB [SGX] <TEST_BINARY>``. You should compile Graphene
+  with ``DEBUG=1`` so that you can see the symbols inside Graphene.
+
+Running all the cases
+---------------------
+
+In case you want to analyze all the test results, including the tests that are
+currently skipped, you can use the ``ltp-all.cfg`` configuration::
+
+    ./runltp_xml.py -v -c ltp-all.cfg install/runtest/syscalls -O ltp-all.xml
+
+The ``all.xml`` file should contain output for all tests.
+
 ``ltp.cfg``
 ------------
 
@@ -49,3 +69,33 @@ See ``--help``.
 
 A lot of LTP tests cause problems in Graphene. The ones we've already analyzed
 should have an appropriate comment in the ``ltp.cfg`` file.
+
+SGX mode
+--------
+
+In SGX mode, we use additional files: ``ltp-sgx.cfg``, and (temporarily)
+``ltp-bug-1075.cfg``. These function as an override for ``ltp.cfg``, so that
+configuration is not duplicated.
+
+Helper scripts (``contrib/``)
+-----------------------------
+
+The ``contrib/`` directory contains a few scripts for dealing with ``.cfg``
+files. Except for ``conf_lint.py``, they are used for manual and one-off tasks.
+
+* ``conf_lint.py``: Validate the configuration (check if it's sorted, look for
+  outdated test names). Used in ``make regression``.
+
+* ``conf_merge.py``: Merge two ``.cfg`` files. If there are duplicate section
+  names, concatenate the sections.
+
+* ``conf_missing.py``: Add missing sections to a ``.cfg`` file, so that it
+  contains sections for all tests (based on an LTP scenario file with a list of
+  tests).
+
+* ``conf_remove_must_pass.py``: Remove all sections with ``must-pass``
+  directive.
+
+* ``conf_subtract.py``: Generate a difference between two files, i.e. output all
+  sections that are in the second file but not in the first. This effectively
+  converts a "full" configuration to an "override" one.

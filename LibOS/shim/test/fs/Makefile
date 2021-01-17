@@ -6,6 +6,7 @@ copy_mmap_execs = \
 copy_execs = \
 	$(copy_mmap_execs) \
 	copy_rev \
+	copy_sendfile \
 	copy_seq \
 	copy_whole
 
@@ -52,9 +53,6 @@ else
 $(execs)
 endif
 
-export PAL_LOADER = $(RUNTIME)/pal-$(PAL_HOST)
-export PYTHONPATH = ../../../../Scripts
-
 .PHONY: fs-test
 fs-test: $(target)
 	$(RM) fs-test.xml
@@ -66,10 +64,10 @@ test: $(target)
 	$(MAKE) pf-test.xml
 
 fs-test.xml: test_fs.py $(call expand_target_to_token,$(target))
-	python3 -m pytest --junit-xml $@ -v $<
+	$(SCRIPTS_DIR)/run-pytest --junit-xml $@ -v $<
 
 pf-test.xml: test_pf.py $(call expand_target_to_token,$(target))
-	python3 -m pytest --junit-xml $@ -v $<
+	$(SCRIPTS_DIR)/run-pytest --junit-xml $@ -v $<
 
 .PHONY: clean-tmp
 clean-tmp:

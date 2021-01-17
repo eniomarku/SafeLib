@@ -5,10 +5,15 @@ exec_target =
 
 clean-extra += clean-build
 
+include ../../../../Scripts/Makefile.rules
 include ../../../../Scripts/Makefile.configs
 # Make ARCH_LIBDIR visible in Makefile.Test
 export ARCH_LIBDIR
 include Makefile.Test
+
+ifeq ($(BUILD_VERBOSE),1)
+	RUNLTPOPTS += -v
+endif
 
 $(SRCDIR)/Makefile:
 	$(error "$(SRCDIR) is empty. Please run `git submodule update --init $(SRCDIR)` or download the LTP source code (https://github.com/linux-test-project/ltp) into $(SRCDIR).")
@@ -56,11 +61,12 @@ else
 	$(MAKE) ltp.xml
 endif
 
-%.xml: %.cfg ltp-bug-1248.cfg ltp-bug-1075.cfg $(LTPSCENARIO) $(target)
-	./contrib/conf_lint.py < $<
-	./runltp_xml.py $(RUNLTPOPTS) -c $< $(LTPSCENARIO) > $@
+ltp.xml: CFG = ltp.cfg
+ltp-sgx.xml: CFG = ltp.cfg ltp-sgx.cfg ltp-bug-1075.cfg
 
-ltp-sgx.xml: RUNLTPOPTS += -c ltp-bug-1075.cfg
+%.xml: $(CFG) $(LTPSCENARIO) $(target)
+	./contrib/conf_lint.py $(CFG) --scenario $(LTPSCENARIO)
+	./runltp_xml.py $(RUNLTPOPTS) $(foreach cfg,$(CFG),-c $(cfg)) $(LTPSCENARIO) -O $@
 
 .PHONY: clean-build
 clean-build:

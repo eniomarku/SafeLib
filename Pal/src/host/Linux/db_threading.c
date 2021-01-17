@@ -2,10 +2,19 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_threading.c
- *
- * This file contain APIs to create, exit and yield a thread.
+ * This file contains APIs to create, exit and yield a thread.
  */
+
+#include <stddef.h> /* linux/signal.h misses this dependency (for size_t), at least on Ubuntu 16.04.
+                     * We must include it ourselves before including linux/signal.h.
+                     */
+
+#include <errno.h>
+#include <linux/mman.h>
+#include <linux/sched.h>
+#include <linux/signal.h>
+#include <linux/types.h>
+#include <linux/wait.h>
 
 #include "api.h"
 #include "pal.h"
@@ -16,12 +25,6 @@
 #include "pal_linux.h"
 #include "pal_linux_defs.h"
 #include "spinlock.h"
-#include <errno.h>
-#include <linux/mman.h>
-#include <linux/sched.h>
-#include <linux/signal.h>
-#include <linux/types.h>
-#include <linux/wait.h>
 
 /* Linux PAL cannot use mmap/unmap to manage thread stacks because this may overlap with
  * pal_control.user_address. Linux PAL also cannot just use malloc/free because DkThreadExit
@@ -75,19 +78,29 @@ out:
     return ret;
 }
 
-/*
- * pal_thread_init(): An initialization wrapper of a newly-created thread (including
- * the first thread). This function accepts a TCB pointer to be set to the GS register
- * of the thread. The rest of the TCB is used as the alternative stack for signal
- * handling.
- */
-int pal_thread_init(void* tcbptr) {
+/* Initialization wrapper of a newly-created thread (including the first thread). This function
+ * accepts a TCB pointer to be set to the GS register (on x86-64) of the thread. The rest of the TCB
+ * is used as the alternate stack for signal handling. Since Graphene uses GCC's stack protector,
+ * and this function modifies the stack protector's GS register, we disable stack protector here. */
+__attribute__((__optimize__("-fno-stack-protector"))) int pal_thread_init(void* tcbptr) {
     PAL_TCB_LINUX* tcb = tcbptr;
     int ret;
 
+    /* we inherited the parent's GS register which we shouldn't use in the child thread, but GCC's
+     * stack protector will look for a canary at gs:[0x8] in functions called below (e.g.,
+     * _DkRandomBitsRead), so let's install a default canary in the child's TCB */
+    pal_set_tcb_stack_canary(tcb, STACK_PROTECTOR_CANARY_DEFAULT);
     ret = pal_set_tcb(&tcb->common);
     if (IS_ERR(ret))
         return -ERRNO(ret);
+
+    /* each newly-created thread (including the first thread) has its own random stack canary */
+    uint64_t stack_protector_canary;
+    ret = _DkRandomBitsRead(&stack_protector_canary, sizeof(stack_protector_canary));
+    if (IS_ERR(ret))
+        return -EPERM;
+
+    pal_set_tcb_stack_canary(tcb, stack_protector_canary);
 
     if (tcb->alt_stack) {
         stack_t ss = {
@@ -110,9 +123,7 @@ int pal_thread_init(void* tcbptr) {
 /* _DkThreadCreate for internal use. Create an internal thread
    inside the current process. The arguments callback and param
    specify the starting function and parameters */
-int _DkThreadCreate (PAL_HANDLE * handle, int (*callback) (void *),
-                     const void * param)
-{
+int _DkThreadCreate(PAL_HANDLE* handle, int (*callback)(void*), const void* param) {
     int ret = 0;
     PAL_HANDLE hdl = NULL;
     void* stack = get_thread_stack();
@@ -138,7 +149,7 @@ int _DkThreadCreate (PAL_HANDLE * handle, int (*callback) (void *),
     memset(stack + THREAD_STACK_SIZE - PRESET_PAGESIZE, 0, PRESET_PAGESIZE);
     memset(stack + THREAD_STACK_SIZE, 0, ALT_STACK_SIZE);
 
-    void * child_stack = stack + THREAD_STACK_SIZE;
+    void* child_stack = stack + THREAD_STACK_SIZE;
 
     hdl = malloc(HANDLE_SIZE(thread));
     if (!hdl) {
@@ -148,12 +159,12 @@ int _DkThreadCreate (PAL_HANDLE * handle, int (*callback) (void *),
     SET_HANDLE_TYPE(hdl, thread);
 
     // Initialize TCB at the top of the alternative stack.
-    PAL_TCB_LINUX * tcb  = child_stack + ALT_STACK_SIZE - sizeof(PAL_TCB_LINUX);
+    PAL_TCB_LINUX* tcb = child_stack + ALT_STACK_SIZE - sizeof(PAL_TCB_LINUX);
     tcb->common.self = &tcb->common;
-    tcb->handle    = hdl;
-    tcb->alt_stack = child_stack; // Stack bottom
-    tcb->callback  = callback;
-    tcb->param     = (void *) param;
+    tcb->handle      = hdl;
+    tcb->alt_stack   = child_stack; // Stack bottom
+    tcb->callback    = callback;
+    tcb->param       = (void*)param;
 
     /* align child_stack to 16 */
     child_stack = ALIGN_DOWN_PTR(child_stack, 16);
@@ -161,8 +172,8 @@ int _DkThreadCreate (PAL_HANDLE * handle, int (*callback) (void *),
     // TODO: pal_thread_init() may fail during initialization, we should check its result (but this
     // happens asynchronously, so it's not trivial to do).
     ret = clone(pal_thread_init, child_stack,
-                CLONE_VM | CLONE_FS | CLONE_FILES | CLONE_SYSVSEM | CLONE_THREAD |
-                CLONE_SIGHAND | CLONE_PARENT_SETTID,
+                CLONE_VM | CLONE_FS | CLONE_FILES | CLONE_SYSVSEM | CLONE_THREAD | CLONE_SIGHAND |
+                    CLONE_PARENT_SETTID,
                 (void*)tcb, &hdl->thread.tid, NULL);
 
     if (IS_ERR(ret)) {
@@ -189,7 +200,7 @@ int _DkThreadDelayExecution(uint64_t* duration_us) {
         sleeptime.tv_sec  = VERY_LONG_TIME_IN_US / 1000000;
         sleeptime.tv_nsec = 0;
     } else {
-        sleeptime.tv_sec = *duration_us / 1000000;
+        sleeptime.tv_sec  = *duration_us / 1000000;
         sleeptime.tv_nsec = (*duration_us - sleeptime.tv_sec * (uint64_t)1000000) * 1000;
     }
 
@@ -206,8 +217,7 @@ int _DkThreadDelayExecution(uint64_t* duration_us) {
 
 /* PAL call DkThreadYieldExecution. Yield the execution
    of the current thread. */
-void _DkThreadYieldExecution (void)
-{
+void _DkThreadYieldExecution(void) {
     INLINE_SYSCALL(sched_yield, 0);
 }
 
@@ -224,8 +234,8 @@ noreturn void _DkThreadExit(int* clear_child_tid) {
         ss.ss_flags = SS_DISABLE;
         ss.ss_size  = 0;
 
-        // Take precautions to unset the TCB and alternative stack first.
-        pal_set_tcb(NULL);
+        /* take precautions to unset alternate stack; note that we cannot unset the TCB because
+         * GCC's stack protector still uses the GS register until the end of this function */
         INLINE_SYSCALL(sigaltstack, 2, &ss, NULL);
     }
 
@@ -245,38 +255,50 @@ noreturn void _DkThreadExit(int* clear_child_tid) {
      *   2. Set *clear_child_tid = 0 if clear_child_tid != NULL
      *      (we thus inform LibOS, where async helper thread is waiting on this to wake up parent)
      *   3. Exit thread */
-    static_assert(sizeof(g_thread_stack_lock.lock) == 4, "unexpected g_thread_stack_lock.lock size");
-    static_assert(offsetof(__typeof__(g_thread_stack_lock), lock) == 0, "unexpected offset of lock in g_thread_stack_lock");
-    static_assert(sizeof(*clear_child_tid) == 4,  "unexpected clear_child_tid size");
+    static_assert(sizeof(g_thread_stack_lock.lock) == 4,
+                  "unexpected g_thread_stack_lock.lock size");
+    static_assert(offsetof(__typeof__(g_thread_stack_lock), lock) == 0,
+                  "unexpected offset of lock in g_thread_stack_lock");
+    static_assert(sizeof(*clear_child_tid) == 4, "unexpected clear_child_tid size");
 
-    __asm__ volatile("movl $0, (%%rdx) \n\t"   /* spinlock_unlock(&g_thread_stack_lock) */
-                     "cmpq $0, %%rbx \n\t"     /* check if clear_child_tid != NULL */
-                     "je 1f \n\t"
-                     "movl $0, (%%rbx) \n\t"   /* set *clear_child_tid = 0 */
-                     "1: \n\t"
-                     "syscall \n\t"            /* rdi arg is already prepared, call exit */
-                     : /* no output regs since we don't return from exit */
-                     : "a"(__NR_exit), "D"(0), /* rdi = exit status == 0 */
-                       "d"(&g_thread_stack_lock.lock), "b"(clear_child_tid)
-                     : "cc", "rcx", "r11", "memory"  /* syscall instr clobbers cc, rcx, and r11 */
+    __asm__ volatile(
+        "movl $0, (%[lock]) \n"             /* spinlock_unlock(&g_thread_stack_lock) */
+        "cmpq $0, %[clear_child_tid] \n"    /* check if clear_child_tid != NULL */
+        "je 1f \n"
+        "movl $0, (%[clear_child_tid]) \n"  /* set *clear_child_tid = 0 */
+        "1: \n"
+        "mov %[nr_exit], %%rax\n"
+        "mov %[exit_code], %%edi\n"
+        "syscall \n"
+        "ud2 \n"
+        "jmp 1b \n"
+        :
+        : [nr_exit] "i" (__NR_exit), [exit_code] "i" (0),
+          [lock] "r" (&g_thread_stack_lock.lock), [clear_child_tid] "r" (clear_child_tid)
+        : "memory"
     );
-
-    while (true) {
-        /* nothing */
-    }
+    __builtin_unreachable();
 }
 
-int _DkThreadResume (PAL_HANDLE threadHandle)
-{
-    int ret = INLINE_SYSCALL(tgkill, 3,
-                             g_linux_state.pid,
-                             threadHandle->thread.tid,
-                             SIGCONT);
+int _DkThreadResume(PAL_HANDLE threadHandle) {
+    int ret = INLINE_SYSCALL(tgkill, 3, g_linux_state.pid, threadHandle->thread.tid, SIGCONT);
 
     if (IS_ERR(ret))
         return -PAL_ERROR_DENIED;
 
     return 0;
+}
+
+int _DkThreadSetCpuAffinity(PAL_HANDLE thread, PAL_NUM cpumask_size, PAL_PTR cpu_mask) {
+    int ret = INLINE_SYSCALL(sched_setaffinity, 3, thread->thread.tid, cpumask_size, cpu_mask);
+
+    return IS_ERR(ret) ? unix_to_pal_error(ERRNO(ret)) : ret;
+}
+
+int _DkThreadGetCpuAffinity(PAL_HANDLE thread, PAL_NUM cpumask_size, PAL_PTR cpu_mask) {
+    int ret = INLINE_SYSCALL(sched_getaffinity, 3, thread->thread.tid, cpumask_size, cpu_mask);
+
+    return IS_ERR(ret) ? unix_to_pal_error(ERRNO(ret)) : ret;
 }
 
 struct handle_ops g_thread_ops = {

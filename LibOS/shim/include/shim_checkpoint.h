@@ -2,8 +2,6 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_checkpoint.h
- *
  * This file contains definitions and macros for checkpointing.
  */
 
@@ -14,9 +12,10 @@
 #include <stdint.h>
 
 #include "pal.h"
-
 #include "shim_defs.h"
 #include "shim_ipc.h"
+#include "shim_process.h"
+#include "shim_thread.h"
 
 #define __attribute_migratable __attribute__((section(".migratable")))
 
@@ -55,12 +54,10 @@ struct shim_cp_entry {
 };
 
 struct shim_mem_entry {
-    struct shim_mem_entry* prev;
+    struct shim_mem_entry* next;
     void* addr;
     size_t size;
-    void** paddr;
-    void* data;
-    int prot;     /* combination of PAL_PROT_* flags */
+    int prot; /* combination of PAL_PROT_* flags */
 };
 
 struct shim_palhdl_entry {
@@ -84,9 +81,8 @@ struct shim_cp_store {
     size_t bound;
 
     /* VMA entries */
-    struct shim_mem_entry* last_mem_entry;
+    struct shim_mem_entry* first_mem_entry;
     size_t mem_entries_cnt;
-    size_t mem_size;
 
     /* PAL-handle entries */
     struct shim_palhdl_entry* last_palhdl_entry;
@@ -281,7 +277,7 @@ struct shim_cp_map_entry* get_cp_map_entry(void* map, void* addr, bool create);
 
 #define BEGIN_MIGRATION_DEF(name, ...)                                  \
     int migrate_cp_##name(struct shim_cp_store* store, ##__VA_ARGS__) { \
-        int ret     = 0;                                                \
+        int ret = 0;                                                    \
         size_t base = store->base;
 
 #define END_MIGRATION_DEF(name)     \
@@ -336,24 +332,28 @@ struct checkpoint_hdr {
     size_t palhdl_entries_cnt;
 };
 
-typedef int (*migrate_func_t)(struct shim_cp_store*, struct shim_thread*, struct shim_process*,
-                              va_list);
+typedef int (*migrate_func_t)(struct shim_cp_store*, struct shim_process*, struct shim_thread*,
+                              struct shim_process_ipc_info*, va_list);
 
 /*!
- * \brief Create child process and migrate current-process state to it.
+ * \brief Create child process and migrate state to it.
  *
  * Called in parent process during fork/clone/execve.
  *
- * \param migrate_func Migration function defined by the caller.
- * \param exec         Executable to load in the child process.
- * \param thread       Main-thread handle to be migrated to the child process.
+ * \param migrate_func          Migration function defined by the caller.
+ * \param exec                  Executable to load in the child process.
+ * \param child_process         Struct bookkeeping the child process, added to the children list.
+ * \param process_description   Struct describing the new process (child).
+ * \param thread_description    Struct describing main thread of the child process.
  *
  * The remaining arguments are passed into the migration function.
  *
- * \return             0 on success, negative POSIX error code on failure.
+ * \return  0 on success, negative POSIX error code on failure.
  */
 int create_process_and_send_checkpoint(migrate_func_t migrate_func, struct shim_handle* exec,
-                                       struct shim_thread* thread, ...);
+                                       struct shim_child_process* child_process,
+                                       struct shim_process* process_description,
+                                       struct shim_thread* thread_description, ...);
 
 /*!
  * \brief Receive a checkpoint from parent process and restore state based on it.

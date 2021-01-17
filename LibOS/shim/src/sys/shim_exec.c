@@ -2,8 +2,6 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_exec.c
- *
  * Implementation of system call "execve".
  */
 
@@ -12,13 +10,18 @@
 #include <sys/mman.h>
 #include <sys/syscall.h>
 
-#include <pal.h>
-#include <pal_error.h>
-#include <shim_fs.h>
-#include <shim_internal.h>
-#include <shim_ipc.h>
-#include <shim_table.h>
-#include <shim_thread.h>
+#include "pal.h"
+#include "pal_error.h"
+#include "shim_checkpoint.h"
+#include "shim_fs.h"
+#include "shim_internal.h"
+#include "shim_ipc.h"
+#include "shim_lock.h"
+#include "shim_process.h"
+#include "shim_table.h"
+#include "shim_thread.h"
+#include "shim_vma.h"
+#include "stat.h"
 
 /* returns 0 if normalized URIs are the same; assumes file URIs */
 static int normalize_and_cmp_uris(const char* uri1, const char* uri2) {
@@ -27,8 +30,7 @@ static int normalize_and_cmp_uris(const char* uri1, const char* uri2) {
     size_t len;
     int ret;
 
-    if (!strstartswith_static(uri1, URI_PREFIX_FILE) ||
-        !strstartswith_static(uri2, URI_PREFIX_FILE))
+    if (!strstartswith(uri1, URI_PREFIX_FILE) || !strstartswith(uri2, URI_PREFIX_FILE))
         return -1;
 
     uri1 += URI_PREFIX_FILE_LEN;
@@ -64,15 +66,14 @@ struct execve_rtld_arg {
 };
 
 noreturn static void __shim_do_execve_rtld(struct execve_rtld_arg* __arg) {
-    struct execve_rtld_arg arg;
-    memcpy(&arg, __arg, sizeof(arg));
+    struct execve_rtld_arg arg = *__arg;
 
     struct shim_thread* cur_thread = get_cur_thread();
     int ret = 0;
 
-    unsigned long fs_base = 0;
-    update_fs_base(fs_base);
-    debug("set fs_base to 0x%lx\n", fs_base);
+    unsigned long tls_base = 0;
+    update_tls_base(tls_base);
+    debug("set tls_base to 0x%lx\n", tls_base);
 
     thread_sigaction_reset_on_execve(cur_thread);
 
@@ -103,23 +104,29 @@ noreturn static void __shim_do_execve_rtld(struct execve_rtld_arg* __arg) {
 
     free_vma_info_array(vmas, count);
 
-    if ((ret = load_elf_object(cur_thread->exec, NULL, 0)) < 0)
+    lock(&g_process.fs_lock);
+    struct shim_handle* exec = g_process.exec;
+    get_handle(exec);
+    unlock(&g_process.fs_lock);
+
+    if ((ret = load_elf_object(exec, NULL, 0)) < 0)
         goto error;
 
-    if ((ret = init_brk_from_executable(cur_thread->exec)) < 0)
+    if ((ret = init_brk_from_executable(exec)) < 0)
         goto error;
 
-    load_elf_interp(cur_thread->exec);
+    load_elf_interp(exec);
 
     cur_thread->robust_list = NULL;
 
     debug("execve: start execution\n");
-    execute_elf_object(cur_thread->exec, arg.new_argp, arg.new_auxv);
+    /* Passing ownership of `exec` to `execute_elf_object`. */
+    execute_elf_object(exec, arg.new_argp, arg.new_auxv);
     /* NOTREACHED */
 
 error:
     debug("execve: failed %d\n", ret);
-    shim_clean_and_exit(ret);
+    process_exit(/*error_code=*/0, /*term_signal=*/SIGKILL);
 }
 
 static int shim_do_execve_rtld(struct shim_handle* hdl, const char** argv, const char** envp) {
@@ -129,9 +136,11 @@ static int shim_do_execve_rtld(struct shim_handle* hdl, const char** argv, const
     if ((ret = close_cloexec_handle(cur_thread->handle_map)) < 0)
         return ret;
 
-    put_handle(cur_thread->exec);
+    lock(&g_process.fs_lock);
+    put_handle(g_process.exec);
     get_handle(hdl);
-    cur_thread->exec = hdl;
+    g_process.exec = hdl;
+    unlock(&g_process.fs_lock);
 
     cur_thread->stack_top = NULL;
     cur_thread->stack     = NULL;
@@ -146,49 +155,41 @@ static int shim_do_execve_rtld(struct shim_handle* hdl, const char** argv, const
     if (ret < 0)
         return ret;
 
-    __disable_preempt(shim_get_tcb());  // Temporarily disable preemption during execve().
+    /* We are done using this handle and we got the ownership from the caller. */
+    put_handle(hdl);
 
     struct execve_rtld_arg arg = {
         .new_argp = new_argp,
         .new_auxv = new_auxv
     };
     __SWITCH_STACK(new_argp, &__shim_do_execve_rtld, &arg);
-    return 0;
+    /* UNREACHABLE */
 }
 
-#include <shim_checkpoint.h>
-
-static BEGIN_MIGRATION_DEF(execve, struct shim_thread* thread, struct shim_process* proc,
+static BEGIN_MIGRATION_DEF(execve, struct shim_process* process_description,
+                           struct shim_thread* thread_description,
+                           struct shim_process_ipc_info* process_ipc_info,
                            const char** argv, const char** envp) {
-    DEFINE_MIGRATE(process, proc, sizeof(struct shim_process));
+    DEFINE_MIGRATE(process_ipc_info, process_ipc_info, sizeof(struct shim_process_ipc_info));
     DEFINE_MIGRATE(all_mounts, NULL, 0);
-    DEFINE_MIGRATE(running_thread, thread, sizeof(struct shim_thread));
+    DEFINE_MIGRATE(process_description, process_description, sizeof(*process_description));
+    DEFINE_MIGRATE(thread, thread_description, sizeof(*thread_description));
     DEFINE_MIGRATE(pending_signals, NULL, 0);
-    DEFINE_MIGRATE(handle_map, thread->handle_map, sizeof(struct shim_handle_map));
     DEFINE_MIGRATE(migratable, NULL, 0);
     DEFINE_MIGRATE(arguments, argv, 0);
     DEFINE_MIGRATE(environ, envp, 0);
+    DEFINE_MIGRATE(groups_info, NULL, 0);
 }
 END_MIGRATION_DEF(execve)
 
-/* thread is cur_thread stripped off stack & tcb (see below func);
- * process is new process which is forked and waits for checkpoint. */
-static int migrate_execve(struct shim_cp_store* cpstore, struct shim_thread* thread,
-                          struct shim_process* process, va_list ap) {
-    struct shim_handle_map* handle_map;
+static int migrate_execve(struct shim_cp_store* cpstore, struct shim_process* process_description,
+                          struct shim_thread* thread_description,
+                          struct shim_process_ipc_info* process_ipc_info, va_list ap) {
     const char** argv = va_arg(ap, const char**);
     const char** envp = va_arg(ap, const char**);
-    int ret;
 
-    if ((ret = dup_handle_map(&handle_map, thread->handle_map)) < 0)
-        return ret;
-
-    set_handle_map(thread, handle_map);
-
-    if ((ret = close_cloexec_handle(handle_map)) < 0)
-        return ret;
-
-    return START_MIGRATE(cpstore, execve, thread, process, argv, envp);
+    return START_MIGRATE(cpstore, execve, process_description, thread_description, process_ipc_info,
+                         argv, envp);
 }
 
 int shim_do_execve(const char* file, const char** argv, const char** envp) {
@@ -251,6 +252,11 @@ reopen:
         __kernel_mode_t mode;
         if ((ret = fs->d_ops->mode(dent, &mode)) < 0)
             goto err;
+        /* Check if the file is executable. Currently just looks at the user bit. */
+        if (!(mode & S_IXUSR)) {
+            ret = -EACCES;
+            goto err;
+        }
     }
 
     struct shim_handle* exec = NULL;
@@ -270,9 +276,7 @@ reopen:
         return -EACCES;
     }
 
-    size_t pathlen;
-    char* path = dentry_get_path(dent, true, &pathlen);
-    qstrsetstr(&exec->path, path, pathlen);
+    dentry_get_path_into_qstr(dent, &exec->path);
 
     if ((ret = check_elf_object(exec)) < 0 && ret != -EINVAL) {
         put_handle(exec);
@@ -333,55 +337,64 @@ reopen:
             }
         } while (!ended);
 
-        if (started) {
-            if (next) {
-                INIT_LIST_HEAD(next, list);
-                LISTP_ADD_TAIL(next, &new_shargs, list);
-            }
-
-            struct sharg* first = LISTP_FIRST_ENTRY(&new_shargs, struct sharg, list);
-            assert(first);
-            debug("detected as script: run by %s\n", first->arg);
-            file = first->arg;
-            LISTP_SPLICE(&new_shargs, &shargs, list, sharg);
+        if (!started) {
+            debug("file not recognized as ELF or shebang");
             put_handle(exec);
-            goto reopen;
+            return -ENOEXEC;
         }
+
+        if (next) {
+            INIT_LIST_HEAD(next, list);
+            LISTP_ADD_TAIL(next, &new_shargs, list);
+        }
+
+        struct sharg* first = LISTP_FIRST_ENTRY(&new_shargs, struct sharg, list);
+        assert(first);
+        debug("detected as script: run by %s\n", first->arg);
+        file = first->arg;
+        LISTP_SPLICE(&new_shargs, &shargs, list, sharg);
+        put_handle(exec);
+        goto reopen;
     }
 
-    /* If `execve` is invoked concurrently by multiple threads, let only one succeed. */
+    /* If `execve` is invoked concurrently by multiple threads, let only one succeed. From this
+     * point errors are fatal. */
     static unsigned int first = 0;
     if (__atomic_exchange_n(&first, 1, __ATOMIC_RELAXED) != 0) {
         /* Just exit current thread. */
         thread_exit(/*error_code=*/0, /*term_signal=*/0);
     }
-    bool threads_killed = kill_other_threads();
+    (void)kill_other_threads();
 
     /* All other threads are dead. Restoring initial value in case we stay inside same process
      * instance and call execve again. */
     __atomic_store_n(&first, 0, __ATOMIC_RELAXED);
 
+    /* Disable preemption during `execve`. It will be enabled back in `execute_elf_object` if we
+     * stay in the same process. Otherwise it is never enabled, since this process dies both on
+     * errors and success. */
+    disable_preempt(NULL);
+
     bool use_same_process = true;
-    if (!strcmp_static(PAL_CB(host_type), "Linux-SGX")) {
+    if (!strcmp(PAL_CB(host_type), "Linux-SGX")) {
         /* for SGX PALs, can use same process only if it is the same executable (because a different
          * executable has a different measurement and thus requires a new enclave); this special
          * case is to correctly handle e.g. Bash process replacing itself */
-        assert(cur_thread->exec);
-        if (normalize_and_cmp_uris(qstrgetstr(&cur_thread->exec->uri), qstrgetstr(&exec->uri))) {
+        lock(&g_process.fs_lock);
+        assert(g_process.exec);
+        if (normalize_and_cmp_uris(qstrgetstr(&g_process.exec->uri), qstrgetstr(&exec->uri))) {
             /* it is not the same executable, definitely cannot use same process */
             use_same_process = false;
         }
+        unlock(&g_process.fs_lock);
     }
 
     if (use_same_process) {
         debug("execve() in the same process\n");
+        /* Passing ownership of `exec`. */
         ret = shim_do_execve_rtld(exec, argv, envp);
-        if (threads_killed) {
-            /* We have killed some threads and execve failed internally. User app might now be in
-             * undefined state, we would better blow everything up. */
-            process_exit(ENOTRECOVERABLE, 0);
-        }
-        return ret;
+        assert(ret < 0);
+        goto out_fatal_error;
     }
     debug("execve() in a new process\n");
 
@@ -405,9 +418,18 @@ reopen:
         argv                    = new_argv;
     }
 
-    lock(&cur_thread->lock);
-    put_handle(cur_thread->exec);
-    cur_thread->exec = exec;
+    /* Pause IPC helper not to receive any child exit messages - all of them will be handled in
+     * the new process (after execve). */
+    ret = pause_ipc_helper();
+    if (ret < 0) {
+        goto out_fatal_error;
+    }
+    /* TODO: we should also terminate async helper, serialize it's state (pending alarms etc.) and
+     * send to the new process. */
+
+    /* We are the only thread running and IPC helper thread is blocked, so there is no need for
+     * locking `cur_thread` and `g_process` and we can safely reuse them as arguments to
+     * `create_process_and_send_checkpoint` below. */
 
     void* stack          = cur_thread->stack;
     void* stack_top      = cur_thread->stack_top;
@@ -418,27 +440,29 @@ reopen:
     cur_thread->stack_top = NULL;
     cur_thread->frameptr  = NULL;
     cur_thread->shim_tcb  = NULL;
-    cur_thread->in_vm     = false;
-    unlock(&cur_thread->lock);
 
-    ret = create_process_and_send_checkpoint(&migrate_execve, exec, cur_thread, argv, envp);
+    ret = close_cloexec_handle(cur_thread->handle_map);
+    if (ret < 0) {
+        goto out_fatal_error_resume_ipc;
+    }
+
+    struct shim_handle* old_exec = g_process.exec;
+    g_process.exec = exec;
+
+    ret = create_process_and_send_checkpoint(&migrate_execve, exec, /*child_process=*/NULL,
+                                             &g_process, cur_thread, argv, envp);
+
+    g_process.exec = old_exec;
 
     lock(&cur_thread->lock);
     cur_thread->stack     = stack;
     cur_thread->stack_top = stack_top;
     cur_thread->frameptr  = frameptr;
     cur_thread->shim_tcb  = shim_tcb;
+    unlock(&cur_thread->lock);
 
     if (ret < 0) {
-        /* execve failed, so reanimate this thread as if nothing happened */
-        cur_thread->in_vm = true;
-        unlock(&cur_thread->lock);
-        if (threads_killed) {
-            /* We have killed some threads and execve failed internally. User app might now be in
-             * undefined state, we would better blow everything up. */
-            process_exit(ENOTRECOVERABLE, 0);
-        }
-        return ret;
+        goto out_fatal_error_resume_ipc;
     }
 
     /* this "temporary" process must die quietly, not sending any messages to not confuse the parent
@@ -446,9 +470,16 @@ reopen:
      * its parent in turn may wait on it, e.g., `bash -c ls`) */
     debug(
         "Temporary process %u is exiting after emulating execve (by forking new process to replace"
-        " this one); will wait for forked process to exit...\n", cur_process.vmid & 0xFFFF);
+        " this one); will wait for forked process to exit...\n", g_process_ipc_info.vmid & 0xFFFF);
     MASTER_LOCK();
     DkProcessExit(PAL_WAIT_FOR_CHILDREN_EXIT);
+    /* UNREACHABLE */
 
-    return 0;
+out_fatal_error_resume_ipc:
+    resume_ipc_helper();
+out_fatal_error:
+    put_handle(exec);
+    /* We might have killed some threads and closed some fds and execve failed internally. User app
+     * might now be in undefined state, we would better blow everything up. */
+    process_exit(/*error_code=*/0, /*term_signal=*/SIGKILL);
 }

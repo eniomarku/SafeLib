@@ -2,15 +2,24 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * syscallas.S
+ * This file contains the entry point of system call table in library OS (the function syscalldb()
+ * and its wrapper syscall_wrapper() for cases of redirection of raw SYSCALL instructions).
  *
- * This file contains the entry point of system call table in library OS.
+ * The below entry point implementation first saves the CPU context of the current application
+ * thread on the thread's stack, then calls the corresponding LibOS syscall-emulation function, and
+ * then restores the context and passes control back to the application. The context consists of
+ * GPRs, FP control word (fpcw) and the SSE/AVX/... control word (mxcsr).
+ *
+ * Note that LibOS may clobber all FP/SSE/AVX/... (extended) state except the control words. We rely
+ * on the fact that applications do *not* assume that this extended state is preserved across system
+ * calls. Indeed, the extended state (bar control words) is explicitly described as *not* preserved
+ * by the System V ABI, and though syscall ABI is not the same as System V ABI, we assume that no
+ * sane application issues syscalls in a non-System-V compliant manner. See System V ABI docs
+ * (https://uclibc.org/docs/psABI-x86_64.pdf), "Register Usage" for more information.
  */
 
-#include <shim_defs.h>
-#include <shim_unistd_defs.h>
-
 #include "asm-offsets.h"
+#include "shim_defs.h"
 
         .global syscalldb
         .type syscalldb, @function
@@ -64,7 +73,10 @@ syscalldb:
         cmp $0, %rbx
         je isundef
 
+        # set pointer to shim_regs and save FP Control Word & MXCSR into current thread's TCB
         movq %rbp, %gs:(SHIM_TCB_OFFSET + TCB_REGS)
+        fnstcw %gs:(SHIM_TCB_OFFSET + TCB_FPCW)
+        stmxcsr %gs:(SHIM_TCB_OFFSET + TCB_MXCSR)
 
         /* Translating x86_64 kernel calling convention to user-space
          * calling convention */
@@ -72,7 +84,10 @@ syscalldb:
         andq $~0xF, %rsp  # Required by System V AMD64 ABI.
         call *%rbx
 
+        # invalidate pointer to shim_regs and restore FP Control Word & MXCSR from TCB
         movq $0, %gs:(SHIM_TCB_OFFSET + TCB_REGS)
+        fldcw %gs:(SHIM_TCB_OFFSET + TCB_FPCW)
+        ldmxcsr %gs:(SHIM_TCB_OFFSET + TCB_MXCSR)
 
 ret:
         movq %rbp, %rsp
@@ -118,6 +133,9 @@ isundef:
          * %rcx: Instruction address to continue app execution after trapped
          *       syscall instruction
          * %r11: rflags on entering syscall
+         *
+         * Omit CFI information for %rflags when compiling under clang, see bug:
+         *   https://bugs.llvm.org/show_bug.cgi?id=33633
          */
 syscall_wrapper:
         .cfi_startproc
@@ -125,7 +143,9 @@ syscall_wrapper:
         # %rcx is used as input for returning %rip
         .cfi_register %rip, %rcx
         # %r11 is used as input to keep %rflags
+#ifndef __clang__
         .cfi_register %rflags, %r11
+#endif
         subq $RED_ZONE_SIZE, %rsp
         .cfi_adjust_cfa_offset RED_ZONE_SIZE
         callq *syscalldb@GOTPCREL(%rip)
@@ -136,10 +156,14 @@ syscall_wrapper_after_syscalldb:
         # This must be done after "addq $RED_ZONE_SIZE, %rsp" above
         # which destroys %rflags
         xchg %r11, (%rsp)
+#ifndef __clang__
         .cfi_offset %rflags, 0
+#endif
         popfq
         .cfi_adjust_cfa_offset -8
+#ifndef __clang__
         .cfi_same_value %rflags
+#endif
         pushq %r11
         .cfi_adjust_cfa_offset 8
         jmp *%rcx

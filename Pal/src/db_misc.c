@@ -2,8 +2,6 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_misc.c
- *
  * This file contains APIs for miscellaneous use.
  */
 
@@ -34,23 +32,30 @@ PAL_NUM DkRandomBitsRead(PAL_PTR buffer, PAL_NUM size) {
 }
 
 #if defined(__x86_64__)
-PAL_PTR DkSegmentRegister(PAL_FLG reg, PAL_PTR addr) {
-    ENTER_PAL_CALL(DkSegmentRegister);
-    void* seg_addr = (void*)addr;
-    int ret;
+PAL_BOL DkSegmentRegisterGet(PAL_FLG reg, PAL_PTR* addr) {
+    ENTER_PAL_CALL(DkSegmentRegisterGet);
 
-    if (addr) {
-        ret = _DkSegmentRegisterSet(reg, seg_addr);
-    } else {
-        ret = _DkSegmentRegisterGet(reg, &seg_addr);
-    }
+    int ret = _DkSegmentRegisterGet(reg, addr);
 
     if (ret < 0) {
         _DkRaiseFailure(-ret);
-        seg_addr = NULL;
+        LEAVE_PAL_CALL_RETURN(PAL_FALSE);
     }
 
-    LEAVE_PAL_CALL_RETURN((PAL_PTR)seg_addr);
+    LEAVE_PAL_CALL_RETURN(PAL_TRUE);
+}
+
+PAL_BOL DkSegmentRegisterSet(PAL_FLG reg, PAL_PTR addr) {
+    ENTER_PAL_CALL(DkSegmentRegisterSet);
+
+    int ret = _DkSegmentRegisterSet(reg, addr);
+
+    if (ret < 0) {
+        _DkRaiseFailure(-ret);
+        LEAVE_PAL_CALL_RETURN(PAL_FALSE);
+    }
+
+    LEAVE_PAL_CALL_RETURN(PAL_TRUE);
 }
 #endif
 
@@ -102,8 +107,8 @@ DkCpuIdRetrieve(PAL_IDX leaf, PAL_IDX subleaf, PAL_IDX values[4]) {
 }
 
 PAL_BOL DkAttestationReport(PAL_PTR user_report_data, PAL_NUM* user_report_data_size,
-                            PAL_PTR target_info, PAL_NUM* target_info_size,
-                            PAL_PTR report, PAL_NUM* report_size) {
+                            PAL_PTR target_info, PAL_NUM* target_info_size, PAL_PTR report,
+                            PAL_NUM* report_size) {
     ENTER_PAL_CALL(DkAttestationReport);
 
     int ret = _DkAttestationReport(user_report_data, user_report_data_size, target_info,
@@ -115,8 +120,8 @@ PAL_BOL DkAttestationReport(PAL_PTR user_report_data, PAL_NUM* user_report_data_
     LEAVE_PAL_CALL_RETURN(PAL_TRUE);
 }
 
-PAL_BOL DkAttestationQuote(PAL_PTR user_report_data, PAL_NUM user_report_data_size,
-                           PAL_PTR quote, PAL_NUM* quote_size) {
+PAL_BOL DkAttestationQuote(PAL_PTR user_report_data, PAL_NUM user_report_data_size, PAL_PTR quote,
+                           PAL_NUM* quote_size) {
     ENTER_PAL_CALL(DkAttestationQuote);
 
     int ret = _DkAttestationQuote(user_report_data, user_report_data_size, quote, quote_size);

@@ -6,6 +6,8 @@ DkThreadDelayExecution
 DkThreadYieldExecution
 DkThreadExit
 DkThreadResume
+DkThreadSetCpuAffinity
+DkThreadGetCpuAffinity
 DkMutexCreate
 DkNotificationEventCreate
 DkSynchronizationEventCreate
@@ -36,8 +38,8 @@ DkInstructionCacheFlush
 DkCpuIdRetrieve
 DkObjectClose
 DkSetExceptionHandler
-DkExceptionReturn
-DkSegmentRegister
+DkSegmentRegisterGet
+DkSegmentRegisterSet
 DkStreamChangeName
 DkStreamAttributesSetByHandle
 DkMemoryAvailableQuota
@@ -46,6 +48,7 @@ DkDebugDetachBinary
 DkAttestationReport
 DkAttestationQuote
 DkSetProtectedFilesKey
+DkDebugLog
 pal_printf
 pal_control_addr
 pal_strerror

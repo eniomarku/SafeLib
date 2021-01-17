@@ -1,0 +1,122 @@
+loader.exec = file:b-kernelbypass-dynamic
+
+loader.preload = file:$(GRAPHENEDIR)/Runtime/libsysdb.so
+
+loader.debug_type = $(GRAPHENEDEBUG)
+
+loader.insecure__use_cmdline_argv = 1
+
+loader.env.LD_LIBRARY_PATH = /lib:$(ARCH_LIBDIR):/usr/$(ARCH_LIBDIR):/usr/lib
+
+loader.insecure__use_host_env = 1
+
+fs.mount.lib.type = chroot
+fs.mount.lib.path = /lib
+fs.mount.lib.uri = file:$(GRAPHENEDIR)/Runtime
+
+fs.mount.lib2.type = chroot
+fs.mount.lib2.path = $(ARCH_LIBDIR)
+fs.mount.lib2.uri = file:$(ARCH_LIBDIR)
+
+fs.mount.lib3.type = chroot
+fs.mount.lib3.path = /usr/lib
+fs.mount.lib3.uri = file:/usr/lib
+
+fs.mount.etc.type = chroot
+fs.mount.etc.path = /etc
+fs.mount.etc.uri = file:/etc
+
+sgx.enclave_size = 1024M
+sgx.thread_num = 8
+
+sgx.trusted_files.ld = file:$(GRAPHENEDIR)/Runtime/ld-linux-x86-64.so.2
+sgx.trusted_files.libc = file:$(GRAPHENEDIR)/Runtime/libc.so.6
+sgx.trusted_files.libm = file:$(GRAPHENEDIR)/Runtime/libm.so.6
+sgx.trusted_files.libdl = file:$(GRAPHENEDIR)/Runtime/libdl.so.2
+sgx.trusted_files.librt = file:$(GRAPHENEDIR)/Runtime/librt.so.1
+sgx.trusted_files.libpthread = file:$(GRAPHENEDIR)/Runtime/libpthread.so.0
+sgx.trusted_files.libstdc= file:/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25
+sgx.trusted_files.libstdc_six= file:/usr/lib/x86_64-linux-gnu/libstdc++.so.6
+sgx.trusted_files.libgcc = file:/lib/x86_64-linux-gnu/libgcc_s.so.1
+
+sgx.trusted_files.libvnf_kernelbypass_dynamic  = file:/usr/lib/libvnf-kernelbypass-dynamic.so
+sgx.trusted_files.libIPSec_MB  = file:/usr/lib/libIPSec_MB.so.0.53.0
+sgx.trusted_files.libIPSec_MB_link  = file:/usr/lib/libIPSec_MB.so.0
+sgx.trusted_files.libspdlog  = file:/usr/$(ARCH_LIBDIR)/libspdlog.so.1.7.0
+sgx.trusted_files.libsctp = file:/usr/$(ARCH_LIBDIR)/libsctp.so.1.0.17
+sgx.trusted_files.libsctp_link = file:/usr/$(ARCH_LIBDIR)/libsctp.so.1
+sgx.trusted_files.libgmp = file:/usr/$(ARCH_LIBDIR)/libgmp.so.10.3.2
+sgx.trusted_files.libgmp_link = file:/usr/$(ARCH_LIBDIR)/libgmp.so.10
+sgx.trusted_files.libnuma = file:/usr/$(ARCH_LIBDIR)/libnuma.so.1.0.0
+sgx.trusted_files.libnuma_link = file:/usr/$(ARCH_LIBDIR)/libnuma.so.1
+sgx.trusted_files.libboost_atomic = file:/usr/$(ARCH_LIBDIR)/libboost_atomic.so.1.65.1
+sgx.trusted_files.libboost_chrono = file:/usr/$(ARCH_LIBDIR)/libboost_chrono.so.1.65.1
+sgx.trusted_files.libboost_container = file:/usr/$(ARCH_LIBDIR)/libboost_container.so.1.65.1
+sgx.trusted_files.libboost_context = file:/usr/$(ARCH_LIBDIR)/libboost_context.so.1.65.1
+sgx.trusted_files.libboost_coroutine = file:/usr/$(ARCH_LIBDIR)/libboost_coroutine.so.1.65.1
+sgx.trusted_files.libboost_date_time = file:/usr/$(ARCH_LIBDIR)/libboost_date_time.so.1.65.1
+sgx.trusted_files.libboost_fiber = file:/usr/$(ARCH_LIBDIR)/libboost_fiber.so.1.65.1
+sgx.trusted_files.libboost_filesystem = file:/usr/$(ARCH_LIBDIR)/libboost_filesystem.so.1.65.1
+sgx.trusted_files.libboost_graph = file:/usr/$(ARCH_LIBDIR)/libboost_graph.so.1.65.1
+sgx.trusted_files.libboost_graph_parallel = file:/usr/$(ARCH_LIBDIR)/libboost_graph_parallel.so.1.65.1
+sgx.trusted_files.libboost_iostream = file:/usr/$(ARCH_LIBDIR)/libboost_iostreams.so.1.65.1
+sgx.trusted_files.libboost_locale = file:/usr/$(ARCH_LIBDIR)/libboost_locale.so.1.65.1
+sgx.trusted_files.libboost_log = file:/usr/$(ARCH_LIBDIR)/libboost_log.so.1.65.1
+sgx.trusted_files.libboost_log_setup = file:/usr/$(ARCH_LIBDIR)/libboost_log_setup.so.1.65.1
+sgx.trusted_files.libboost_math_c99 = file:/usr/$(ARCH_LIBDIR)/libboost_math_c99.so.1.65.1
+sgx.trusted_files.libboost_math_c99f = file:/usr/$(ARCH_LIBDIR)/libboost_math_c99f.so.1.65.1
+sgx.trusted_files.libboost_math_c99l = file:/usr/$(ARCH_LIBDIR)/libboost_math_c99l.so.1.65.1
+sgx.trusted_files.libboost_math_tr1 = file:/usr/$(ARCH_LIBDIR)/libboost_math_tr1.so.1.65.1
+sgx.trusted_files.libboost_math_tr1f = file:/usr/$(ARCH_LIBDIR)/libboost_math_tr1f.so.1.65.1
+sgx.trusted_files.libboost_math_tr1l = file:/usr/$(ARCH_LIBDIR)/libboost_math_tr1l.so.1.65.1
+sgx.trusted_files.libboost_mpi = file:/usr/$(ARCH_LIBDIR)/libboost_mpi.so.1.65.1
+sgx.trusted_files.libboost_mpi_python_py27 = file:/usr/$(ARCH_LIBDIR)/libboost_mpi_python-py27.so.1.65.1
+sgx.trusted_files.libboost_mpi_python_py36 = file:/usr/$(ARCH_LIBDIR)/libboost_mpi_python-py36.so
+sgx.trusted_files.libboost_mpi_python3_py36 = file:/usr/$(ARCH_LIBDIR)/libboost_mpi_python3-py36.so.1.65.1
+sgx.trusted_files.libboost_mpi_python = file:/usr/$(ARCH_LIBDIR)/libboost_mpi_python.so
+sgx.trusted_files.libboost_mpi_python3 = file:/usr/$(ARCH_LIBDIR)/libboost_mpi_python3.so
+sgx.trusted_files.libboost_numpy_py27 = file:/usr/$(ARCH_LIBDIR)/libboost_numpy-py27.so.1.65.1
+sgx.trusted_files.libboost_numpy = file:/usr/$(ARCH_LIBDIR)/libboost_numpy.so
+sgx.trusted_files.libboost_numpy3_py36 = file:/usr/$(ARCH_LIBDIR)/libboost_numpy3-py36.so.1.65.1
+sgx.trusted_files.libboost_numpy3 = file:/usr/$(ARCH_LIBDIR)/libboost_numpy3.so
+sgx.trusted_files.libboost_prg_exec_monitor = file:/usr/$(ARCH_LIBDIR)/libboost_prg_exec_monitor.so.1.65.1
+sgx.trusted_files.libboost_program_options = file:/usr/$(ARCH_LIBDIR)/libboost_program_options.so.1.65.1
+sgx.trusted_files.libboost_python_py27 = file:/usr/$(ARCH_LIBDIR)/libboost_python-py27.so.1.65.1
+sgx.trusted_files.libboost_python_py36 = file:/usr/$(ARCH_LIBDIR)/libboost_python-py36.so
+sgx.trusted_files.libboost_python = file:/usr/$(ARCH_LIBDIR)/libboost_python.so
+sgx.trusted_files.libboost_python3_py36 = file:/usr/$(ARCH_LIBDIR)/libboost_python3-py36.so.1.65.1
+sgx.trusted_files.libboost_python3 = file:/usr/$(ARCH_LIBDIR)/libboost_python3.so
+sgx.trusted_files.libboost_random = file:/usr/$(ARCH_LIBDIR)/libboost_random.so.1.65.1
+sgx.trusted_files.libboost_regex = file:/usr/$(ARCH_LIBDIR)/libboost_regex.so.1.65.1
+sgx.trusted_files.libboost_serialization = file:/usr/$(ARCH_LIBDIR)/libboost_serialization.so.1.65.1
+sgx.trusted_files.libboost_signals = file:/usr/$(ARCH_LIBDIR)/libboost_signals.so.1.65.1
+sgx.trusted_files.libboost_stacktrace_addr2line = file:/usr/$(ARCH_LIBDIR)/libboost_stacktrace_addr2line.so.1.65.1
+sgx.trusted_files.libboost_stacktrace_backtrace = file:/usr/$(ARCH_LIBDIR)/libboost_stacktrace_backtrace.so.1.65.1
+sgx.trusted_files.libboost_stacktrace_basic = file:/usr/$(ARCH_LIBDIR)/libboost_stacktrace_basic.so.1.65.1
+sgx.trusted_files.libboost_stacktrace_noop = file:/usr/$(ARCH_LIBDIR)/libboost_stacktrace_noop.so.1.65.1
+sgx.trusted_files.libboost_system = file:/usr/$(ARCH_LIBDIR)/libboost_system.so.1.65.1
+sgx.trusted_files.libboost_thread = file:/usr/$(ARCH_LIBDIR)/libboost_thread.so.1.65.1
+sgx.trusted_files.libboost_timer = file:/usr/$(ARCH_LIBDIR)/libboost_timer.so.1.65.1
+sgx.trusted_files.libboost_type_erasure = file:/usr/$(ARCH_LIBDIR)/libboost_type_erasure.so.1.65.1
+sgx.trusted_files.libboost_unit_test_framework = file:/usr/$(ARCH_LIBDIR)/libboost_unit_test_framework.so.1.65.1
+sgx.trusted_files.libboost_wave = file:/usr/$(ARCH_LIBDIR)/libboost_wave.so.1.65.1
+sgx.trusted_files.libboost_wserialization = file:/usr/$(ARCH_LIBDIR)/libboost_wserialization.so.1.65.1
+
+sgx.trusted_files.server_conf = file:server.conf
+
+
+fs.mount.dev_dpdk.type = chroot
+fs.mount.dev_dpdk.path = /dev/dpdk-iface
+fs.mount.dev_dpdk.uri = file:/dev/dpdk-iface
+sgx.allowed_files.dev_dpdk = file:/dev/dpdk-iface
+
+fs.mount.sys_cpu.type = chroot
+fs.mount.sys_cpu.path = /sys/devices/system/cpu
+fs.mount.sys_cpu.uri = file:/sys/devices/system/cpu
+sgx.allowed_files.sys_cpu = file:/sys/devices/system/cpu
+
+fs.mount.var_dpdk.type = chroot
+fs.mount.var_dpdk.path = /var/run/dpdk
+fs.mount.var_dpdk.uri = file:/var/run/dpdk
+sgx.allowed_files.var_dpdk = file:/var/run/dpdk
+

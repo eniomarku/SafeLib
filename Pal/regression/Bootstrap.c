@@ -16,11 +16,6 @@ int main(int argc, char** argv, char** envp) {
     /* check executable name */
     pal_printf("Loaded Executable: %s\n", pal_control.executable);
 
-    /* check manifest name */
-    char manifest[30];
-    DkStreamGetName(pal_control.manifest_handle, manifest, 30);
-    pal_printf("Loaded Manifest: %s\n", manifest);
-
     /* check arguments */
     pal_printf("# of Arguments: %d\n", argc);
     for (int i = 0; i < argc; i++) {
@@ -30,15 +25,12 @@ int main(int argc, char** argv, char** envp) {
     /* unique process ID */
     pal_printf("Process ID: %016lx\n", pal_control.process_id);
 
-    /* unique host ID */
-    pal_printf("Host ID: %016lx\n", pal_control.host_id);
-
     /* parent process */
     pal_printf("Parent Process: %p\n", pal_control.parent_process);
 
     /* test debug stream */
     char* msg = "Written to Debug Stream\n";
-    DkStreamWrite(pal_control.debug_stream, 0, strlen(msg), msg, NULL);
+    DkDebugLog(msg, strlen(msg));
 
     /* Allocation Alignment */
     pal_printf("Allocation Alignment: %ld\n", pal_control.alloc_align);
@@ -62,7 +54,7 @@ int main(int argc, char** argv, char** envp) {
         (void*)&test_func < pal_control.executable_range.end)
         pal_printf("Executable Range OK\n");
 
-    pal_printf("CPU num: %ld\n", pal_control.cpu_info.cpu_num);
+    pal_printf("CPU num: %ld\n", pal_control.cpu_info.online_logical_cores);
     pal_printf("CPU vendor: %s\n", pal_control.cpu_info.cpu_vendor);
     pal_printf("CPU brand: %s\n", pal_control.cpu_info.cpu_brand);
     pal_printf("CPU family: %ld\n", pal_control.cpu_info.cpu_family);

@@ -14,9 +14,9 @@
 GRAPHENEDIR ?= ../..
 GRAPHENEKEY ?= $(GRAPHENEDIR)/Pal/src/host/Linux-SGX/signer/enclave-key.pem
 
-# Specify your SPID and linkable/unlinkable attestation policy (only for EPID);
-# these variables will not be used if this example is built for ECDSA/DCAP
-RA_CLIENT_SPID ?= AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+# for EPID attestation, specify your SPID and linkable/unlinkable attestation policy;
+# for DCAP/ECDSA attestation, specify SPID as empty string (linkable value is ignored)
+RA_CLIENT_SPID ?=
 RA_CLIENT_LINKABLE ?= 0
 
 ifeq ($(DEBUG),1)
@@ -47,7 +47,7 @@ dcap: secret_prov_server_dcap libsecret_prov_attest.so libsecret_prov_verify_dca
 MBEDTLS_VERSION ?= 2.21.0
 MBEDTLS_SRC ?= mbedtls-$(MBEDTLS_VERSION).tar.gz
 MBEDTLS_URI ?= https://github.com/ARMmbed/mbedtls/archive/
-MBEDTLS_CHECKSUM ?= 320e930b7596ade650ae4fc9ba94b510d05e3a7d63520e121d8fdc7a21602db9
+MBEDTLS_CHECKSUM ?= e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 
 # mbedTLS uses a submodule mbedcrypto, need to download it and move under mbedtls/crypto
 MBEDCRYPTO_VERSION ?= 3.1.0
@@ -215,9 +215,10 @@ check_epid: app epid files/input.txt
 	SGX=1 ./pal_loader ./secret_prov_client >> OUTPUT; \
 	SGX=1 ./pal_loader ./secret_prov_pf_client >> OUTPUT; \
 	kill -9 $$SERVER_ID;
-	@grep "Received secret = 'ffeeddccbbaa99887766554433221100'" OUTPUT && echo "[ Success 1/3 ]"
-	@grep "Received secret1 = 'ffeeddccbbaa99887766554433221100', secret2 = '42'" OUTPUT && echo "[ Success 2/3 ]"
-	@grep "Read from protected file: 'helloworld'" OUTPUT && echo "[ Success 3/3 ]"
+	@grep "Received secret = 'ffeeddccbbaa99887766554433221100'" OUTPUT && echo "[ Success 1/4 ]"
+	@grep "Received secret1 = 'ffeeddccbbaa99887766554433221100', secret2 = '42'" OUTPUT && echo "[ Success 2/4 ]"
+	@grep "\[parent\] Read from protected file: 'helloworld'" OUTPUT && echo "[ Success 3/4 ]"
+	@grep "\[child\] Read from protected file: 'helloworld'" OUTPUT && echo "[ Success 4/4 ]"
 	@rm OUTPUT
 
 .PHONY: check_dcap
@@ -228,9 +229,10 @@ check_dcap: app dcap files/input.txt
 	SGX=1 ./pal_loader ./secret_prov_client >> OUTPUT; \
 	SGX=1 ./pal_loader ./secret_prov_pf_client >> OUTPUT; \
 	kill -9 $$SERVER_ID;
-	@grep "Received secret = 'ffeeddccbbaa99887766554433221100'" OUTPUT && echo "[ Success 1/3 ]"
-	@grep "Received secret1 = 'ffeeddccbbaa99887766554433221100', secret2 = '42'" OUTPUT && echo "[ Success 2/3 ]"
-	@grep "Read from protected file: 'helloworld'" OUTPUT && echo "[ Success 3/3 ]"
+	@grep "Received secret = 'ffeeddccbbaa99887766554433221100'" OUTPUT && echo "[ Success 1/4 ]"
+	@grep "Received secret1 = 'ffeeddccbbaa99887766554433221100', secret2 = '42'" OUTPUT && echo "[ Success 2/4 ]"
+	@grep "\[parent\] Read from protected file: 'helloworld'" OUTPUT && echo "[ Success 3/4 ]"
+	@grep "\[child\] Read from protected file: 'helloworld'" OUTPUT && echo "[ Success 4/4 ]"
 	@rm OUTPUT
 
 ################################## CLEANUP ####################################

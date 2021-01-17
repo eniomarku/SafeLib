@@ -2,17 +2,14 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_fs.h
- *
  * Definitions of types and functions for file system bookkeeping.
  */
 
 #ifndef _SHIM_FS_H_
 #define _SHIM_FS_H_
 
-#define __KERNEL__
 #include <stdbool.h>
-#include <linux/stat.h>
+#include <asm/stat.h>
 
 #include "list.h"
 #include "pal.h"
@@ -125,14 +122,6 @@ struct shim_dentry {
     struct shim_mount* fs;     /* this dentry's mounted fs */
     struct shim_qstr rel_path; /* the path is relative to its mount point */
     struct shim_qstr name;     /* caching the file's name. */
-
-    /* DEP 6/16/17: For now, let's try not hashing; I suspect it is overkill for most purposes.
-     * I'll leave the field here for now, but propose we move to a per-directory table to accelerate
-     * lookups, rather than a global table, since this just supports one process.
-     */
-    LIST_TYPE(shim_dentry) hlist; /* to resolve collisions in the hash table */
-    LIST_TYPE(shim_dentry) list; /* put dentry to different list according to its availability, \
-                                  * persistent or freeable */
 
     struct shim_dentry* parent;
     int nchildren;
@@ -295,8 +284,6 @@ void put_mount(struct shim_mount* mount);
 
 struct shim_mount* find_mount_from_uri(const char* uri);
 
-#include <shim_utils.h>
-
 static inline void set_handle_fs(struct shim_handle* hdl, struct shim_mount* fs) {
     get_mount(fs);
     hdl->fs = fs;
@@ -398,49 +385,22 @@ int list_directory_handle(struct shim_dentry* dent, struct shim_handle* hdl);
 void get_dentry(struct shim_dentry* dent);
 /* Decrement the reference count on dent */
 void put_dentry(struct shim_dentry* dent);
+/* Decrement the reference count by one and delete `dent` if this is the last reference. */
+void put_dentry_maybe_delete(struct shim_dentry* dent);
 
-static inline __attribute__((always_inline)) char* dentry_get_path(struct shim_dentry* dent, bool on_stack, size_t* sizeptr) {
-    struct shim_mount* fs = dent->fs;
-    char* buffer;
-    char* c;
-    size_t bufsize = dent->rel_path.len + 1;
+/* Size of the path constructed by dentry_get_path(), including null terminator. */
+size_t dentry_get_path_size(struct shim_dentry* dent);
 
-    if (fs)
-        bufsize += fs->path.len + 1;
+/* Get path (FS path + relpath). The path size can be checked by calling dentry_get_path_size(dent),
+ * and the buffer needs to have space for at least that many bytes.
+ */
+char* dentry_get_path(struct shim_dentry* dent, char* buffer);
 
-    if (on_stack) {
-        c = buffer = __alloca(bufsize);
-    } else {
-        if (!(c = buffer = malloc(bufsize)))
-            return NULL;
-    }
-
-    if (fs && !qstrempty(&fs->path)) {
-        memcpy(c, qstrgetstr(&fs->path), fs->path.len);
-        c += fs->path.len;
-    }
-
-    if (dent->rel_path.len) {
-        const char* path = qstrgetstr(&dent->rel_path);
-        int len          = dent->rel_path.len;
-
-        if (c > buffer && *(c - 1) == '/') {
-            if (*path == '/')
-                path++;
-        } else {
-            if (*path != '/')
-                *(c++) = '/';
-        }
-
-        memcpy(c, path, len);
-        c += len;
-    }
-
-    if (sizeptr)
-        *sizeptr = c - buffer;
-
-    *c = 0;
-    return buffer;
+static inline char* dentry_get_path_into_qstr(struct shim_dentry* dent, struct shim_qstr* str) {
+    size_t size = dentry_get_path_size(dent);
+    char buffer[size];
+    dentry_get_path(dent, buffer);
+    return qstrsetstr(str, buffer, size - 1);
 }
 
 static inline const char* dentry_get_name(struct shim_dentry* dent) {
@@ -527,6 +487,15 @@ struct pseudo_name_ops {
     int (*list_name)(const char* name, struct shim_dirent** buf, int count);
 };
 
+static inline dev_t makedev(unsigned int major, unsigned int minor) {
+    dev_t dev;
+    dev  = (((dev_t)(major & 0x00000fffu)) <<  8);
+    dev |= (((dev_t)(major & 0xfffff000u)) << 32);
+    dev |= (((dev_t)(minor & 0x000000ffu)) <<  0);
+    dev |= (((dev_t)(minor & 0xffffff00u)) << 12);
+    return dev;
+}
+
 struct pseudo_fs_ops {
     int (*open)(struct shim_handle* hdl, const char* name, int flags);
     int (*mode)(const char* name, mode_t* mode);
@@ -541,7 +510,7 @@ struct pseudo_ent {
     const char* name;
     const struct pseudo_name_ops* name_ops;
     const struct pseudo_fs_ops* fs_ops;
-    const struct pseudo_dir* dir;  /* NULL if pseudo-FS entry is a file */
+    const struct pseudo_dir* dir; /* NULL if pseudo-FS entry is a file */
     int type; /* LINUX_DT_REG, LINUX_DT_CHR, etc (if dir != NULL, then always LINUX_DT_DIR) */
 };
 

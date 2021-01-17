@@ -2,16 +2,14 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * dynamic_link.h
- *
- * This files contain inline functions for dynamic linking.
- * The source code is imported and modified from the GNU C Library.
+ * This file contains inline functions for dynamic linking. The source code was imported from the
+ * GNU C Library and modified.
  */
 
-#include <dl-machine.h>
-#include <elf/elf.h>
-#include <pal_internal.h>
-#include <pal_rtld.h>
+#include "dl-machine.h"
+#include "elf/elf.h"
+#include "pal_internal.h"
+#include "pal_rtld.h"
 
 /* We pass reloc_addr as a pointer to void, as opposed to a pointer to
    ElfW(Addr), because not all architectures can assume that the
@@ -24,23 +22,23 @@
    copying memory, breaking the very code written to handle the
    unaligned cases.  */
 #if !ELF_MACHINE_NO_REL
-static inline void __attribute_always_inline elf_machine_rel(struct link_map* l, ElfW(Rel)* reloc,
-                                                             ElfW(Sym)* sym,
-                                                             void* const reloc_addr);
+static inline void elf_machine_rel(struct link_map* l, ElfW(Rel)* reloc,
+                                   ElfW(Sym)* sym,
+                                   void* const reloc_addr);
 
-static inline void __attribute_always_inline elf_machine_rel_relative(struct link_map* l,
-                                                                      const ElfW(Rel)* reloc,
-                                                                      void* const reloc_addr);
+static inline void elf_machine_rel_relative(struct link_map* l,
+                                            const ElfW(Rel)* reloc,
+                                            void* const reloc_addr);
 #endif
 
 #if !ELF_MACHINE_NO_RELA
-static inline void __attribute_always_inline elf_machine_rela(struct link_map* l,
-                                                              ElfW(Rela)* reloc, ElfW(Sym)* sym,
-                                                              void* const reloc_addr);
+static inline void elf_machine_rela(struct link_map* l,
+                                    ElfW(Rela)* reloc, ElfW(Sym)* sym,
+                                    void* const reloc_addr);
 
-static inline void __attribute_always_inline elf_machine_rela_relative(struct link_map* l,
-                                                                       const ElfW(Rela)* reloc,
-                                                                       void* const reloc_addr);
+static inline void elf_machine_rela_relative(struct link_map* l,
+                                             const ElfW(Rela)* reloc,
+                                             void* const reloc_addr);
 #endif
 
 /* Read the dynamic section at DYN and fill in INFO with indices DT_*.  */

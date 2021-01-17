@@ -2,21 +2,21 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_poll.c
- *
  * Implementation of system calls "poll", "ppoll", "select" and "pselect6".
  */
 
 #include <errno.h>
 #include <linux/fcntl.h>
-#include <pal.h>
-#include <pal_error.h>
-#include <shim_fs.h>
-#include <shim_handle.h>
-#include <shim_internal.h>
-#include <shim_table.h>
-#include <shim_thread.h>
-#include <shim_utils.h>
+
+#include "pal.h"
+#include "pal_error.h"
+#include "shim_fs.h"
+#include "shim_handle.h"
+#include "shim_internal.h"
+#include "shim_lock.h"
+#include "shim_table.h"
+#include "shim_thread.h"
+#include "shim_utils.h"
 
 typedef long int __fd_mask;
 
@@ -148,12 +148,12 @@ static int _shim_do_poll(struct pollfd* fds, nfds_t nfds, int timeout_ms) {
 
     PAL_BOL polled = DkStreamsWaitEvents(pal_cnt, pals, pal_events, ret_events, timeout_us);
 
-    /* update fds.revents, but only if something was actually polled */
-    if (polled) {
-        for (nfds_t i = 0; i < nfds; i++) {
-            if (!fds_mapping[i].hdl)
-                continue;
+    for (nfds_t i = 0; i < nfds; i++) {
+        if (!fds_mapping[i].hdl)
+            continue;
 
+        /* update fds.revents, but only if something was actually polled */
+        if (polled) {
             fds[i].revents = 0;
             if (ret_events[fds_mapping[i].idx] & PAL_WAIT_ERROR)
                 fds[i].revents |= POLLERR | POLLHUP;
@@ -164,9 +164,9 @@ static int _shim_do_poll(struct pollfd* fds, nfds_t nfds, int timeout_ms) {
 
             if (fds[i].revents)
                 nrevents++;
-
-            put_handle(fds_mapping[i].hdl);
         }
+
+        put_handle(fds_mapping[i].hdl);
     }
 
     free(pals);

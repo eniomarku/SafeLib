@@ -1,7 +1,8 @@
-#include <stddef.h>
 #include <asm/errno.h>
+#include <stddef.h>
 
 #include "ecall_types.h"
+#include "generated-offsets-build.h"
 #include "ocall_types.h"
 #include "pal.h"
 #include "pal_linux.h"
@@ -10,20 +11,9 @@
 #include "sgx_arch.h"
 #include "sgx_tls.h"
 
-/* sgx.h header from the Intel SGX driver assumes that `__packed` macro was defined */
-#ifndef __packed
-#define __packed __attribute__((packed))
-#endif
-#include "sgx.h"
-#undef __packed
+#include "gsgx.h"
 
-#include <generated-offsets-build.h>
-
-/* required due to -Wmissing-prototypes */
-void dummy(void);
-
-void dummy(void)
-{
+__attribute__((__used__)) static void dummy(void) {
     /* defines in sgx_arch.h */
     DEFINE(SGX_FLAGS_DEBUG, SGX_FLAGS_DEBUG);
     DEFINE(SGX_FLAGS_MODE64BIT, SGX_FLAGS_MODE64BIT);
@@ -33,6 +23,9 @@ void dummy(void)
     DEFINE(SGX_XFRM_AVX512, SGX_XFRM_AVX512);
     DEFINE(SGX_MISCSELECT_EXINFO, SGX_MISCSELECT_EXINFO);
     DEFINE(SE_KEY_SIZE, SE_KEY_SIZE);
+
+    /* defines in pal-arch.h */
+    DEFINE(STACK_PROTECTOR_CANARY_DEFAULT, STACK_PROTECTOR_CANARY_DEFAULT);
 
     /* sgx_measurement_t */
     DEFINE(SGX_HASH_SIZE, sizeof(sgx_measurement_t));
@@ -79,11 +72,11 @@ void dummy(void)
     OFFSET_T(SGX_CPU_CONTEXT_RFLAGS, sgx_cpu_context_t, rflags);
     OFFSET_T(SGX_CPU_CONTEXT_RIP, sgx_cpu_context_t, rip);
     DEFINE(SGX_CPU_CONTEXT_SIZE, sizeof(sgx_cpu_context_t));
-    DEFINE(SGX_CPU_CONTEXT_XSTATE_ALIGN_SUB,
-           sizeof(sgx_cpu_context_t) % PAL_XSTATE_ALIGN);
+    DEFINE(SGX_CPU_CONTEXT_XSTATE_ALIGN_SUB, sizeof(sgx_cpu_context_t) % PAL_XSTATE_ALIGN);
 
     /* struct enclave_tls */
     OFFSET(SGX_COMMON_SELF, enclave_tls, common.self);
+    OFFSET(SGX_COMMON_STACK_PROTECTOR_CANARY, enclave_tls, common.stack_protector_canary);
     OFFSET(SGX_ENCLAVE_SIZE, enclave_tls, enclave_size);
     OFFSET(SGX_TCS_OFFSET, enclave_tls, tcs_offset);
     OFFSET(SGX_INITIAL_STACK_OFFSET, enclave_tls, initial_stack_offset);
@@ -157,14 +150,17 @@ void dummy(void)
     OFFSET(PAL_SEC_ENCLAVE_ATTRIBUTES, pal_sec, enclave_attributes);
 
     /* pal_linux_def.h */
-    DEFINE(ENCLAVE_HIGH_ADDRESS, ENCLAVE_HIGH_ADDRESS);
     DEFINE(SSAFRAMENUM, SSAFRAMENUM);
     DEFINE(ENCLAVE_STACK_SIZE, ENCLAVE_STACK_SIZE);
     DEFINE(ENCLAVE_SIG_STACK_SIZE, ENCLAVE_SIG_STACK_SIZE);
-    DEFINE(DEFAULT_HEAP_MIN, DEFAULT_HEAP_MIN);
+    DEFINE(DEFAULT_ENCLAVE_BASE, DEFAULT_ENCLAVE_BASE);
+    DEFINE(MMAP_MIN_ADDR, MMAP_MIN_ADDR);
 
     /* pal_linux.h */
     DEFINE(PAGESIZE, PRESET_PAGESIZE);
+
+    /* pal.h */
+    DEFINE(PAL_EVENT_NUM_BOUND, PAL_EVENT_NUM_BOUND);
 
     /* errno */
     DEFINE(EINTR, EINTR);
@@ -185,8 +181,5 @@ void dummy(void)
     /* SGX_DCAP */
 #ifdef SGX_DCAP
     DEFINE(SGX_DCAP, SGX_DCAP);
-#endif
-#ifdef SGX_DCAP_16_OR_LATER
-    DEFINE(SGX_DCAP_16_OR_LATER, SGX_DCAP_16_OR_LATER);
 #endif
 }

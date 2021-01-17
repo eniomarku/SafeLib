@@ -2,14 +2,12 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * path.c
- *
  * This file contains functions to read app config (manifest) file and create a tree to
  * lookup / access config values.
  */
 
-#include <api.h>
-#include <pal_error.h>
+#include "api.h"
+#include "pal_error.h"
 
 /*
  * Finds next '/' in `path`.
@@ -69,7 +67,7 @@ int get_norm_path(const char* path, char* buf, size_t* size_ptr) {
 
     size_t offset = 0, ret_size = 0; /* accounts for undiscardable bytes written to `buf`
                                       * i.e. `buf - ret_size` points to original `buf` */
-    bool need_slash       = false;    // is '/' needed before next token
+    bool need_slash = false; // is '/' needed before next token
     bool is_absolute_path = *path == '/';
 
     /* handle an absolute path */

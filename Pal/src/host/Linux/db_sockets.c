@@ -2,14 +2,20 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_socket.c
- *
- * This file contains operands for streams with URIs that start with
- * "tcp:", "tcp.srv:", "udp:", "udp.srv:".
+ * This file contains operands for streams with URIs that start with "tcp:", "tcp.srv:", "udp:",
+ * "udp.srv:".
  */
 
+#include <asm/errno.h>
+#include <asm/fcntl.h>
+#include <asm/ioctls.h>
+#include <linux/in.h>
+#include <linux/in6.h>
 #include <linux/poll.h>
+#include <linux/time.h>
 #include <linux/types.h>
+#include <netinet/tcp.h>
+#include <sys/socket.h>
 
 #include "api.h"
 #include "pal.h"
@@ -20,14 +26,6 @@
 #include "pal_linux.h"
 #include "pal_linux_defs.h"
 #include "pal_security.h"
-typedef __kernel_pid_t pid_t;
-#include <asm/errno.h>
-#include <asm/fcntl.h>
-#include <linux/in.h>
-#include <linux/in6.h>
-#include <linux/time.h>
-#include <netinet/tcp.h>
-#include <sys/socket.h>
 
 #ifndef SOL_TCP
 #define SOL_TCP 6
@@ -270,49 +268,6 @@ static inline PAL_HANDLE socket_create_handle(int type, int fd, int options,
     return hdl;
 }
 
-static bool check_zero(void* mem, size_t size) {
-    void* p = mem;
-    void* q = mem + size;
-
-    while (p < q) {
-        if (p <= q - sizeof(long)) {
-            if (*(long*)p)
-                return false;
-            p += sizeof(long);
-        } else if (p <= q - sizeof(int)) {
-            if (*(int*)p)
-                return false;
-            p += sizeof(int);
-        } else if (p <= q - sizeof(short)) {
-            if (*(short*)p)
-                return false;
-            p += sizeof(short);
-        } else {
-            if (*(char*)p)
-                return false;
-            p++;
-        }
-    }
-
-    return true;
-}
-
-/* check if an address is "Any" */
-static bool check_any_addr(struct sockaddr* addr) {
-    if (addr->sa_family == AF_INET) {
-        struct sockaddr_in* addr_in = (struct sockaddr_in*)addr;
-
-        return addr_in->sin_port == 0 && check_zero(&addr_in->sin_addr, sizeof(addr_in->sin_addr));
-    } else if (addr->sa_family == AF_INET6) {
-        struct sockaddr_in6* addr_in6 = (struct sockaddr_in6*)addr;
-
-        return addr_in6->sin6_port == 0 &&
-               check_zero(&addr_in6->sin6_addr, sizeof(addr_in6->sin6_addr));
-    }
-
-    return false;
-}
-
 /* listen on a tcp socket */
 static int tcp_listen(PAL_HANDLE* handle, char* uri, int create, int options) {
     struct sockaddr_storage buffer;
@@ -328,13 +283,6 @@ static int tcp_listen(PAL_HANDLE* handle, char* uri, int create, int options) {
 
     assert(bind_addrlen == addr_size(bind_addr));
 
-#if ALLOW_BIND_ANY == 0
-    /* the socket need to have a binding address, a null address or an
-       any address is not allowed */
-    if (check_any_addr(bind_addr))
-        return -PAL_ERROR_INVAL;
-#endif
-
     int sock_options = options & PAL_OPTION_NONBLOCK ? SOCK_NONBLOCK : 0;
     fd = INLINE_SYSCALL(socket, 3, bind_addr->sa_family, SOCK_STREAM | SOCK_CLOEXEC | sock_options,
                         0);
@@ -344,14 +292,16 @@ static int tcp_listen(PAL_HANDLE* handle, char* uri, int create, int options) {
 
     /* must set the socket to be reuseable */
     int reuseaddr = 1;
-    ret = INLINE_SYSCALL(setsockopt, 5, fd, SOL_SOCKET, SO_REUSEADDR, &reuseaddr, sizeof(reuseaddr));
+    ret = INLINE_SYSCALL(setsockopt, 5, fd, SOL_SOCKET, SO_REUSEADDR, &reuseaddr,
+                         sizeof(reuseaddr));
     if (IS_ERR(ret))
         return -PAL_ERROR_INVAL;
 
     if (bind_addr->sa_family == AF_INET6) {
         /* IPV6_V6ONLY socket option can only be set before first bind */
         int ipv6_v6only = create & PAL_CREATE_DUALSTACK ? 0 : 1;
-        ret = INLINE_SYSCALL(setsockopt, 5, fd, IPPROTO_IPV6, IPV6_V6ONLY, &ipv6_v6only, sizeof(ipv6_v6only));
+        ret = INLINE_SYSCALL(setsockopt, 5, fd, IPPROTO_IPV6, IPV6_V6ONLY, &ipv6_v6only,
+                             sizeof(ipv6_v6only));
         if (IS_ERR(ret))
             return -PAL_ERROR_INVAL;
     }
@@ -372,11 +322,9 @@ static int tcp_listen(PAL_HANDLE* handle, char* uri, int create, int options) {
         }
     }
 
-    if (check_any_addr(bind_addr)) {
-        /* call getsockname to get socket address */
-        if ((ret = INLINE_SYSCALL(getsockname, 3, fd, bind_addr, &bind_addrlen)) < 0)
-            goto failed;
-    }
+    /* call getsockname to get socket address */
+    if ((ret = INLINE_SYSCALL(getsockname, 3, fd, bind_addr, &bind_addrlen)) < 0)
+        goto failed;
 
     ret = INLINE_SYSCALL(listen, 2, fd, DEFAULT_BACKLOG);
     if (IS_ERR(ret))
@@ -407,7 +355,7 @@ static int tcp_accept(PAL_HANDLE handle, PAL_HANDLE* client) {
     size_t bind_addrlen        = addr_size(bind_addr);
     struct sockaddr_storage buffer;
     int addrlen = sizeof(buffer);
-    int ret           = 0;
+    int ret = 0;
 
     int newfd = INLINE_SYSCALL(accept4, 4, handle->sock.fd, &buffer, &addrlen, SOCK_CLOEXEC);
 
@@ -486,7 +434,7 @@ static int tcp_connect(PAL_HANDLE* handle, char* uri, int options) {
 
     if (IS_ERR(ret) && ERRNO(ret) == EINPROGRESS) {
         struct pollfd pfd = {.fd = fd, .events = POLLOUT, .revents = 0};
-        ret               = INLINE_SYSCALL(ppoll, 5, &pfd, 1, NULL, NULL, 0);
+        ret = INLINE_SYSCALL(ppoll, 5, &pfd, 1, NULL, NULL, 0);
     }
 
     if (IS_ERR(ret)) {
@@ -538,10 +486,10 @@ static int tcp_open(PAL_HANDLE* handle, const char* type, const char* uri, int a
     char uri_buf[PAL_SOCKADDR_SIZE];
     memcpy(uri_buf, uri, uri_len);
 
-    if (!strcmp_static(type, URI_TYPE_TCP_SRV))
+    if (!strcmp(type, URI_TYPE_TCP_SRV))
         return tcp_listen(handle, uri_buf, create, options);
 
-    if (!strcmp_static(type, URI_TYPE_TCP))
+    if (!strcmp(type, URI_TYPE_TCP))
         return tcp_connect(handle, uri_buf, options);
 
     return -PAL_ERROR_NOTSUPPORT;
@@ -626,13 +574,6 @@ static int udp_bind(PAL_HANDLE* handle, char* uri, int create, int options) {
 
     assert(bind_addrlen == addr_size(bind_addr));
 
-#if ALLOW_BIND_ANY == 0
-    /* the socket need to have a binding address, a null address or an
-       any address is not allowed */
-    if (check_any_addr(bind_addr))
-        return -PAL_ERROR_INVAL;
-#endif
-
     int sock_options = options & PAL_OPTION_NONBLOCK ? SOCK_NONBLOCK : 0;
     fd = INLINE_SYSCALL(socket, 3, bind_addr->sa_family, SOCK_DGRAM | SOCK_CLOEXEC | sock_options,
                         0);
@@ -643,7 +584,8 @@ static int udp_bind(PAL_HANDLE* handle, char* uri, int create, int options) {
     /* IPV6_V6ONLY socket option can only be set before first bind */
     if (bind_addr->sa_family == AF_INET6) {
         int ipv6_v6only = create & PAL_CREATE_DUALSTACK ? 0 : 1;
-        ret = INLINE_SYSCALL(setsockopt, 5, fd, IPPROTO_IPV6, IPV6_V6ONLY, &ipv6_v6only, sizeof(ipv6_v6only));
+        ret = INLINE_SYSCALL(setsockopt, 5, fd, IPPROTO_IPV6, IPV6_V6ONLY, &ipv6_v6only,
+                             sizeof(ipv6_v6only));
         if (IS_ERR(ret))
             return -PAL_ERROR_INVAL;
     }
@@ -689,13 +631,6 @@ static int udp_connect(PAL_HANDLE* handle, char* uri, int create, int options) {
 
     if ((ret = socket_parse_uri(uri, &bind_addr, &bind_addrlen, &dest_addr, &dest_addrlen)) < 0)
         return ret;
-
-#if ALLOW_BIND_ANY == 0
-    /* the socket need to have a binding address, a null address or an
-       any address is not allowed */
-    if (bind_addr && check_any_addr(bind_addr))
-        return -PAL_ERROR_INVAL;
-#endif
 
     int sock_options = options & PAL_OPTION_NONBLOCK ? SOCK_NONBLOCK : 0;
     fd = INLINE_SYSCALL(socket, 3, dest_addr ? dest_addr->sa_family : AF_INET,
@@ -764,10 +699,10 @@ static int udp_open(PAL_HANDLE* hdl, const char* type, const char* uri, int acce
 
     memcpy(buf, uri, len + 1);
 
-    if (!strcmp_static(type, URI_TYPE_UDP_SRV))
+    if (!strcmp(type, URI_TYPE_UDP_SRV))
         return udp_bind(hdl, buf, create, options);
 
-    if (!strcmp_static(type, URI_TYPE_UDP))
+    if (!strcmp(type, URI_TYPE_UDP))
         return udp_connect(hdl, buf, create, options);
 
     return -PAL_ERROR_NOTSUPPORT;
@@ -885,7 +820,7 @@ static int64_t udp_sendbyaddr(PAL_HANDLE handle, uint64_t offset, size_t len, co
     if (handle->sock.fd == PAL_IDX_POISON)
         return -PAL_ERROR_BADHANDLE;
 
-    if (!strstartswith_static(addr, URI_PREFIX_UDP))
+    if (!strstartswith(addr, URI_PREFIX_UDP))
         return -PAL_ERROR_INVAL;
 
     addr += static_strlen(URI_PREFIX_UDP);
@@ -975,9 +910,9 @@ static int socket_attrquerybyhdl(PAL_HANDLE handle, PAL_STREAM_ATTR* attr) {
     if (handle->sock.fd == PAL_IDX_POISON)
         return -PAL_ERROR_BADHANDLE;
 
-    attr->handle_type           = HANDLE_HDR(handle)->type;
-    attr->nonblocking           = handle->sock.nonblocking;
-    attr->disconnected          = HANDLE_HDR(handle)->flags & ERROR(0);
+    attr->handle_type  = HANDLE_HDR(handle)->type;
+    attr->nonblocking  = handle->sock.nonblocking;
+    attr->disconnected = HANDLE_HDR(handle)->flags & ERROR(0);
 
     attr->socket.linger         = handle->sock.linger;
     attr->socket.receivebuf     = handle->sock.receivebuf;
@@ -1031,7 +966,7 @@ static int socket_attrsetbyhdl(PAL_HANDLE handle, PAL_STREAM_ATTR* attr) {
             struct __kernel_linger l;
             l.l_onoff  = attr->socket.linger ? 1 : 0;
             l.l_linger = attr->socket.linger;
-            ret        = INLINE_SYSCALL(setsockopt, 5, fd, SOL_SOCKET, SO_LINGER, &l,
+            ret = INLINE_SYSCALL(setsockopt, 5, fd, SOL_SOCKET, SO_LINGER, &l,
                                  sizeof(struct __kernel_linger));
 
             if (IS_ERR(ret))
@@ -1042,7 +977,7 @@ static int socket_attrsetbyhdl(PAL_HANDLE handle, PAL_STREAM_ATTR* attr) {
 
         if (attr->socket.receivebuf != handle->sock.receivebuf) {
             int val = attr->socket.receivebuf;
-            ret     = INLINE_SYSCALL(setsockopt, 5, fd, SOL_SOCKET, SO_RCVBUF, &val, sizeof(int));
+            ret = INLINE_SYSCALL(setsockopt, 5, fd, SOL_SOCKET, SO_RCVBUF, &val, sizeof(int));
 
             if (IS_ERR(ret))
                 return unix_to_pal_error(ERRNO(ret));
@@ -1052,7 +987,7 @@ static int socket_attrsetbyhdl(PAL_HANDLE handle, PAL_STREAM_ATTR* attr) {
 
         if (attr->socket.sendbuf != handle->sock.sendbuf) {
             int val = attr->socket.sendbuf;
-            ret     = INLINE_SYSCALL(setsockopt, 5, fd, SOL_SOCKET, SO_SNDBUF, &val, sizeof(int));
+            ret = INLINE_SYSCALL(setsockopt, 5, fd, SOL_SOCKET, SO_SNDBUF, &val, sizeof(int));
 
             if (IS_ERR(ret))
                 return unix_to_pal_error(ERRNO(ret));
@@ -1062,7 +997,7 @@ static int socket_attrsetbyhdl(PAL_HANDLE handle, PAL_STREAM_ATTR* attr) {
 
         if (attr->socket.receivetimeout != handle->sock.receivetimeout) {
             int val = attr->socket.receivetimeout;
-            ret     = INLINE_SYSCALL(setsockopt, 5, fd, SOL_SOCKET, SO_RCVTIMEO, &val, sizeof(int));
+            ret = INLINE_SYSCALL(setsockopt, 5, fd, SOL_SOCKET, SO_RCVTIMEO, &val, sizeof(int));
 
             if (IS_ERR(ret))
                 return unix_to_pal_error(ERRNO(ret));
@@ -1072,7 +1007,7 @@ static int socket_attrsetbyhdl(PAL_HANDLE handle, PAL_STREAM_ATTR* attr) {
 
         if (attr->socket.sendtimeout != handle->sock.sendtimeout) {
             int val = attr->socket.sendtimeout;
-            ret     = INLINE_SYSCALL(setsockopt, 5, fd, SOL_SOCKET, SO_SNDTIMEO, &val, sizeof(int));
+            ret = INLINE_SYSCALL(setsockopt, 5, fd, SOL_SOCKET, SO_SNDTIMEO, &val, sizeof(int));
 
             if (IS_ERR(ret))
                 return unix_to_pal_error(ERRNO(ret));

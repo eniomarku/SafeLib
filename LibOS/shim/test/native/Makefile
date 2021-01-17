@@ -24,9 +24,7 @@ c_executables = \
 	malloc \
 	meminfo \
 	msg_create \
-	msg_create_libos \
 	msg_send \
-	msg_send_libos \
 	multiproc \
 	multisleep \
 	pause \
@@ -36,7 +34,6 @@ c_executables = \
 	pipe_latency \
 	readdir \
 	rename \
-	script \
 	sem \
 	sleep \
 	socketpair \
@@ -55,14 +52,11 @@ cxx_executables =
 manifests = \
 	manifest \
 	exec_fork.manifest \
-	ls.manifest \
-	script.manifest \
 	static.manifest
 
 exec_target = \
 	$(c_executables) \
-	$(cxx_executables) \
-	ls.manifest
+	$(cxx_executables)
 
 target = \
 	$(exec_target) \
@@ -72,15 +66,10 @@ include ../../../../Scripts/Makefile.configs
 include ../../../../Scripts/Makefile.manifest
 include ../../../../Scripts/Makefile.Test
 
-CFLAGS-msg_create_libos += $(CFLAGS-libos)
-CFLAGS-msg_send_libos += $(CFLAGS-libos)
-
 LDLIBS-condvar += -lpthread
 LDLIBS-futextest += -lpthread
 LDLIBS-get_time += -lm
 LDLIBS-helloworld_pthread += -lpthread
-LDLIBS-msg_create_libos += -llibos
-LDLIBS-msg_send_libos += -llibos
 LDLIBS-sqrt += -lm
 LDLIBS-start += -lpthread -lm
 LDLIBS-sync += -lpthread
