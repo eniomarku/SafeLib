@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /build
 /install
 
@@ -47,3 +48,14 @@ TAGS
 cscope.*
 ncscope.*
 *cscope*
+=======
+.idea
+cmake-build-debug
+*a.out
+build
+*.o
+*~
+temp/
+tags
+
+>>>>>>> 74ff4726038167e3280f94260e652514979ca6b0
