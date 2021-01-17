@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # libvnf
 * **libvnf** is a library to easily build custom, scalable, high-performance, virtual network functions
 * This is an implementation of paper [libVNF: Building Virtual Network Functions Made Easy](https://www.cse.iitb.ac.in/~mythili/research/papers/2018-libvnf-socc.pdf) accepted in SoCC 2018
@@ -73,3 +74,8 @@
 1. [Sagar Tikore](https://www.cse.iitb.ac.in/~sagart/)
 1. [Vaishali Jhalani](https://www.cse.iitb.ac.in/~vaishali/)
 1. [Prof. Mythili Vutukuru](https://www.cse.iitb.ac.in/~mythili/)
+=======
+# SafeLib
+TBA
+#This is the first commit version of SafeLib, we are cleaning the code first, and then write ReadMe file
+>>>>>>> 3d4da7f792eba8f1b0e097f27458aaf33f289698
