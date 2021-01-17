@@ -1,7 +1,10 @@
-Quick Start
+Quick start
 ===========
 
 .. highlight:: sh
+
+Quick start without SGX support
+-------------------------------
 
 #. Clone the Graphene repository::
 
@@ -21,8 +24,8 @@ Quick Start
 
 #. For more complex examples, see :file:`Examples` directory.
 
-SGX Quick Start
----------------
+Quick start with SGX support
+-------------------------------
 
 Graphene-SGX requires that the FSGSBASE feature of recent processors is enabled
 in the Linux kernel. For the ways to enable the FSGSBASE feature, please refer
@@ -52,7 +55,6 @@ second command should list the process status of :command:`aesm_service`.
 
       git clone https://github.com/oscarlab/graphene.git
       cd graphene
-      git submodule update --init -- Pal/src/host/Linux-SGX/sgx-driver/
       export GRAPHENE_DIR=$PWD
 
 #. Prepare a signing key::
@@ -68,16 +70,27 @@ second command should list the process status of :command:`aesm_service`.
       cd $GRAPHENE_DIR
       make SGX=1
       # the console will prompt you for the path to the Intel SGX driver code
+      # (simply press ENTER if you use the in-kernel Intel SGX driver)
 
-#. Set ``vm.mmap_min_addr=0`` in the system::
+#. Set ``vm.mmap_min_addr=0`` in the system (*only required for the legacy SGX
+   driver and not needed for newer DCAP/in-kernel drivers*)::
 
       sudo sysctl vm.mmap_min_addr=0
 
-   Note that this is an inadvisable configuration for production systems. This
-   temporary workaround will not be required in the future.
+   Note that this is an inadvisable configuration for production systems.
 
 #. Build and run :program:`helloworld`::
 
       cd $GRAPHENE_DIR/LibOS/shim/test/native
       make SGX=1 sgx-tokens
       SGX=1 ./pal_loader helloworld
+
+Running sample applications
+---------------------------
+
+We prepared and tested several applications to demonstrate Graphene and
+Graphene-SGX usability. These applications can be found in the :file:`Examples`
+folder in the repository, each containing a short README with instructions how
+to test it. We recommend starting with simpler, thoroughly documented examples
+like Memcached and Redis, to understand manifest options and features of
+Graphene.

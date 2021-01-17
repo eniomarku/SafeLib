@@ -71,12 +71,14 @@ class TC_00_FileSystem(RegressionTestCase):
 
     def verify_open_flags(self, stdout, stderr):
         self.assertNotIn('ERROR: ', stderr)
-        self.assertIn('open(O_CREAT|O_EXCL|O_RDWR) [doesn\'t exist] succeeded as expected', stdout)
-        self.assertIn('open(O_CREAT|O_EXCL|O_RDWR) [exists] failed as expected', stdout)
-        self.assertIn('open(O_CREAT|O_RDWR) [exists] succeeded as expected', stdout)
-        self.assertIn('open(O_CREAT|O_RDWR) [doesn\'t exist] succeeded as expected', stdout)
-        self.assertIn('open(O_CREAT|O_TRUNC|O_RDWR) [doesn\'t exist] succeeded as expected', stdout)
-        self.assertIn('open(O_CREAT|O_TRUNC|O_RDWR) [exists] succeeded as expected', stdout)
+        self.assertIn('open(O_CREAT | O_EXCL | O_RDWR) [doesn\'t exist] succeeded as expected',
+                      stdout)
+        self.assertIn('open(O_CREAT | O_EXCL | O_RDWR) [exists] failed as expected', stdout)
+        self.assertIn('open(O_CREAT | O_RDWR) [exists] succeeded as expected', stdout)
+        self.assertIn('open(O_CREAT | O_RDWR) [doesn\'t exist] succeeded as expected', stdout)
+        self.assertIn('open(O_CREAT | O_TRUNC | O_RDWR) [doesn\'t exist] succeeded as expected',
+                      stdout)
+        self.assertIn('open(O_CREAT | O_TRUNC | O_RDWR) [exists] succeeded as expected', stdout)
 
     def test_101_open_flags(self):
         file_path = os.path.join(self.OUTPUT_DIR, 'test_101') # new file to be created
@@ -258,6 +260,8 @@ class TC_00_FileSystem(RegressionTestCase):
             if executable == 'copy_whole':
                 self.assertIn('read_fd(' + size + ') input OK', stdout)
                 self.assertIn('write_fd(' + size + ') output OK', stdout)
+            if executable == 'copy_sendfile':
+                self.assertIn('sendfile_fd(' + size + ') OK', stdout)
             if size != '0':
                 if 'copy_mmap' in executable:
                     self.assertIn('mmap_fd(' + size + ') input OK', stdout)
@@ -287,16 +291,19 @@ class TC_00_FileSystem(RegressionTestCase):
     def test_202_copy_dir_rev(self):
         self.do_copy_test('copy_rev', 60)
 
+    def test_203_copy_dir_sendfile(self):
+        self.do_copy_test('copy_sendfile', 60)
+
     @expectedFailureIf(HAS_SGX)
-    def test_203_copy_dir_mmap_whole(self):
+    def test_204_copy_dir_mmap_whole(self):
         self.do_copy_test('copy_mmap_whole', 30)
 
     @expectedFailureIf(HAS_SGX)
-    def test_204_copy_dir_mmap_seq(self):
+    def test_205_copy_dir_mmap_seq(self):
         self.do_copy_test('copy_mmap_seq', 60)
 
     @expectedFailureIf(HAS_SGX)
-    def test_205_copy_dir_mmap_rev(self):
+    def test_206_copy_dir_mmap_rev(self):
         self.do_copy_test('copy_mmap_rev', 60)
 
     def test_210_copy_dir_mounted(self):

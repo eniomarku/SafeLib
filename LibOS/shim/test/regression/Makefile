@@ -3,7 +3,9 @@ include ../../../../Scripts/Makefile.configs
 c_executables-x86_64 = \
 	attestation \
 	cpuid \
-	rdtsc
+	debug_regs-x86_64 \
+	rdtsc \
+	sighandler_divbyzero
 
 c_executables = \
 	abort \
@@ -11,7 +13,9 @@ c_executables = \
 	bootstrap \
 	bootstrap_pie \
 	bootstrap_static \
+	debug \
 	dev \
+	device \
 	epoll_wait_timeout \
 	eventfd \
 	exec \
@@ -26,6 +30,7 @@ c_executables = \
 	file_size \
 	fopen_cornercases \
 	fork_and_exec \
+	fp_multithread \
 	fstat_cwd \
 	futex_bitset \
 	futex_requeue \
@@ -33,11 +38,14 @@ c_executables = \
 	futex_wake_op \
 	getcwd \
 	getdents \
+	getsockname \
 	getsockopt \
+	groups \
 	host_root_fs \
 	init_fail \
 	large_mmap \
 	large_dir_read \
+	madvise \
 	mkfifo \
 	mmap_file \
 	mprotect_file_fork \
@@ -45,6 +53,8 @@ c_executables = \
 	multi_pthread \
 	openmp \
 	pipe \
+	pipe_nonblocking \
+	pipe_ocloexec \
 	poll \
 	poll_closed_fd \
 	poll_many_types \
@@ -53,8 +63,10 @@ c_executables = \
 	proc_cpuinfo \
 	proc_path \
 	pselect \
+	pthread_set_get_affinity \
 	readdir \
 	sched \
+	sched_set_get_affinity \
 	select \
 	shared_object \
 	sigaction_per_process \
@@ -67,7 +79,6 @@ c_executables = \
 	stat_invalid_args \
 	str_close_leak \
 	syscall \
-	system \
 	tcp_ipv6_v6only \
 	tcp_msg_peek \
 	udp \
@@ -81,7 +92,8 @@ manifests = \
 	manifest \
 	argv_from_file.manifest \
 	attestation.manifest \
-	echo.manifest \
+	debug_log_file.manifest \
+	debug_log_inline.manifest \
 	env_from_file.manifest \
 	env_from_host.manifest \
 	eventfd.manifest \
@@ -102,30 +114,38 @@ manifests = \
 	multi_pthread_exitless.manifest \
 	openmp.manifest \
 	proc_path.manifest \
-	sh.manifest \
 	shared_object.manifest
 
 exec_target = \
 	$(c_executables) \
 	$(cxx_executables) \
 	argv_from_file.manifest \
-	echo.manifest \
+	debug_log_file.manifest \
+	debug_log_inline.manifest \
 	env_from_file.manifest \
 	env_from_host.manifest \
 	file_check_policy_allow_all_but_log.manifest \
 	file_check_policy_strict.manifest \
 	init_fail2.manifest \
-	multi_pthread_exitless.manifest \
-	sh.manifest
+	multi_pthread_exitless.manifest
 
 target = \
+	argv_from_file \
+	debug_log_file \
+	debug_log_inline \
+	env_from_host \
+	env_from_file \
+	file_check_policy_allow_all_but_log \
+	file_check_policy_strict \
+	init_fail2 \
+	multi_pthread_exitless \
 	$(exec_target) \
 	$(manifests)
 
 clean-extra += clean-tmp
 
 extra_rules = \
-	-e 's:\$$(RA_CLIENT_SPID):$(if $(RA_CLIENT_SPID),$(RA_CLIENT_SPID),AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA):g' \
+	-e 's:\$$(RA_CLIENT_SPID):$(if $(RA_CLIENT_SPID),$(RA_CLIENT_SPID),):g' \
 	-e 's:\$$(RA_CLIENT_LINKABLE):$(if $(RA_CLIENT_LINKABLE),$(RA_CLIENT_LINKABLE),0):g'
 
 include ../../../../Scripts/Makefile.manifest
@@ -133,6 +153,8 @@ include ../../../../Scripts/Makefile.Test
 
 CFLAGS-bootstrap_static = -static
 CFLAGS-bootstrap_pie = -fPIC -pie
+CFLAGS-debug = -g3
+CFLAGS-debug_regs-x86_64 = -g3
 CFLAGS-exec_same = -pthread
 CFLAGS-shared_object = -fPIC -pie
 CFLAGS-syscall += -I$(PALDIR)/../include -I$(PALDIR)/host/$(PAL_HOST) -I$(PALDIR)/../include/arch/$(ARCH)/Linux
@@ -148,11 +170,33 @@ CFLAGS-proc_common = -pthread
 CFLAGS-spinlock += -I$(PALDIR)/../include/lib -I$(PALDIR)/../include/arch/$(ARCH) -pthread
 CFLAGS-sigaction_per_process += -pthread
 CFLAGS-signal_multithread += -pthread
+CFLAGS-pthread_set_get_affinity += -pthread
 
 CFLAGS-attestation += -I$(PALDIR)/../lib/crypto/mbedtls/crypto/include \
                       -I$(PALDIR)/host/Linux-SGX \
                       -I$(PALDIR)/../include/pal
 LDLIBS-attestation += $(PALDIR)/../lib/crypto/mbedtls/install/lib/libmbedcrypto.a
+
+CFLAGS-fp_multithread += -pthread -fno-builtin  # see comment in the test's source
+LDLIBS-fp_multithread += -lm
+
+# Handle multiple tests which share one binary (Graphene requires 1-1 manifest-executable
+# correspondence).
+
+argv_from_file env_from_host env_from_file: bootstrap
+	$(call cmd,ln_sfr)
+
+debug_log_file debug_log_inline: bootstrap
+	$(call cmd,ln_sfr)
+
+file_check_policy_allow_all_but_log file_check_policy_strict: file_check_policy
+	$(call cmd,ln_sfr)
+
+init_fail2: init_fail
+	$(call cmd,ln_sfr)
+
+multi_pthread_exitless: multi_pthread
+	$(call cmd,ln_sfr)
 
 %: %.c
 	$(call cmd,csingle)
@@ -160,16 +204,13 @@ LDLIBS-attestation += $(PALDIR)/../lib/crypto/mbedtls/install/lib/libmbedcrypto.
 %: %.cpp
 	$(call cmd,cxxsingle)
 
-export PAL_LOADER = $(RUNTIME)/pal-$(PAL_HOST)
-export PYTHONPATH=../../../../Scripts
-
 .PHONY: regression
 regression: $(target)
 	$(RM) libos-regression.xml
 	$(MAKE) libos-regression.xml
 
 libos-regression.xml: test_libos.py $(call expand_target_to_token,$(target))
-	python3 -m pytest --junit-xml $@ -v $<
+	../../../../Scripts/run-pytest --junit-xml $@ -v $<
 
 .PHONY: clean-tmp
 clean-tmp:

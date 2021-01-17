@@ -2,22 +2,22 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_malloc.c
+ * This file implements page allocation for the library OS-internal SLAB memory allocator. The slab
+ * allocator is in Pal/lib/slabmgr.h.
  *
- * This file implements page allocation for the library OS-internal SLAB
- * memory allocator.  The slab allocator is in Pal/lib/slabmgr.h.
- *
- * When existing slabs are not sufficient, or a large (4k or greater)
- * allocation is requested, it ends up here (__system_alloc and __system_free).
+ * When existing slabs are not sufficient, or a large (4k or greater) allocation is requested, it
+ * ends up here (__system_alloc and __system_free).
  */
 
 #include <asm/mman.h>
-#include <pal.h>
-#include <pal_debug.h>
-#include <shim_checkpoint.h>
-#include <shim_internal.h>
-#include <shim_utils.h>
-#include <shim_vma.h>
+
+#include "pal.h"
+#include "pal_debug.h"
+#include "shim_checkpoint.h"
+#include "shim_internal.h"
+#include "shim_lock.h"
+#include "shim_utils.h"
+#include "shim_vma.h"
 
 static struct shim_lock slab_mgr_lock;
 
@@ -25,14 +25,10 @@ static struct shim_lock slab_mgr_lock;
 #define SYSTEM_UNLOCK() unlock(&slab_mgr_lock)
 #define SYSTEM_LOCKED() locked(&slab_mgr_lock)
 
-#ifdef SLAB_DEBUG_TRACE
-#define SLAB_DEBUG
-#endif
-
 #define SLAB_CANARY
 #define STARTUP_SIZE 16
 
-#include <slabmgr.h>
+#include "slabmgr.h"
 
 static SLAB_MGR slab_mgr = NULL;
 
@@ -92,19 +88,8 @@ int init_slab(void) {
     return 0;
 }
 
-EXTERN_ALIAS(init_slab);
-
-#if defined(SLAB_DEBUG_PRINT) || defined(SLABD_DEBUG_TRACE)
-void* __malloc_debug(size_t size, const char* file, int line)
-#else
-void* malloc(size_t size)
-#endif
-{
-#ifdef SLAB_DEBUG_TRACE
-    void* mem = slab_alloc_debug(slab_mgr, size, file, line);
-#else
+void* malloc(size_t size) {
     void* mem = slab_alloc(slab_mgr, size);
-#endif
 
     if (!mem) {
         /*
@@ -112,18 +97,12 @@ void* malloc(size_t size)
          * If malloc() failed internally, we cannot handle the
          * condition and must terminate the current process.
          */
-        SYS_PRINTF("******** Out-of-memory in library OS ********\n");
+        warn("******** Out-of-memory in library OS ********\n");
         __abort();
     }
 
-#ifdef SLAB_DEBUG_PRINT
-    debug("malloc(%d) = %p (%s:%d)\n", size, mem, file, line);
-#endif
     return mem;
 }
-#if !defined(SLAB_DEBUG_PRINT) && !defined(SLAB_DEBUG_TRACE)
-EXTERN_ALIAS(malloc);
-#endif
 
 void* calloc(size_t nmemb, size_t size) {
     // This overflow checking is not a UB, because the operands are unsigned.
@@ -135,79 +114,44 @@ void* calloc(size_t nmemb, size_t size) {
         memset(ptr, 0, total);
     return ptr;
 }
-EXTERN_ALIAS(calloc);
 
-#if 0 /* Temporarily disabling this code */
-void * realloc(void * ptr, size_t new_size)
-{
-    /* TODO: We can't deal with this case right now */
+#if 0
+void* realloc(void* ptr, size_t new_size) {
+    /* TODO: decide how to deal with migrated-memory case */
     assert(!memory_migrated(ptr));
 
     size_t old_size = slab_get_buf_size(slab_mgr, ptr);
 
-    /*
-     * TODO: this realloc() implementation follows the GLIBC design, which
-     * will avoid reallocation when the buffer is large enough. Potentially
-     * this design can cause memory draining if user resizes an extremely
-     * large object to much smaller.
-     */
+    /* TODO: this realloc() implementation follows the Glibc design, which will avoid reallocation
+     *       when the buffer is large enough. Potentially this design can cause memory draining if
+     *       user resizes an extremely large object to much smaller. */
     if (old_size >= new_size)
         return ptr;
 
-    void * new_buf = malloc(new_size);
+    void* new_buf = malloc(new_size);
     if (!new_buf)
         return NULL;
 
-    memcpy(new_buf, ptr, old_size);
     /* realloc() does not zero the rest of the object */
+    memcpy(new_buf, ptr, old_size);
+
     free(ptr);
     return new_buf;
 }
-EXTERN_ALIAS(realloc);
 #endif
 
 // Copies data from `mem` to a newly allocated buffer of a specified size.
-#if defined(SLAB_DEBUG_PRINT) || defined(SLABD_DEBUG_TRACE)
-void* __malloc_copy_debug(const void* mem, size_t size, const char* file, int line)
-#else
-void* malloc_copy(const void* mem, size_t size)
-#endif
-{
-#if defined(SLAB_DEBUG_PRINT) || defined(SLABD_DEBUG_TRACE)
-    void* buff = __malloc_debug(size, file, line);
-#else
+void* malloc_copy(const void* mem, size_t size) {
     void* buff = malloc(size);
-#endif
     if (buff)
         memcpy(buff, mem, size);
     return buff;
 }
-#if !defined(SLAB_DEBUG_PRINT) && !defined(SLABD_DEBUG_TRACE)
-EXTERN_ALIAS(malloc_copy);
-#endif
 
-#if defined(SLAB_DEBUG_PRINT) || defined(SLABD_DEBUG_TRACE)
-void __free_debug(void* mem, const char* file, int line)
-#else
-void free(void* mem)
-#endif
-{
-    if (!mem)
-        return;
+void free(void* mem) {
     if (memory_migrated(mem)) {
         return;
     }
 
-#ifdef SLAB_DEBUG_PRINT
-    debug("free(%p) (%s:%d)\n", mem, file, line);
-#endif
-
-#ifdef SLAB_DEBUG_TRACE
-    slab_free_debug(slab_mgr, mem, file, line);
-#else
     slab_free(slab_mgr, mem);
-#endif
 }
-#if !defined(SLAB_DEBUG_PRINT) && !defined(SLABD_DEBUG_TRACE)
-EXTERN_ALIAS(free);
-#endif

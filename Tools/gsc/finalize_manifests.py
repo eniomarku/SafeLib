@@ -21,6 +21,7 @@ def generate_trusted_files(root_dir):
                                 r'boot/.*'
                                 r'|dev/.*'
                                 r'|etc/rc(\d|.)\.d/.*'
+                                r'|graphene/python/.*'
                                 r'|proc/.*'
                                 r'|sys/.*'
                                 r'|var/.*)'
@@ -42,7 +43,7 @@ def generate_trusted_files(root_dir):
                 and is_ascii(filename)
                 and os.path.isfile(filename)
                 and filename != script_file):
-                trusted_files += f'sgx.trusted_files.file{num_trusted} = file:{filename}\n'
+                trusted_files += f'sgx.trusted_files.file{num_trusted} = "file:{filename}"\n'
                 num_trusted += 1
 
     print(f'Found {num_trusted} files in \'{root_dir}\'.')
@@ -59,12 +60,13 @@ def generate_library_paths():
 
     ld_library_paths = os.getenv('LD_LIBRARY_PATH')
 
-    return ''.join(ld_paths) + (ld_library_paths[1:] if ld_library_paths is not None else '')
+    return ''.join(ld_paths) + (ld_library_paths if ld_library_paths is not None else '')
 
 def get_binary_path(executable):
     path = subprocess.check_output(f'which {executable}',
                                    stderr=subprocess.STDOUT, shell=True).decode()
     return path.replace('\n', '')
+
 
 argparser = argparse.ArgumentParser()
 argparser.add_argument('directory', default='/',
@@ -104,12 +106,15 @@ def main(args=None):
 
         executable = manifest[:manifest.rfind('.manifest')] if (
             manifest.rfind('.manifest') != -1) else manifest
-        binary_path = get_binary_path(executable)
 
-        print(f'\tSetting exec file to \'{binary_path}\'.')
+        print(f'\tSetting exec file to \'{executable}\'.')
 
         # Write final manifest file with trusted files and children
-        rendered_manifest = env.get_template(manifest).render(binary_path=binary_path)
+        rendered_manifest = env.get_template(manifest).render()
+        # Graphene requires binaries to be in the same folder with their manifests.
+        # This is a temporary workaround till the next loader update.
+        os.symlink(get_binary_path(executable), executable)
+
         with open(manifest, 'w') as manifest_file:
             manifest_file.write('\n'.join((rendered_manifest,
                                 trusted_files,
@@ -119,10 +124,10 @@ def main(args=None):
         print(f'\tWrote {manifest}.')
 
         trusted_signatures.append(f'sgx.trusted_children.child{len(trusted_signatures)}'
-                                  f' = file:{executable}.sig')
+                                  f' = "file:{executable}.sig"')
 
         with open('signing_order.txt', 'a+') as sig_order:
-            print(manifest, file=sig_order)
+            print(executable, file=sig_order)
 
 if __name__ == '__main__':
     main(sys.argv)

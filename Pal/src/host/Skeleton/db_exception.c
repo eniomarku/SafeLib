@@ -2,10 +2,8 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_signal.c
- *
- * This file contains APIs to set up handlers of exceptions issued by the
- * host, and the methods to pass the exceptions to the upcalls.
+ * This file contains APIs to set up handlers of exceptions issued by the host, and the methods to
+ * pass the exceptions to the upcalls.
  */
 
 #include "api.h"
@@ -28,9 +26,5 @@ int (*_DkExceptionHandlers[PAL_EVENT_NUM_BOUND])(int, PAL_UPCALL, int) = {
 };
 
 void _DkRaiseFailure(int error) {
-    /* needs to be implemented */
-}
-
-void _DkExceptionReturn(void* event) {
     /* needs to be implemented */
 }

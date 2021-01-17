@@ -2,22 +2,9 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_stream.c
- *
- * This file contains APIs to open, read, write and get attribute of
- * streams.
+ * This file contains APIs to open, read, write and get attribute of streams.
  */
 
-#include "api.h"
-#include "pal.h"
-#include "pal_debug.h"
-#include "pal_defs.h"
-#include "pal_error.h"
-#include "pal_internal.h"
-#include "pal_linux.h"
-#include "pal_linux_defs.h"
-
-typedef __kernel_pid_t pid_t;
 #include <asm/errno.h>
 #include <asm/fcntl.h>
 #include <asm/poll.h>
@@ -27,8 +14,21 @@ typedef __kernel_pid_t pid_t;
 #include <linux/types.h>
 #include <linux/wait.h>
 #include <netinet/in.h>
-#include <sys/signal.h>
 #include <sys/socket.h>
+
+#include "api.h"
+#include "pal.h"
+#include "pal_debug.h"
+#include "pal_defs.h"
+#include "pal_error.h"
+#include "pal_internal.h"
+#include "pal_linux.h"
+#include "pal_linux_defs.h"
+#include "pal_security.h"
+#include "perm.h"
+#include "stat.h"
+
+static int g_debug_fd = -1;
 
 struct hdl_header {
     uint8_t fds;       /* bitmask of host file descriptors corresponding to PAL handle */
@@ -71,7 +71,7 @@ int handle_set_cloexec(PAL_HANDLE handle, bool enable) {
     for (int i = 0; i < MAX_FDS; i++)
         if (HANDLE_HDR(handle)->flags & (RFD(i) | WFD(i))) {
             long flags = enable ? FD_CLOEXEC : 0;
-            int ret    = INLINE_SYSCALL(fcntl, 3, handle->generic.fds[i], F_SETFD, flags);
+            int ret = INLINE_SYSCALL(fcntl, 3, handle->generic.fds[i], F_SETFD, flags);
             if (IS_ERR(ret) && ERRNO(ret) != EBADF)
                 return -PAL_ERROR_DENIED;
         }
@@ -115,10 +115,7 @@ int handle_serialize(PAL_HANDLE handle, void** data) {
             /* pipes have no fields to serialize */
             break;
         case pal_type_dev:
-            if (handle->dev.realpath) {
-                d1   = handle->dev.realpath;
-                dsz1 = strlen(handle->dev.realpath) + 1;
-            }
+            /* devices have no fields to serialize */
             break;
         case pal_type_dir:
             if (handle->dir.realpath) {
@@ -181,7 +178,6 @@ int handle_deserialize(PAL_HANDLE* handle, const void* data, int size) {
         case pal_type_pipeprv:
             break;
         case pal_type_dev:
-            hdl->dev.realpath = hdl->dev.realpath ? (PAL_STR)hdl + hdlsz : NULL;
             break;
         case pal_type_dir:
             hdl->dir.realpath = hdl->dir.realpath ? (PAL_STR)hdl + hdlsz : NULL;
@@ -368,4 +364,30 @@ int _DkReceiveHandle(PAL_HANDLE hdl, PAL_HANDLE* cargo) {
 
     *cargo = handle;
     return 0;
+}
+
+int _DkInitDebugStream(const char* path) {
+    int ret;
+
+    if (g_debug_fd >= 0) {
+        ret = INLINE_SYSCALL(close, 1, g_debug_fd);
+        g_debug_fd = -1;
+        if (ret < 0)
+            return unix_to_pal_error(ERRNO(ret));
+    }
+
+    ret = INLINE_SYSCALL(open, 3, path, O_WRONLY | O_APPEND | O_CREAT, PERM_rw_______);
+    if (ret < 0)
+        return unix_to_pal_error(ERRNO(ret));
+    g_debug_fd = ret;
+    return 0;
+}
+
+ssize_t _DkDebugLog(const void* buf, size_t size) {
+    if (g_debug_fd < 0)
+        return -PAL_ERROR_BADHANDLE;
+
+    ssize_t ret = INLINE_SYSCALL(write, 3, g_debug_fd, buf, size);
+    ret = IS_ERR(ret) ? unix_to_pal_error(ERRNO(ret)) : ret;
+    return ret;
 }

@@ -2,8 +2,6 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_mutex.c
- *
  * This file contains APIs that provides operations of mutexes.
  */
 
@@ -18,7 +16,7 @@ DkMutexCreate(PAL_NUM initialCount) {
     ENTER_PAL_CALL(DkMutexCreate);
 
     PAL_HANDLE handle = NULL;
-    int ret           = _DkMutexCreate(&handle, initialCount);
+    int ret = _DkMutexCreate(&handle, initialCount);
 
     if (ret < 0) {
         _DkRaiseFailure(-ret);

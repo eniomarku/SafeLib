@@ -1,5 +1,6 @@
-#include "api.h"
 #include "enclave_pages.h"
+
+#include "api.h"
 #include "list.h"
 #include "pal_error.h"
 #include "pal_internal.h"
@@ -12,8 +13,11 @@ static size_t g_page_size = PRESET_PAGESIZE;
 static void* g_heap_bottom;
 static void* g_heap_top;
 
-/* list of VMAs of used memory areas kept in DESCENDING order */
-/* TODO: rewrite the logic so that this list keeps VMAs in ascending order */
+static size_t g_pal_internal_mem_used = 0;
+
+/* list of VMAs of used memory areas kept in DESCENDING order; note that preallocated PAL internal
+ * memory relies on this descending order of allocations (from high addresses to low), see
+ * _DkGetAvailableUserAddressRange() for more details */
 DEFINE_LIST(heap_vma);
 struct heap_vma {
     LIST_TYPE(heap_vma) list;
@@ -93,8 +97,8 @@ int init_enclave_pages(void) {
             goto out;
         }
 
-        exec_vma->bottom = g_pal_sec.exec_addr;
-        exec_vma->top = g_pal_sec.exec_addr + g_pal_sec.exec_size;
+        exec_vma->bottom          = g_pal_sec.exec_addr;
+        exec_vma->top             = g_pal_sec.exec_addr + g_pal_sec.exec_size;
         exec_vma->is_pal_internal = false;
         INIT_LIST_HEAD(exec_vma, list);
         LISTP_ADD(exec_vma, &g_heap_vma_list, list);
@@ -133,9 +137,9 @@ static void* __create_vma_and_merge(void* addr, size_t size, bool is_pal_interna
     struct heap_vma* check_vma_above = vma_above;
     while (check_vma_above && addr + size > check_vma_above->bottom) {
         if (check_vma_above->is_pal_internal != is_pal_internal) {
-            SGX_DBG(DBG_M, "VMA %p-%p (internal=%d) overlaps with %p-%p (internal=%d)\n",
-                    addr, addr + size, is_pal_internal, check_vma_above->bottom,
-                    check_vma_above->top, check_vma_above->is_pal_internal);
+            SGX_DBG(DBG_M, "VMA %p-%p (internal=%d) overlaps with %p-%p (internal=%d)\n", addr,
+                    addr + size, is_pal_internal, check_vma_above->bottom, check_vma_above->top,
+                    check_vma_above->is_pal_internal);
             return NULL;
         }
         check_vma_above = LISTP_PREV_ENTRY(check_vma_above, &g_heap_vma_list, list);
@@ -145,9 +149,9 @@ static void* __create_vma_and_merge(void* addr, size_t size, bool is_pal_interna
     struct heap_vma* check_vma_below = vma_below;
     while (check_vma_below && addr < check_vma_below->top) {
         if (check_vma_below->is_pal_internal != is_pal_internal) {
-            SGX_DBG(DBG_M, "VMA %p-%p (internal=%d) overlaps with %p-%p (internal=%d)\n",
-                    addr, addr + size, is_pal_internal, check_vma_below->bottom,
-                    check_vma_below->top, check_vma_below->is_pal_internal);
+            SGX_DBG(DBG_M, "VMA %p-%p (internal=%d) overlaps with %p-%p (internal=%d)\n", addr,
+                    addr + size, is_pal_internal, check_vma_below->bottom, check_vma_below->top,
+                    check_vma_below->is_pal_internal);
             return NULL;
         }
         check_vma_below = LISTP_NEXT_ENTRY(check_vma_below, &g_heap_vma_list, list);
@@ -162,11 +166,6 @@ static void* __create_vma_and_merge(void* addr, size_t size, bool is_pal_interna
     vma->top             = addr + size;
     vma->is_pal_internal = is_pal_internal;
 
-    if (g_pal_sec.zero_heap_on_demand) {
-        /* initialize the contents of the new VMA to zero */
-        memset(vma->bottom, 0, vma->top - vma->bottom);
-    }
-
     /* how much memory was freed because [addr, addr + size) overlapped with VMAs */
     size_t freed = 0;
 
@@ -177,8 +176,8 @@ static void* __create_vma_and_merge(void* addr, size_t size, bool is_pal_interna
     while (vma_above && vma_above->bottom <= vma->top &&
            vma_above->is_pal_internal == vma->is_pal_internal) {
         /* newly created VMA grows into above VMA; expand newly created VMA and free above-VMA */
-        SGX_DBG(DBG_M, "Merge %p-%p and %p-%p\n", vma->bottom, vma->top,
-                vma_above->bottom, vma_above->top);
+        SGX_DBG(DBG_M, "Merge %p-%p and %p-%p\n", vma->bottom, vma->top, vma_above->bottom,
+                vma_above->top);
 
         freed += vma_above->top - vma_above->bottom;
         struct heap_vma* vma_above_above = LISTP_PREV_ENTRY(vma_above, &g_heap_vma_list, list);
@@ -194,8 +193,8 @@ static void* __create_vma_and_merge(void* addr, size_t size, bool is_pal_interna
     while (vma_below && vma_below->top >= vma->bottom &&
            vma_below->is_pal_internal == vma->is_pal_internal) {
         /* newly created VMA grows into below VMA; expand newly create VMA and free below-VMA */
-        SGX_DBG(DBG_M, "Merge %p-%p and %p-%p\n", vma->bottom, vma->top,
-                vma_below->bottom, vma_below->top);
+        SGX_DBG(DBG_M, "Merge %p-%p and %p-%p\n", vma->bottom, vma->top, vma_below->bottom,
+                vma_below->top);
 
         freed += vma_below->top - vma_below->bottom;
         struct heap_vma* vma_below_below = LISTP_NEXT_ENTRY(vma_below, &g_heap_vma_list, list);
@@ -220,6 +219,12 @@ static void* __create_vma_and_merge(void* addr, size_t size, bool is_pal_interna
     assert(vma->top - vma->bottom >= (ptrdiff_t)freed);
     size_t allocated = vma->top - vma->bottom - freed;
     __atomic_add_fetch(&g_allocated_pages.counter, allocated / g_page_size, __ATOMIC_SEQ_CST);
+
+    if (is_pal_internal) {
+        assert(allocated <= g_pal_internal_mem_size - g_pal_internal_mem_used);
+        g_pal_internal_mem_used += allocated;
+    }
+
     return addr;
 }
 
@@ -242,6 +247,11 @@ void* get_enclave_pages(void* addr, size_t size, bool is_pal_internal) {
 
     _DkInternalLock(&g_heap_vma_lock);
 
+    if (is_pal_internal && size > g_pal_internal_mem_size - g_pal_internal_mem_used) {
+        /* requested PAL-internal allocation would exceed the limit, fail */
+        return NULL;
+    }
+
     if (addr) {
         /* caller specified concrete address; find VMA right-above this address */
         if (addr < g_heap_bottom || addr + size > g_heap_top)
@@ -261,7 +271,8 @@ void* get_enclave_pages(void* addr, size_t size, bool is_pal_internal) {
 
         LISTP_FOR_EACH_ENTRY(vma, &g_heap_vma_list, list) {
             if (vma->top < vma_above_bottom - size) {
-                ret = __create_vma_and_merge(vma_above_bottom - size, size, is_pal_internal, vma_above);
+                ret = __create_vma_and_merge(vma_above_bottom - size, size, is_pal_internal,
+                                             vma_above);
                 goto out;
             }
             vma_above = vma;
@@ -286,8 +297,8 @@ int free_enclave_pages(void* addr, size_t size) {
 
     size = ALIGN_UP(size, g_page_size);
 
-    if (!access_ok(addr, size) || !IS_ALIGNED_PTR(addr, g_page_size) ||
-        addr < g_heap_bottom || addr + size > g_heap_top) {
+    if (!access_ok(addr, size) || !IS_ALIGNED_PTR(addr, g_page_size) || addr < g_heap_bottom ||
+            addr + size > g_heap_top) {
         return -PAL_ERROR_INVAL;
     }
 
@@ -298,7 +309,7 @@ int free_enclave_pages(void* addr, size_t size) {
     /* VMA list contains both normal and pal-internal VMAs; it is impossible to free an area
      * that overlaps with VMAs of two types at the same time, so we fail in such cases */
     bool is_pal_internal_set = false;
-    bool is_pal_internal;
+    bool is_pal_internal = false;
 
     /* how much memory was actually freed, since [addr, addr + size) can overlap with VMAs */
     size_t freed = 0;
@@ -318,8 +329,10 @@ int free_enclave_pages(void* addr, size_t size) {
         }
 
         if (is_pal_internal != vma->is_pal_internal) {
-            SGX_DBG(DBG_E, "*** Area to free (address %p, size %lu) overlaps with both normal and "
-                    "pal-internal VMAs ***\n", addr, size);
+            SGX_DBG(DBG_E,
+                    "*** Area to free (address %p, size %lu) overlaps with both normal and "
+                    "pal-internal VMAs ***\n",
+                    addr, size);
             ret = -PAL_ERROR_INVAL;
             goto out;
         }
@@ -352,6 +365,11 @@ int free_enclave_pages(void* addr, size_t size) {
     }
 
     __atomic_sub_fetch(&g_allocated_pages.counter, freed / g_page_size, __ATOMIC_SEQ_CST);
+
+    if (is_pal_internal_set && is_pal_internal) {
+        assert(g_pal_internal_mem_used >= freed);
+        g_pal_internal_mem_used -= freed;
+    }
 
 out:
     _DkInternalUnlock(&g_heap_vma_lock);

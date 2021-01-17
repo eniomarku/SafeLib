@@ -1,9 +1,4 @@
-loader.debug_type = inline
+loader.debug_type = "inline"
 loader.insecure__use_cmdline_argv = 1
 
-fs.mount.root.uri = file:
-
-net.allow_bind.1 = 127.0.0.1:8000
-net.allow_peer.1 = 127.0.0.1:8000
-
-sgx.zero_heap_on_demand = 1
+fs.mount.root.uri = "file:"

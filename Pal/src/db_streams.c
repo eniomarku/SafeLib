@@ -2,10 +2,7 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_stream.c
- *
- * This file contains APIs to open, read, write and get attribute of
- * streams.
+ * This file contains APIs to open, read, write and get attribute of streams.
  */
 
 #include "api.h"
@@ -74,13 +71,13 @@ static int parse_stream_uri(const char** uri, char** prefix, struct handle_ops**
             static_assert(static_strlen(URI_PREFIX_UDP) == 4, "URI_PREFIX_UDP has unexpected length");
             static_assert(static_strlen(URI_PREFIX_DEV) == 4, "URI_PREFIX_DEV has unexpected length");
 
-            if (strstartswith_static(u, URI_PREFIX_DIR))
+            if (strstartswith(u, URI_PREFIX_DIR))
                 hops = &g_dir_ops;
-            else if (strstartswith_static(u, URI_PREFIX_TCP))
+            else if (strstartswith(u, URI_PREFIX_TCP))
                 hops = &g_tcp_ops;
-            else if (strstartswith_static(u, URI_PREFIX_UDP))
+            else if (strstartswith(u, URI_PREFIX_UDP))
                 hops = &g_udp_ops;
-            else if (strstartswith_static(u, URI_PREFIX_DEV))
+            else if (strstartswith(u, URI_PREFIX_DEV))
                 hops = &g_dev_ops;
             break;
 
@@ -88,9 +85,9 @@ static int parse_stream_uri(const char** uri, char** prefix, struct handle_ops**
             static_assert(static_strlen(URI_PREFIX_FILE) == 5, "URI_PREFIX_FILE has unexpected length");
             static_assert(static_strlen(URI_PREFIX_PIPE) == 5, "URI_PREFIX_PIPE has unexpected length");
 
-            if (strstartswith_static(u, URI_PREFIX_FILE))
+            if (strstartswith(u, URI_PREFIX_FILE))
                 hops = &g_file_ops;
-            else if (strstartswith_static(u, URI_PREFIX_PIPE))
+            else if (strstartswith(u, URI_PREFIX_PIPE))
                 hops = &g_pipe_ops;
             break;
 
@@ -99,18 +96,18 @@ static int parse_stream_uri(const char** uri, char** prefix, struct handle_ops**
             static_assert(static_strlen(URI_PREFIX_UDP_SRV) == 8, "URI_PREFIX_UDP_SRV has unexpected length");
             static_assert(static_strlen(URI_PREFIX_EVENTFD) == 8, "URI_PREFIX_EVENTFD has unexpected length");
 
-            if (strstartswith_static(u, URI_PREFIX_TCP_SRV))
+            if (strstartswith(u, URI_PREFIX_TCP_SRV))
                 hops = &g_tcp_ops;
-            else if (strstartswith_static(u, URI_PREFIX_UDP_SRV))
+            else if (strstartswith(u, URI_PREFIX_UDP_SRV))
                 hops = &g_udp_ops;
-            else if (strstartswith_static(u, URI_PREFIX_EVENTFD))
+            else if (strstartswith(u, URI_PREFIX_EVENTFD))
                 hops = &g_eventfd_ops;
             break;
 
         case 9: ;
             static_assert(static_strlen(URI_PREFIX_PIPE_SRV) == 9, "URI_PREFIX_PIPE_SRV has unexpected length");
 
-            if (strstartswith_static(u, URI_PREFIX_PIPE_SRV))
+            if (strstartswith(u, URI_PREFIX_PIPE_SRV))
                 hops = &g_pipe_ops;
             break;
 
@@ -753,4 +750,16 @@ const char* _DkStreamRealpath(PAL_HANDLE hdl) {
         return NULL;
 
     return ops->getrealpath(hdl);
+}
+
+PAL_NUM DkDebugLog(PAL_PTR buffer, PAL_NUM size) {
+    ENTER_PAL_CALL(DkDebugLog);
+
+    ssize_t ret = _DkDebugLog(buffer, size);
+    if (ret < 0) {
+        _DkRaiseFailure(-ret);
+        ret = PAL_STREAM_ERROR;
+    }
+
+    LEAVE_PAL_CALL_RETURN(ret);
 }

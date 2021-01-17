@@ -2,10 +2,7 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_stream.c
- *
- * This file contains APIs to open, read, write and get attribute of
- * streams.
+ * This file contains APIs to open, read, write and get attributes of streams.
  */
 
 #include "api.h"
@@ -34,5 +31,13 @@ int _DkSendHandle(PAL_HANDLE hdl, PAL_HANDLE cargo) {
 /* _DkReceiveHandle for internal use. Receive and return a PAL_HANDLE over the
    given PAL_HANDLE else return negative value. */
 int _DkReceiveHandle(PAL_HANDLE hdl, PAL_HANDLE* cargo) {
+    return -PAL_ERROR_NOTIMPLEMENTED;
+}
+
+int _DkInitDebugStream(const char* path) {
+    return -PAL_ERROR_NOTIMPLEMENTED;
+}
+
+ssize_t _DkDebugLog(const void* buf, size_t size) {
     return -PAL_ERROR_NOTIMPLEMENTED;
 }

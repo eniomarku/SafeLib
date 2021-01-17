@@ -2,21 +2,21 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_sched.c
- *
- * Implementation of system calls "sched_yield", "setpriority", "getpriority",
- * "sched_setparam", "sched_getparam", "sched_setscheduler", "sched_getscheduler",
- * "sched_get_priority_max", "sched_get_priority_min", "sched_rr_get_interval",
- * "sched_setaffinity", "sched_getaffinity", "getcpu".
+ * Implementation of system calls "sched_yield", "setpriority", "getpriority", "sched_setparam",
+ * "sched_getparam", "sched_setscheduler", "sched_getscheduler", "sched_get_priority_max",
+ * "sched_get_priority_min", "sched_rr_get_interval", "sched_setaffinity", "sched_getaffinity",
+ * "getcpu".
  */
 
-#include <api.h>
 #include <errno.h>
 #include <linux/resource.h>
 #include <linux/sched.h>
-#include <pal.h>
-#include <shim_internal.h>
-#include <shim_table.h>
+
+#include "api.h"
+#include "pal.h"
+#include "shim_internal.h"
+#include "shim_table.h"
+#include "shim_thread.h"
 
 int shim_do_sched_yield(void) {
     DkThreadYieldExecution();
@@ -71,18 +71,19 @@ int shim_do_sched_setscheduler(pid_t pid, int policy, struct __kernel_sched_para
         return -EINVAL;
 
     /* fail on unrecognized policies */
-    if (policy != SCHED_NORMAL && policy != SCHED_BATCH && policy != SCHED_IDLE && /* non-real-time */
-        policy != SCHED_FIFO && policy != SCHED_RR /* real-time */)
+    if (policy != SCHED_NORMAL && policy != SCHED_BATCH &&
+            policy != SCHED_IDLE && /* non-real-time */
+            policy != SCHED_FIFO && policy != SCHED_RR /* real-time */)
         return -EINVAL;
 
     /* non-real-time policies must have priority of 0 */
     if ((policy == SCHED_NORMAL || policy == SCHED_BATCH || policy == SCHED_IDLE) &&
-        (param->__sched_priority != 0))
+            (param->__sched_priority != 0))
         return -EINVAL;
 
     /* real-time policies must have priority in range [1, 99] */
     if ((policy == SCHED_FIFO || policy == SCHED_RR) &&
-        (param->__sched_priority < 1 || param->__sched_priority > 99))
+            (param->__sched_priority < 1 || param->__sched_priority > 99))
         return -EINVAL;
 
     return 0;
@@ -98,8 +99,9 @@ int shim_do_sched_getscheduler(pid_t pid) {
 
 int shim_do_sched_get_priority_max(int policy) {
     /* fail on unrecognized policies */
-    if (policy != SCHED_NORMAL && policy != SCHED_BATCH && policy != SCHED_IDLE && /* non-real-time */
-        policy != SCHED_FIFO && policy != SCHED_RR /* real-time */)
+    if (policy != SCHED_NORMAL && policy != SCHED_BATCH &&
+            policy != SCHED_IDLE && /* non-real-time */
+            policy != SCHED_FIFO && policy != SCHED_RR /* real-time */)
         return -EINVAL;
 
     /* real-time policies have max priority of 99 */
@@ -112,8 +114,9 @@ int shim_do_sched_get_priority_max(int policy) {
 
 int shim_do_sched_get_priority_min(int policy) {
     /* fail on unrecognized policies */
-    if (policy != SCHED_NORMAL && policy != SCHED_BATCH && policy != SCHED_IDLE && /* non-real-time */
-        policy != SCHED_FIFO && policy != SCHED_RR /* real-time */)
+    if (policy != SCHED_NORMAL && policy != SCHED_BATCH &&
+            policy != SCHED_IDLE && /* non-real-time */
+            policy != SCHED_FIFO && policy != SCHED_RR /* real-time */)
         return -EINVAL;
 
     /* real-time policies have min priority of 1 */
@@ -137,51 +140,85 @@ int shim_do_sched_rr_get_interval(pid_t pid, struct timespec* interval) {
     return 0;
 }
 
-static int check_affinity_params(int ncpus, size_t len, __kernel_cpu_set_t* user_mask_ptr) {
-    /* Check that user_mask_ptr is valid; if not, should return -EFAULT */
-    if (test_user_memory(user_mask_ptr, len, true))
+long shim_do_sched_setaffinity(pid_t pid, unsigned int cpumask_size, unsigned long* user_mask_ptr) {
+    int ret;
+
+    /* check if user_mask_ptr is valid */
+    if (test_user_memory(user_mask_ptr, cpumask_size, /*write=*/false))
         return -EFAULT;
 
-    /* Linux kernel bitmap is based on long. So according to its
-     * implementation, round up the result to sizeof(long) */
-    size_t bitmask_long_count    = (ncpus + sizeof(long) * 8 - 1) / (sizeof(long) * 8);
-    size_t bitmask_size_in_bytes = bitmask_long_count * sizeof(long);
-    if (len < bitmask_size_in_bytes)
-        return -EINVAL;
-    /* Linux kernel also rejects non-natural size */
-    if (len & (sizeof(long) - 1))
-        return -EINVAL;
+    struct shim_thread* thread = pid ? lookup_thread(pid) : get_cur_thread();
+    if (!thread)
+        return -ESRCH;
 
-    return bitmask_size_in_bytes;
-}
+    /* lookup_thread() internally increments thread count; do the same in case of
+       get_cur_thread(). */
+    if (pid == 0)
+        get_thread(thread);
 
-/* dummy implementation: ignore user-supplied mask and return success */
-int shim_do_sched_setaffinity(pid_t pid, size_t len, __kernel_cpu_set_t* user_mask_ptr) {
-    __UNUSED(pid);
-    int ncpus = PAL_CB(cpu_info.cpu_num);
+    /* Internal graphene threads are not affinitized; if we hit an internal thread here, this is
+       some bug in user app. */
+    if (is_internal(thread)) {
+        put_thread(thread);
+        return -ESRCH;
+    }
 
-    int bitmask_size_in_bytes = check_affinity_params(ncpus, len, user_mask_ptr);
-    if (bitmask_size_in_bytes < 0)
-        return bitmask_size_in_bytes;
+    ret = DkThreadSetCpuAffinity(thread->pal_handle, cpumask_size, user_mask_ptr);
+    if (!ret) {
+        put_thread(thread);
+        return -PAL_ERRNO();
+    }
 
+    put_thread(thread);
     return 0;
 }
 
-/* dummy implementation: always return all-ones (as many as there are host CPUs)  */
-int shim_do_sched_getaffinity(pid_t pid, size_t len, __kernel_cpu_set_t* user_mask_ptr) {
-    __UNUSED(pid);
-    int ncpus = PAL_CB(cpu_info.cpu_num);
+long shim_do_sched_getaffinity(pid_t pid, unsigned int cpumask_size, unsigned long* user_mask_ptr) {
+    int ret;
+    size_t cpu_cnt = PAL_CB(cpu_info.online_logical_cores);
 
-    int bitmask_size_in_bytes = check_affinity_params(ncpus, len, user_mask_ptr);
-    if (bitmask_size_in_bytes < 0)
-        return bitmask_size_in_bytes;
+    /* Check if user_mask_ptr is valid */
+    if (test_user_memory(user_mask_ptr, cpumask_size, /*write=*/true))
+        return -EFAULT;
 
-    memset(user_mask_ptr, 0, len);
-    for (int i = 0; i < ncpus; i++) {
-        ((uint8_t*)user_mask_ptr)[i / 8] |= 1 << (i % 8);
+    /* Linux kernel bitmap is based on long. So according to its implementation, round up the result
+     * to sizeof(long) */
+    size_t bitmask_size_in_bytes = BITS_TO_LONGS(cpu_cnt) * sizeof(long);
+    if (cpumask_size < bitmask_size_in_bytes) {
+        debug("size of cpumask must be at least %lu but supplied cpumask is %u\n",
+               bitmask_size_in_bytes, cpumask_size);
+        return -EINVAL;
     }
-    /* imitate the Linux kernel implementation
-     * See SYSCALL_DEFINE3(sched_getaffinity) */
+
+    /* Linux kernel also rejects non-natural size */
+    if (cpumask_size & (sizeof(long) - 1))
+        return -EINVAL;
+
+    struct shim_thread* thread = pid ? lookup_thread(pid) : get_cur_thread();
+    if (!thread)
+        return -ESRCH;
+
+    /* lookup_thread() internally increments thread count; do the same in case of
+       get_cur_thread(). */
+    if (pid == 0)
+        get_thread(thread);
+
+    /* Internal graphene threads are not affinitized; if we hit an internal thread here, this is
+       some bug in user app. */
+    if (is_internal(thread)) {
+        put_thread(thread);
+        return -ESRCH;
+    }
+
+    memset(user_mask_ptr, 0, cpumask_size);
+    ret = DkThreadGetCpuAffinity(thread->pal_handle, bitmask_size_in_bytes, user_mask_ptr);
+    if (!ret) {
+        put_thread(thread);
+        return -PAL_ERRNO();
+    }
+
+    put_thread(thread);
+    /* on success, imitate Linux kernel implementation: see SYSCALL_DEFINE3(sched_getaffinity) */
     return bitmask_size_in_bytes;
 }
 

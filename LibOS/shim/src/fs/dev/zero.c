@@ -8,6 +8,7 @@
  */
 
 #include "shim_fs.h"
+#include "stat.h"
 
 static ssize_t dev_zero_read(struct shim_handle* hdl, void* buf, size_t count) {
     __UNUSED(hdl);
@@ -58,7 +59,7 @@ static int dev_zero_open(struct shim_handle* hdl, const char* name, int flags) {
                                .stat     = &dev_zero_stat,
                                .hstat    = &dev_zero_hstat};
 
-    memcpy(&hdl->info.dev.dev_ops, &ops, sizeof(ops));
+    hdl->info.dev.dev_ops = ops;
     return 0;
 }
 

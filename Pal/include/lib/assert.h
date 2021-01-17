@@ -1,9 +1,5 @@
 /*
- * assert.h
- *
- * Define a common interface for assertions that builds for both the PAL
- * and libOS.
- *
+ * Define a common interface for assertions that builds for both the PAL and libOS.
  */
 
 #ifndef ASSERT_H
@@ -25,16 +21,18 @@ noreturn void __abort(void);
  * build system.
  */
 #ifdef DEBUG
-#define assert(expr)                                                     \
-    ({                                                                   \
-        (!(expr)) ? ({                                                   \
-            warn("assert failed " __FILE__ ":%d %s\n", __LINE__, #expr); \
-            __abort();                                                   \
-        })                                                               \
-                  : (void)0;                                             \
+/* This `if` is weird intentionally - not to have parentheses around `expr` to catch `assert(x = y)`
+ * errors. */
+#define assert(expr)                                                        \
+    ({                                                                      \
+        if (expr) {} else {                                                 \
+            warn("assert failed " __FILE__ ":%d %s\n", __LINE__, #expr);    \
+            __abort();                                                      \
+        }                                                                   \
+        (void)0;                                                            \
     })
 #else
 #define assert(expr) ((void)0)
 #endif
 
-#endif  /* ASSERT_H */
+#endif /* ASSERT_H */

@@ -41,9 +41,12 @@ Graphene:
 Graphene is *not a production-ready software* (yet)
 ===================================================
 
-We are still in a process of transition from a research proof-of-concept into a
-more reliable piece of software. The most important problems (which include
-major security issues) are tracked in
+Graphene is at a point where it is functionally ready for testing and development, but there are
+some known security issues that require more attention.  The effort to review and harden security of
+Graphene is ongoing.  Our roadmap is to address the remaining production blockers roughly by the fall
+of 2021.  Of course, with additional help from the community, we can meet these milestones sooner!
+
+The most important problems (which include major security issues) are tracked in
 `#1544 (Production blockers) <https://github.com/oscarlab/graphene/issues/1544>`__.
 You should read it before installing and using Graphene.
 
@@ -60,20 +63,11 @@ are available <https://graphene.readthedocs.io/en/latest/building.html>`__.
 How to run an application in Graphene?
 ======================================
 
-Graphene library OS uses the PAL (``libpal.so``) as a loader to bootstrap
-applications in the library OS. To start Graphene, PAL (``libpal.so``) will have
-to be run as an executable, with the name of the program, and a |nbsp| "manifest
-file" (per-app configuration) given from the command line. Graphene provides
-three options for specifying the programs and manifest files:
+Graphene library OS uses ``pal_loader`` utility as a loader to bootstrap
+applications in the library OS::
 
-- option 1 (automatic manifest)::
-
-   [PATH TO Runtime]/pal_loader [PROGRAM] [ARGUMENTS]...
-   (Manifest file: "[PROGRAM].manifest" or "manifest")
-
-- option 2 (given manifest)::
-
-   [PATH TO Runtime]/pal_loader [MANIFEST] [ARGUMENTS]...
+   [PATH TO Runtime]/pal_loader [EXECUTABLE] [ARGUMENTS]...
+   (Manifest file: "[EXECUTABLE].manifest" or "manifest")
 
 Running an application requires some minimal configuration in the application's
 manifest file. A |nbsp| sensible manifest file will include paths to the library
@@ -82,11 +76,11 @@ OS and other libraries the application requires; environment variables, such as
 
 Here is an example manifest file::
 
-    loader.preload = file:LibOS/shim/src/libsysdb.so
-    loader.env.LD_LIBRAY_PATH = /lib
-    fs.mount.libc.type = chroot
-    fs.mount.libc.path = /lib
-    fs.mount.libc.uri = file:[relative path to Graphene root]/Runtime
+    loader.preload = "file:LibOS/shim/src/libsysdb.so"
+    loader.env.LD_LIBRAY_PATH = "/lib"
+    fs.mount.libc.type = "chroot"
+    fs.mount.libc.path = "/lib"
+    fs.mount.libc.uri = "file:[relative path to Graphene root]/Runtime"
 
 More examples can be found in the test directories (``LibOS/shim/test``). We
 have also tested several applications, such as GCC, Bash, and Apache.

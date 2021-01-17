@@ -2,8 +2,6 @@
 /* Copyright (C) 2019 Intel Corporation */
 
 /*
- * db_eventfd.c
- *
  * This file contains operations to handle streams with URIs that have "eventfd:".
  */
 
@@ -13,7 +11,7 @@
 #include "pal_error.h"
 #include "pal_internal.h"
 
-/* `type` must be eventfd, `uri` & `access` & `share` are unused, `create` holds eventfd's initval, 
+/* `type` must be eventfd, `uri` & `access` & `share` are unused, `create` holds eventfd's initval,
  * `options` holds eventfd's flags */
 static int eventfd_pal_open(PAL_HANDLE* handle, const char* type, const char* uri, int access,
                             int share, int create, int options) {

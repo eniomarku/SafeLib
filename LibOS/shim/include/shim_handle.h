@@ -2,8 +2,6 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_handle.h
- *
  * Definitions of types and functions for file/handle bookkeeping.
  */
 
@@ -12,17 +10,18 @@
 
 #include <asm/fcntl.h>
 #include <asm/resource.h>
-#include <atomic.h>  // TODO: migrate to stdatomic.h
 #include <linux/in.h>
 #include <linux/in6.h>
 #include <linux/shm.h>
 #include <linux/un.h>
-#include <list.h>
-#include <pal.h>
-#include <shim_defs.h>
-#include <shim_sysv.h>
-#include <shim_types.h>
 #include <stdalign.h>
+
+#include "atomic.h"  // TODO: migrate to stdatomic.h
+#include "list.h"
+#include "pal.h"
+#include "shim_defs.h"
+#include "shim_sysv.h"
+#include "shim_types.h"
 
 /* start definition of shim handle */
 enum shim_handle_type {
@@ -229,7 +228,6 @@ struct shim_msg_handle {
     IDTYPE msqid;         /* msg queue identifier */
     bool owned;           /* owned by current process */
     struct shim_ipc_info* owner;
-    LEASETYPE lease;
     int perm;        /* access permissions */
     bool deleted;    /* marking the queue deleted */
     int nmsgs;       /* number of msgs */
@@ -242,7 +240,6 @@ struct shim_msg_handle {
     int ntypes;
     int maxtypes;
     struct msg_type* types;
-    struct sysv_score scores[MAX_SYSV_CLIENTS];
     LIST_TYPE(shim_msg_handle) list;
     LIST_TYPE(shim_msg_handle) key_hlist;
     LIST_TYPE(shim_msg_handle) qid_hlist;
@@ -256,14 +253,12 @@ struct shim_sem_handle {
     IDTYPE semid;
     bool owned;
     struct shim_ipc_info* owner;
-    LEASETYPE lease;
     int perm;
     bool deleted;
     PAL_HANDLE event;
     int nsems;
     struct sem_obj* sems;
     int nreqs;
-    struct sysv_score scores[MAX_SYSV_CLIENTS];
     LISTP_TYPE(sem_ops) migrated;
     LIST_TYPE(shim_sem_handle) list;
     LIST_TYPE(shim_sem_handle) key_hlist;
@@ -288,12 +283,25 @@ struct shim_str_handle {
 
 DEFINE_LIST(shim_epoll_item);
 DEFINE_LISTP(shim_epoll_item);
-struct shim_epoll_handle {
-    int maxfds;
-    int waiter_cnt;
+struct shim_epoll_item {
+    FDTYPE fd;
+    uint64_t data;
+    unsigned int events;
+    unsigned int revents;
+    /* The two references below are not ref-counted (to prevent cycles). When a handle is dropped
+     * (ref-count goes to 0) it is also removed from all epoll instances. When an epoll instance is
+     * destroyed, all handles that it traced are removed from it. */
+    struct shim_handle* handle;      /* reference to monitored object (socket, pipe, file, etc) */
+    struct shim_handle* epoll;       /* reference to epoll object that monitors handle object */
+    LIST_TYPE(shim_epoll_item) list; /* list of shim_epoll_items, used by epoll object (via `fds`) */
+    LIST_TYPE(shim_epoll_item) back; /* list of epolls, used by handle object (via `epolls`) */
+};
 
-    int pal_cnt;
-    PAL_HANDLE* pal_handles;
+struct shim_epoll_handle {
+    size_t waiter_cnt;
+
+    /* Number of items on fds list. */
+    size_t fds_count;
 
     AEVENTTYPE event;
     LISTP_TYPE(shim_epoll_item) fds;
@@ -346,9 +354,11 @@ struct shim_handle {
 
 /* allocating / manage handle */
 struct shim_handle* get_new_handle(void);
-void flush_handle(struct shim_handle* hdl);
 void get_handle(struct shim_handle* hdl);
 void put_handle(struct shim_handle* hdl);
+
+/* Set handle to non-blocking mode. */
+int set_handle_nonblocking(struct shim_handle* hdl);
 
 /* file descriptor table */
 struct shim_fd_handle {
@@ -391,13 +401,14 @@ struct shim_handle* get_fd_handle(FDTYPE fd, int* flags, struct shim_handle_map*
 int set_new_fd_handle(struct shim_handle* hdl, int fd_flags, struct shim_handle_map* map);
 int set_new_fd_handle_by_fd(FDTYPE fd, struct shim_handle* hdl, int fd_flags,
                             struct shim_handle_map* map);
+int set_new_fd_handle_above_fd(FDTYPE fd, struct shim_handle* hdl, int fd_flags,
+                               struct shim_handle_map* map);
 struct shim_handle* __detach_fd_handle(struct shim_fd_handle* fd, int* flags,
                                        struct shim_handle_map* map);
 struct shim_handle* detach_fd_handle(FDTYPE fd, int* flags, struct shim_handle_map* map);
 
 /* manage handle mapping */
 int dup_handle_map(struct shim_handle_map** new_map, struct shim_handle_map* old_map);
-int flush_handle_map(struct shim_handle_map* map);
 void get_handle_map(struct shim_handle_map* map);
 void put_handle_map(struct shim_handle_map* map);
 int walk_handle_map(int (*callback)(struct shim_fd_handle*, struct shim_handle_map*),

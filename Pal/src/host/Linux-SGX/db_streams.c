@@ -2,11 +2,19 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_stream.c
- *
- * This file contains APIs to open, read, write and get attribute of
- * streams.
+ * This file contains APIs to open, read, write and get attribute of streams.
  */
+
+#include <asm/fcntl.h>
+#include <asm/poll.h>
+#include <asm/socket.h>
+#include <asm/stat.h>
+#include <linux/in.h>
+#include <linux/in6.h>
+#include <linux/msg.h>
+#include <linux/socket.h>
+#include <linux/types.h>
+#include <linux/wait.h>
 
 #include "api.h"
 #include "enclave_pages.h"
@@ -19,22 +27,14 @@
 #include "pal_linux.h"
 #include "pal_linux_defs.h"
 #include "pal_linux_error.h"
+#include "perm.h"
+#include "stat.h"
 
-typedef __kernel_pid_t pid_t;
-#include <asm/fcntl.h>
-#include <asm/poll.h>
-#include <asm/socket.h>
-#include <asm/stat.h>
-#include <linux/in.h>
-#include <linux/in6.h>
-#include <linux/msg.h>
-#include <linux/socket.h>
-#include <linux/stat.h>
-#include <linux/types.h>
-#include <linux/wait.h>
 
-#define DUMMYPAYLOAD "dummypayload"
+#define DUMMYPAYLOAD     "dummypayload"
 #define DUMMYPAYLOADSIZE (sizeof(DUMMYPAYLOAD))
+
+static int g_debug_fd = -1;
 
 struct hdl_header {
     uint8_t fds;       /* bitmask of host file descriptors corresponding to PAL handle */
@@ -117,10 +117,7 @@ static ssize_t handle_serialize(PAL_HANDLE handle, void** data) {
         case pal_type_pipeprv:
             break;
         case pal_type_dev:
-            if (handle->dev.realpath) {
-                d1   = handle->dev.realpath;
-                dsz1 = strlen(handle->dev.realpath) + 1;
-            }
+            /* devices have no fields to serialize */
             break;
         case pal_type_dir:
             if (handle->dir.realpath) {
@@ -142,7 +139,13 @@ static ssize_t handle_serialize(PAL_HANDLE handle, void** data) {
             }
             break;
         case pal_type_process:
-            /* do not send ssl_ctx to child */
+            /* session key is part of handle but need to serialize SSL context */
+            if (handle->process.ssl_ctx) {
+                free_d1 = true;
+                ret = _DkStreamSecureSave(handle->process.ssl_ctx, (const uint8_t**)&d1, &dsz1);
+                if (ret < 0)
+                    return -PAL_ERROR_DENIED;
+            }
             break;
         case pal_type_eventfd:
             break;
@@ -203,7 +206,6 @@ static int handle_deserialize(PAL_HANDLE* handle, const void* data, size_t size,
         case pal_type_pipeprv:
             break;
         case pal_type_dev:
-            hdl->dev.realpath = hdl->dev.realpath ? (PAL_STR)hdl + hdlsz : NULL;
             break;
         case pal_type_dir:
             hdl->dir.realpath = hdl->dir.realpath ? (PAL_STR)hdl + hdlsz : NULL;
@@ -221,8 +223,15 @@ static int handle_deserialize(PAL_HANDLE* handle, const void* data, size_t size,
             break;
         }
         case pal_type_process:
-            /* child doesn't need to know ssl_ctx of other processes */
-            hdl->process.ssl_ctx = NULL;
+            /* session key is part of handle but need to deserialize SSL context */
+            hdl->process.stream = fds[0]; /* correct host FD must be passed to SSL context */
+            ret = _DkStreamSecureInit(hdl, hdl->process.is_server, &hdl->process.session_key,
+                                      (LIB_SSL_CONTEXT**)&hdl->process.ssl_ctx,
+                                      (const uint8_t*)hdl + hdlsz, size - hdlsz);
+            if (ret < 0) {
+                free(hdl);
+                return -PAL_ERROR_DENIED;
+            }
             break;
         case pal_type_eventfd:
             break;
@@ -285,7 +294,8 @@ int _DkSendHandle(PAL_HANDLE hdl, PAL_HANDLE cargo) {
     memcpy(CMSG_DATA(control_hdr), fds, fds_size);
 
     /* next send FDs-to-transfer as ancillary data */
-    ret = ocall_send(fd, DUMMYPAYLOAD, DUMMYPAYLOADSIZE, NULL, 0, control_hdr, control_hdr->cmsg_len);
+    ret = ocall_send(fd, DUMMYPAYLOAD, DUMMYPAYLOADSIZE, NULL, 0, control_hdr,
+                     control_hdr->cmsg_len);
     if (IS_ERR(ret)) {
         free(hdl_data);
         return unix_to_pal_error(ERRNO(ret));
@@ -345,7 +355,8 @@ int _DkReceiveHandle(PAL_HANDLE hdl, PAL_HANDLE* cargo) {
 
     /* next receive FDs-to-transfer as ancillary data */
     char dummypayload[DUMMYPAYLOADSIZE];
-    ret = ocall_recv(fd, dummypayload, DUMMYPAYLOADSIZE, NULL, NULL, control_buf, &control_buf_size);
+    ret = ocall_recv(fd, dummypayload, DUMMYPAYLOADSIZE, NULL, NULL, control_buf,
+                     &control_buf_size);
     if (IS_ERR(ret))
         return unix_to_pal_error(ERRNO(ret));
 
@@ -388,4 +399,30 @@ int _DkReceiveHandle(PAL_HANDLE hdl, PAL_HANDLE* cargo) {
 
     *cargo = handle;
     return 0;
+}
+
+int _DkInitDebugStream(const char* path) {
+    int ret;
+
+    if (g_debug_fd >= 0) {
+        ret = ocall_close(g_debug_fd);
+        g_debug_fd = -1;
+        if (ret < 0)
+            return unix_to_pal_error(ERRNO(ret));
+    }
+
+    ret = ocall_open(path, O_WRONLY | O_APPEND | O_CREAT, PERM_rw_______);
+    if (ret < 0)
+        return unix_to_pal_error(ERRNO(ret));
+    g_debug_fd = ret;
+    return 0;
+}
+
+ssize_t _DkDebugLog(const void* buf, size_t size) {
+    if (g_debug_fd < 0)
+        return -PAL_ERROR_BADHANDLE;
+
+    ssize_t ret = ocall_write(g_debug_fd, buf, size);
+    ret = IS_ERR(ret) ? unix_to_pal_error(ERRNO(ret)) : ret;
+    return ret;
 }

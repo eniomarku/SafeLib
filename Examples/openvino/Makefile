@@ -16,7 +16,7 @@ MODEL_COMMIT ?= acf297c73db8cb3f68791ae1fad4a7cc4a6039e5     # corresponds to ta
 MODEL_NAME ?= VGG_VOC0712Plus_SSD_300x300_ft_iter_160000
 
 OPENVINO_DIR ?= $(THIS_DIR)openvino
-OPENVINO_COMMIT ?= ba6e22b1b5ee4cbefcc30e8d9493cddb0bb3dfdf  # corresponds to tag "2019_R2"
+OPENVINO_COMMIT ?= 023e7c2c3f8a8ac83564db09799d2049115d9cf6  # corresponds to tag "2020.4"
 
 # Relative path to Graphene root and key for enclave signing
 GRAPHENE_DIR ?= ../..
@@ -25,17 +25,18 @@ SGX_SIGNER_KEY ?= $(GRAPHENE_DIR)/Pal/src/host/Linux-SGX/signer/enclave-key.pem
 ifeq ($(DEBUG),1)
 GRAPHENE_DEBUG = inline
 OPENVINO_BUILD = Debug
-LIBTBB_DEBUG   = "sgx.trusted_files.libtbb_debug = file:$(OPENVINO_DIR)/inference-engine/temp/tbb/lib/libtbb_debug.so.2"
 else
 GRAPHENE_DEBUG = none
 OPENVINO_BUILD = Release
-LIBTBB_DEBUG   = ""
 endif
 
 .PHONY: all
-all: $(OPENVINO_DIR)/inference-engine/bin/intel64/$(OPENVINO_BUILD)/object_detection_sample_ssd $(MODEL_DIR)/$(MODEL_NAME).bin openvino.manifest pal_loader
+all: $(OPENVINO_DIR)/inference-engine/bin/intel64/$(OPENVINO_BUILD)/object_detection_sample_ssd \
+     $(MODEL_DIR)/$(MODEL_NAME).bin object_detection_sample_ssd.manifest pal_loader \
+     | object_detection_sample_ssd
 ifeq ($(SGX),1)
-all: openvino.manifest.sgx openvino.sig openvino.token
+all: object_detection_sample_ssd.manifest.sgx object_detection_sample_ssd.sig \
+     object_detection_sample_ssd.token
 endif
 
 include ../../Scripts/Makefile.configs
@@ -53,47 +54,50 @@ $(MODEL_DIR)/$(MODEL_NAME).bin: $(MODEL_DIR)/README.md
 		--output_dir $(abspath $(MODEL_DIR))
 
 $(OPENVINO_DIR)/README.md:
-	git clone https://github.com/opencv/dldt.git $(OPENVINO_DIR)
+	git clone https://github.com/openvinotoolkit/openvino.git $(OPENVINO_DIR)
 	git -C $(OPENVINO_DIR) checkout $(OPENVINO_COMMIT)
-	git -C $(OPENVINO_DIR)/inference-engine submodule init
-	git -C $(OPENVINO_DIR)/inference-engine submodule update --recursive
+	git -C $(OPENVINO_DIR)/inference-engine submodule update --init --recursive
 
 $(OPENVINO_DIR)/inference-engine/bin/intel64/$(OPENVINO_BUILD)/object_detection_sample_ssd: $(OPENVINO_DIR)/README.md
 	cd $(OPENVINO_DIR)/inference-engine && mkdir -p build
-	cd $(OPENVINO_DIR)/inference-engine/build && cmake -DCMAKE_BUILD_TYPE=$(OPENVINO_BUILD) ..
+	cd $(OPENVINO_DIR)/inference-engine/build && cmake -DTHREADING=OMP -DCMAKE_BUILD_TYPE=$(OPENVINO_BUILD) ../..
 	$(MAKE) -C $(OPENVINO_DIR)/inference-engine/build
 
-openvino.manifest: openvino.manifest.template
+object_detection_sample_ssd.manifest: object_detection_sample_ssd.manifest.template
 	sed -e 's|$$(GRAPHENE_DIR)|'"$(GRAPHENE_DIR)"'|g' \
 	    -e 's|$$(GRAPHENE_DEBUG)|'"$(GRAPHENE_DEBUG)"'|g' \
 	    -e 's|$$(OPENVINO_DIR)|'"$(OPENVINO_DIR)"'|g' \
 	    -e 's|$$(OPENVINO_DIR_ABSPATH)|'"$(abspath $(OPENVINO_DIR))"'|g' \
 	    -e 's|$$(MODEL_DIR)|'"$(MODEL_DIR)"'|g' \
 	    -e 's|$$(OPENVINO_BUILD)|'"$(OPENVINO_BUILD)"'|g' \
-	    -e 's|$$(LIBTBB_DEBUG)|'$(LIBTBB_DEBUG)'|g' \
 	    -e 's|$$(ARCH_LIBDIR)|'"$(ARCH_LIBDIR)"'|g' \
 	    $< > $@
 
-# Generating the SGX-specific manifest (openvino.manifest.sgx), the enclave signature,
+# Generating the SGX-specific manifest (object_detection_sample_ssd.manifest.sgx), the enclave signature,
 # and the token for enclave initialization.
-openvino.manifest.sgx: openvino.manifest $(OPENVINO_DIR)/inference-engine/bin/intel64/$(OPENVINO_BUILD)/object_detection_sample_ssd
+object_detection_sample_ssd.manifest.sgx: object_detection_sample_ssd.manifest \
+		$(OPENVINO_DIR)/inference-engine/bin/intel64/$(OPENVINO_BUILD)/object_detection_sample_ssd \
+		| object_detection_sample_ssd
 	$(GRAPHENE_DIR)/Pal/src/host/Linux-SGX/signer/pal-sgx-sign \
+		-exec object_detection_sample_ssd \
 		-libpal $(GRAPHENE_DIR)/Runtime/libpal-Linux-SGX.so \
 		-key $(SGX_SIGNER_KEY) \
 		-manifest $< -output $@
 
-openvino.sig: openvino.manifest.sgx
+object_detection_sample_ssd.sig: object_detection_sample_ssd.manifest.sgx
 
-openvino.token: openvino.sig
+object_detection_sample_ssd.token: object_detection_sample_ssd.sig
 	$(GRAPHENE_DIR)/Pal/src/host/Linux-SGX/signer/pal-sgx-get-token -sig $< -output $@
 
-# Extra executables
+object_detection_sample_ssd:
+	ln -s $(OPENVINO_DIR)/bin/intel64/$(OPENVINO_BUILD)/object_detection_sample_ssd $@
+
 pal_loader:
 	ln -s $(GRAPHENE_DIR)/Runtime/pal_loader $@
 
 .PHONY: clean
 clean:
-	$(RM) *.manifest *.manifest.sgx *.token *.sig pal_loader *.bmp
+	$(RM) *.manifest *.manifest.sgx *.token *.sig object_detection_sample_ssd pal_loader *.bmp
 
 .PHONY: distclean
 distclean: clean

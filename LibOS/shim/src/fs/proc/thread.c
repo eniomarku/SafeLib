@@ -1,20 +1,22 @@
-#define __KERNEL__
-
 #include <asm/fcntl.h>
 #include <asm/mman.h>
 #include <asm/unistd.h>
 #include <errno.h>
 #include <linux/fcntl.h>
-#include <linux/stat.h>
 
-#include <pal.h>
-#include <pal_error.h>
-#include <shim_fs.h>
-#include <shim_handle.h>
-#include <shim_internal.h>
-#include <shim_table.h>
-#include <shim_thread.h>
-#include <shim_utils.h>
+#include "pal.h"
+#include "pal_error.h"
+#include "perm.h"
+#include "shim_fs.h"
+#include "shim_handle.h"
+#include "shim_internal.h"
+#include "shim_lock.h"
+#include "shim_process.h"
+#include "shim_table.h"
+#include "shim_thread.h"
+#include "shim_utils.h"
+#include "stat.h"
+#include "shim_vma.h"
 
 static int parse_thread_name(const char* name, IDTYPE* pidptr, const char** next, size_t* next_len,
                              const char** nextnext) {
@@ -24,7 +26,7 @@ static int parse_thread_name(const char* name, IDTYPE* pidptr, const char** next
     if (*p == '/')
         p++;
 
-    if (strstartswith_static(p, "self")) {
+    if (strstartswith(p, "self")) {
         p += static_strlen("self");
         if (*p && *p != '/')
             return -ENOENT;
@@ -61,8 +63,8 @@ static int parse_thread_name(const char* name, IDTYPE* pidptr, const char** next
     return 0;
 }
 
-static int find_thread_link(const char* name, struct shim_qstr* link, struct shim_dentry** dentptr,
-                            struct shim_thread** threadptr) {
+static int find_thread_link(const char* name, struct shim_qstr* link,
+                            struct shim_dentry** dentptr) {
     const char* next;
     const char* nextnext;
     size_t next_len;
@@ -76,28 +78,25 @@ static int find_thread_link(const char* name, struct shim_qstr* link, struct shi
 
     if (!thread)
         return -ENOENT;
+    /* We just checked that a thread with this id exists and we do not need this handle anymore. */
+    put_thread(thread);
 
-    if (!thread->in_vm) {
-        ret = -ENOENT;
-        goto out;
-    }
-
-    lock(&thread->lock);
+    lock(&g_process.fs_lock);
 
     if (next_len == static_strlen("root") && !memcmp(next, "root", next_len)) {
-        dent = thread->root;
+        dent = g_process.root;
         get_dentry(dent);
     }
 
     if (next_len == static_strlen("cwd") && !memcmp(next, "cwd", next_len)) {
-        dent = thread->cwd;
+        dent = g_process.cwd;
         get_dentry(dent);
     }
 
     if (next_len == static_strlen("exe") && !memcmp(next, "exe", next_len)) {
-        struct shim_handle* exec = thread->exec;
+        struct shim_handle* exec = g_process.exec;
         if (!exec->dentry) {
-            unlock(&thread->lock);
+            unlock(&g_process.fs_lock);
             ret = -EINVAL;
             goto out;
         }
@@ -105,7 +104,7 @@ static int find_thread_link(const char* name, struct shim_qstr* link, struct shi
         get_dentry(dent);
     }
 
-    unlock(&thread->lock);
+    unlock(&g_process.fs_lock);
 
     if (nextnext) {
         struct shim_dentry* next_dent = NULL;
@@ -118,10 +117,9 @@ static int find_thread_link(const char* name, struct shim_qstr* link, struct shi
         dent = next_dent;
     }
 
-    if (link) {
-        size_t size;
-        char* path = dentry_get_path(dent, true, &size);
-        qstrsetstr(link, path, size);
+    if (link && !dentry_get_path_into_qstr(dent, link)) {
+        ret = -ENOMEM;
+        goto out;
     }
 
     if (dentptr) {
@@ -129,24 +127,17 @@ static int find_thread_link(const char* name, struct shim_qstr* link, struct shi
         *dentptr = dent;
     }
 
-    if (threadptr) {
-        get_thread(thread);
-        *threadptr = thread;
-    }
-
     ret = 0;
 out:
     if (dent)
         put_dentry(dent);
-    if (thread)
-        put_thread(thread);
     return ret;
 }
 
 static int proc_thread_link_open(struct shim_handle* hdl, const char* name, int flags) {
     struct shim_dentry* dent;
 
-    int ret = find_thread_link(name, NULL, &dent, NULL);
+    int ret = find_thread_link(name, NULL, &dent);
     if (ret < 0)
         return ret;
 
@@ -164,7 +155,7 @@ out:
 static int proc_thread_link_mode(const char* name, mode_t* mode) {
     struct shim_dentry* dent;
 
-    int ret = find_thread_link(name, NULL, &dent, NULL);
+    int ret = find_thread_link(name, NULL, &dent);
     if (ret < 0)
         return ret;
 
@@ -182,7 +173,7 @@ out:
 static int proc_thread_link_stat(const char* name, struct stat* buf) {
     struct shim_dentry* dent;
 
-    int ret = find_thread_link(name, NULL, &dent, NULL);
+    int ret = find_thread_link(name, NULL, &dent);
     if (ret < 0)
         return ret;
 
@@ -198,7 +189,7 @@ out:
 }
 
 static int proc_thread_link_follow_link(const char* name, struct shim_qstr* link) {
-    return find_thread_link(name, link, NULL, NULL);
+    return find_thread_link(name, link, NULL);
 }
 
 static const struct pseudo_fs_ops fs_thread_link = {
@@ -237,7 +228,7 @@ static int parse_thread_fd(const char* name, const char** rest, struct shim_hand
     if (!thread)
         return -ENOENT;
 
-    struct shim_handle_map* handle_map = get_cur_handle_map(thread);
+    struct shim_handle_map* handle_map = get_thread_handle_map(thread);
 
     lock(&handle_map->lock);
 
@@ -282,7 +273,7 @@ static int proc_list_thread_each_fd(const char* name, struct shim_dirent** buf, 
     if (!thread)
         return -ENOENT;
 
-    struct shim_handle_map* handle_map = get_cur_handle_map(thread);
+    struct shim_handle_map* handle_map = get_thread_handle_map(thread);
     int err = 0, bytes = 0;
     struct shim_dirent* dirent = *buf;
     struct shim_dirent** last  = NULL;
@@ -364,10 +355,9 @@ static int find_thread_each_fd(const char* name, struct shim_qstr* link,
         dent = next_dent;
     }
 
-    if (link) {
-        size_t size;
-        char* path = dentry_get_path(dent, true, &size);
-        qstrsetstr(link, path, size);
+    if (link && !dentry_get_path_into_qstr(dent, link)) {
+        ret = -ENOMEM;
+        goto out;
     }
 
     if (dentptr) {
@@ -556,13 +546,13 @@ static int proc_thread_maps_open(struct shim_handle* hdl, const char* name, int 
         goto err;
     }
 
-    data->str          = buffer;
-    data->len          = offset;
+    data->str = buffer;
+    data->len = offset;
     hdl->type          = TYPE_STR;
     hdl->flags         = flags & ~O_RDONLY;
     hdl->acc_mode      = MAY_READ;
     hdl->info.str.data = data;
-    ret                = 0;
+    ret = 0;
 
 err:
     if (ret < 0) {
@@ -578,7 +568,7 @@ err:
 static int proc_thread_maps_mode(const char* name, mode_t* mode) {
     // Only used by one file
     __UNUSED(name);
-    *mode = 0400;
+    *mode = PERM_r________;
     return 0;
 }
 
@@ -588,7 +578,7 @@ static int proc_thread_maps_stat(const char* name, struct stat* buf) {
     memset(buf, 0, sizeof(struct stat));
 
     buf->st_dev = buf->st_ino = 1;
-    buf->st_mode              = 0400 | S_IFREG;
+    buf->st_mode              = PERM_r________ | S_IFREG;
     buf->st_uid               = 0;
     buf->st_gid               = 0;
     buf->st_size              = 0;
@@ -623,7 +613,7 @@ static int proc_thread_dir_mode(const char* name, mode_t* mode) {
     if (ret < 0)
         return ret;
 
-    *mode = 0500;
+    *mode = PERM_r_x______;
     return 0;
 }
 
@@ -642,7 +632,7 @@ static int proc_thread_dir_stat(const char* name, struct stat* buf) {
 
     memset(buf, 0, sizeof(struct stat));
     buf->st_dev = buf->st_ino = 1;
-    buf->st_mode              = 0500 | S_IFDIR;
+    buf->st_mode              = PERM_r_x______ | S_IFDIR;
     lock(&thread->lock);
     buf->st_uid = thread->uid;
     buf->st_gid = thread->gid;
@@ -730,20 +720,9 @@ const struct pseudo_fs_ops fs_thread = {
 const struct pseudo_dir dir_thread = {
     .size = 5,
     .ent  = {
-              { .name   = "cwd",
-                .fs_ops = &fs_thread_link,
-                .type   = LINUX_DT_LNK },
-              { .name   = "exe",
-                .fs_ops = &fs_thread_link,
-                .type   = LINUX_DT_LNK },
-              { .name   = "root",
-                .fs_ops = &fs_thread_link,
-                .type   = LINUX_DT_LNK },
-              { .name   = "fd",
-                .fs_ops = &fs_thread_fd,
-                .dir    = &dir_fd },
-              { .name   = "maps",
-                .fs_ops = &fs_thread_maps,
-                .type   = LINUX_DT_REG },
-        }
-};
+        {.name = "cwd",  .fs_ops = &fs_thread_link, .type = LINUX_DT_LNK},
+        {.name = "exe",  .fs_ops = &fs_thread_link, .type = LINUX_DT_LNK},
+        {.name = "root", .fs_ops = &fs_thread_link, .type = LINUX_DT_LNK},
+        {.name = "fd",   .fs_ops = &fs_thread_fd,   .dir = &dir_fd},
+        {.name = "maps", .fs_ops = &fs_thread_maps, .type = LINUX_DT_REG},
+    }};

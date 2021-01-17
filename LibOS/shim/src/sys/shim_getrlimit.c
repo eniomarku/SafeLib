@@ -2,17 +2,19 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_getrlimit.c
- *
- * Implementation of system call "getrlimit" and "setrlimit".
+ * Implementation of system calls "getrlimit" and "setrlimit".
  */
 
 #include <asm/resource.h>
-#include <shim_checkpoint.h>
-#include <shim_internal.h>
-#include <shim_table.h>
-#include <shim_utils.h>
-#include <shim_vma.h>
+
+#include "shim_checkpoint.h"
+#include "shim_internal.h"
+#include "shim_lock.h"
+#include "shim_process.h"
+#include "shim_table.h"
+#include "shim_thread.h"
+#include "shim_utils.h"
+#include "shim_vma.h"
 
 /*
  * TODO: implement actual limitation on each resource.
@@ -118,7 +120,7 @@ int shim_do_prlimit64(pid_t pid, int resource, const struct __kernel_rlimit64* n
     int ret = 0;
 
     // XXX: Do not support setting/getting the rlimit of other processes yet.
-    if (pid && pid != (pid_t)cur_thread->tgid)
+    if (pid && (IDTYPE)pid != g_process.pid)
         return -ENOSYS;
 
     if (resource < 0 || RLIM_NLIMITS <= resource)

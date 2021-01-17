@@ -2,21 +2,19 @@
 /* Copyright (C) 2019 Intel Corporation */
 
 /*
- * fs.c
- *
- * This file contains codes for implementation of 'eventfd' filesystem.
+ * This file contains code for implementation of 'eventfd' filesystem.
  */
 
 #include <asm/fcntl.h>
 #include <asm/unistd.h>
 #include <errno.h>
 #include <linux/fcntl.h>
-#include <linux/stat.h>
 
-#include <pal.h>
-#include <shim_fs.h>
-#include <shim_handle.h>
-#include <shim_internal.h>
+#include "pal.h"
+#include "shim_fs.h"
+#include "shim_handle.h"
+#include "shim_internal.h"
+#include "shim_lock.h"
 
 static ssize_t eventfd_read(struct shim_handle* hdl, void* buf, size_t count) {
     if (count < sizeof(uint64_t))

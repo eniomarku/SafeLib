@@ -2,8 +2,6 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_event.c
- *
  * This file contains implementation of Drawbridge event synchronization APIs.
  */
 
@@ -22,10 +20,6 @@ int _DkEventSet(PAL_HANDLE event, int wakeup) {
 }
 
 int _DkEventWaitTimeout(PAL_HANDLE event, int64_t timeout_us) {
-    return -PAL_ERROR_NOTIMPLEMENTED;
-}
-
-int _DkEventWait(PAL_HANDLE event) {
     return -PAL_ERROR_NOTIMPLEMENTED;
 }
 

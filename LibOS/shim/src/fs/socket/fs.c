@@ -2,26 +2,23 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * fs.c
- *
- * This file contains codes for implementation of 'socket' filesystem.
+ * This file contains code for implementation of 'socket' filesystem.
  */
-
-#define __KERNEL__
 
 #include <asm/fcntl.h>
 #include <asm/mman.h>
 #include <asm/unistd.h>
 #include <errno.h>
 #include <linux/fcntl.h>
-#include <linux/stat.h>
 
 #include "pal.h"
 #include "pal_error.h"
-
 #include "shim_fs.h"
 #include "shim_internal.h"
-#include "shim_thread.h"
+#include "shim_lock.h"
+#include "shim_process.h"
+#include "shim_signal.h"
+#include "stat.h"
 
 static int socket_close(struct shim_handle* hdl) {
     /* XXX: Shouldn't this do something? */
@@ -94,9 +91,14 @@ static ssize_t socket_write(struct shim_handle* hdl, const void* buf, size_t cou
     if (bytes == PAL_STREAM_ERROR) {
         int err = PAL_ERRNO();
         if (err == EPIPE) {
-            struct shim_thread* cur = get_cur_thread();
-            assert(cur);
-            (void)do_kill_proc(cur->tid, cur->tgid, SIGPIPE, /*use_ipc=*/false);
+            siginfo_t info = {
+                .si_signo = SIGPIPE,
+                .si_pid = g_process.pid,
+                .si_code = SI_USER,
+            };
+            if (kill_current_proc(&info) < 0) {
+                debug("socket_write: failed to deliver a signal\n");
+            }
         }
 
         lock(&hdl->lock);
@@ -133,7 +135,7 @@ static int socket_checkout(struct shim_handle* hdl) {
 
 static off_t socket_poll(struct shim_handle* hdl, int poll_type) {
     struct shim_sock_handle* sock = &hdl->info.sock;
-    off_t ret                     = 0;
+    off_t ret = 0;
 
     lock(&hdl->lock);
 

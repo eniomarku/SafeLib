@@ -39,7 +39,8 @@ class TC_50_ProtectedFiles(TC_00_FileSystem):
         for i in cls.INDEXES:
             cmd = [cls.PF_CRYPT, 'encrypt', '-w', cls.WRAP_KEY, '-i', cls.INPUT_FILES[i], '-o',
                    cls.ENCRYPTED_FILES[i]]
-            cls.run_native_binary(cls, cmd, libpath=os.path.join(os.getcwd(), 'lib'))
+
+            cls.run_native_binary(cmd, libpath=os.path.join(os.getcwd(), 'lib'))
 
     def __pf_crypt(self, args):
         args.insert(0, self.PF_CRYPT)
@@ -172,15 +173,15 @@ class TC_50_ProtectedFiles(TC_00_FileSystem):
         self.verify_copy(stdout, stderr, self.ENCRYPTED_DIR, executable)
 
     # overrides TC_00_FileSystem to not skip this on SGX
-    def test_203_copy_dir_mmap_whole(self):
+    def test_204_copy_dir_mmap_whole(self):
         self.do_copy_test('copy_mmap_whole', 30)
 
     # overrides TC_00_FileSystem to not skip this on SGX
-    def test_204_copy_dir_mmap_seq(self):
+    def test_205_copy_dir_mmap_seq(self):
         self.do_copy_test('copy_mmap_seq', 60)
 
     # overrides TC_00_FileSystem to not skip this on SGX
-    def test_205_copy_dir_mmap_rev(self):
+    def test_206_copy_dir_mmap_rev(self):
         self.do_copy_test('copy_mmap_rev', 60)
 
     # overrides TC_00_FileSystem to change dirs (from plaintext to encrypted)
@@ -192,24 +193,20 @@ class TC_50_ProtectedFiles(TC_00_FileSystem):
 
     def __corrupt_file(self, input_path, output_path):
         cmd = [self.PF_TAMPER, '-w', self.WRAP_KEY, '-i', input_path, '-o', output_path]
-        return self.run_native_binary(cmd)
+        return self.run_native_binary(cmd, libpath=os.path.join(os.getcwd(), 'lib'))
 
     # invalid/corrupted files
-    @expectedFailureIf(HAS_SGX)
-    # pylint: disable=fixme
     def test_500_invalid(self):
-        # TODO: port these to the new file format
         invalid_dir = os.path.join(self.TEST_DIR, 'pf_invalid')
-        # files below should work normally (benign modifications)
-        should_pass = ['chunk_padding_1_fixed', 'chunk_padding_2_fixed', 'chunk_data_3',
-                       'chunk_data_3_fixed', 'chunk_data_4', 'chunk_data_4_fixed']
         if not os.path.exists(invalid_dir):
             os.mkdir(invalid_dir)
+
         # prepare valid encrypted file (largest one for maximum possible corruptions)
         original_input = self.OUTPUT_FILES[-1]
         self.__encrypt_file(self.INPUT_FILES[-1], original_input)
         # generate invalid files based on the above
         self.__corrupt_file(original_input, invalid_dir)
+
         # try to decrypt invalid files
         for name in os.listdir(invalid_dir):
             invalid = os.path.join(invalid_dir, name)
@@ -217,17 +214,13 @@ class TC_50_ProtectedFiles(TC_00_FileSystem):
             input_path = os.path.join(invalid_dir, os.path.basename(original_input))
             # copy the file so it has the original file name (for allowed path check)
             shutil.copy(invalid, input_path)
-            should_pass = any(s in name for s in should_pass)
 
             try:
                 args = ['decrypt', '-V', '-w', self.WRAP_KEY, '-i', input_path, '-o', output_path]
                 self.__pf_crypt(args)
             except subprocess.CalledProcessError as exc:
-                if should_pass:
-                    self.assertEqual(exc.returncode, 0)
-                else:
-                    self.assertNotEqual(exc.returncode, 0)
+                # decryption of invalid file must fail with -1 (wrapped to 255)
+                self.assertEqual(exc.returncode, 255)
             else:
-                if not should_pass:
-                    print('[!] Fail: successfully decrypted file: ' + name)
-                    self.fail()
+                print('[!] Fail: successfully decrypted file: ' + name)
+                self.fail()

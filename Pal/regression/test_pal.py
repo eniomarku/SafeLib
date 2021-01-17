@@ -3,13 +3,11 @@
 import ast
 import collections
 import mmap
-import os
 import pathlib
 import random
 import shutil
 import string
 import subprocess
-import sys
 import unittest
 
 from regression import (
@@ -18,10 +16,6 @@ from regression import (
     RegressionTestCase,
     expectedFailureIf,
 )
-
-if HAS_SGX:
-    sys.path.insert(0, os.path.dirname(__file__) + '/../src/host/Linux-SGX/signer')
-    from pal_sgx_sign import read_manifest
 
 CPUINFO_FLAGS_WHITELIST = [
     'fpu', 'vme', 'de', 'pse', 'tsc', 'msr', 'pae', 'mce', 'cx8', 'apic', 'sep',
@@ -86,7 +80,7 @@ class TC_00_BasicSet2(RegressionTestCase):
     @unittest.skipUnless(ON_X86, "x86-specific")
     def test_Segment(self):
         _, stderr = self.run_binary(['Segment'])
-        self.assertIn('TLS = 0x', stderr)
+        self.assertIn('Test OK', stderr)
 
     def test_Select(self):
         _, stderr = self.run_binary(['Select'])
@@ -194,25 +188,6 @@ class TC_01_Bootstrap(RegressionTestCase):
         _, stderr = self.run_binary(['..Bootstrap'])
         self.assertIn('User Program Started', stderr)
 
-    def test_104_manifest_as_executable_name(self):
-        manifest = self.get_manifest('Bootstrap2')
-        _, stderr = self.run_binary([manifest])
-        self.assertIn('User Program Started', stderr)
-        self.assertIn('Loaded Manifest: file:' + manifest, stderr)
-
-    def test_105_manifest_as_argument(self):
-        manifest = self.get_manifest('Bootstrap4')
-        _, stderr = self.run_binary([manifest])
-        self.assertIn('Loaded Manifest: file:' + manifest, stderr)
-        self.assertIn('Loaded Executable: file:Bootstrap', stderr)
-
-    @unittest.skipUnless(HAS_SGX, 'need SGX')
-    def test_106_manifest_with_nonelf_binary(self):
-        manifest = self.get_manifest('nonelf_binary')
-        # Expected return code is -ENOEXEC (248 as unsigned char)
-        with self.expect_returncode(248):
-            self.run_binary([manifest])
-
     def test_110_preload_libraries(self):
         _, stderr = self.run_binary(['Bootstrap3'])
         self.assertIn('Binary 1 Preloaded', stderr)
@@ -220,32 +195,23 @@ class TC_01_Bootstrap(RegressionTestCase):
         self.assertIn('Preloaded Function 1 Called', stderr)
         self.assertIn('Preloaded Function 2 Called', stderr)
 
-    def test_111_preload_libraries(self):
-        # Bootstrap without Executable but Preload Libraries
-        _, stderr = self.run_binary([self.get_manifest('Bootstrap5')])
-        self.assertIn('Binary 1 Preloaded', stderr)
-        self.assertIn('Binary 2 Preloaded', stderr)
-
     @unittest.skipUnless(HAS_SGX, 'this test requires SGX')
     def test_120_8gb_enclave(self):
-        manifest = self.get_manifest('Bootstrap6')
-        _, stderr = self.run_binary([manifest], timeout=360)
-        self.assertIn('Loaded Manifest: file:' + manifest, stderr)
+        _, stderr = self.run_binary(['Bootstrap6'], timeout=360)
         self.assertIn('Executable Range OK', stderr)
 
     def test_130_large_number_of_items_in_manifest(self):
-        _, stderr = self.run_binary([self.get_manifest('Bootstrap7')])
+        _, stderr = self.run_binary(['Bootstrap7'])
         self.assertIn('key1000=na', stderr)
         self.assertIn('key1=na', stderr)
 
-    @unittest.skip('this is broken on non-SGX, see #860')
     def test_140_missing_executable_and_manifest(self):
         try:
             _, stderr = self.run_binary(['fakenews'])
             self.fail(
                 'expected non-zero returncode, stderr: {!r}'.format(stderr))
-        except subprocess.CalledProcessError as e:
-            self.assertIn('USAGE: ', e.stderr.decode())
+        except subprocess.CalledProcessError:
+            pass
 
 class TC_02_Symbols(RegressionTestCase):
     ALL_SYMBOLS = [
@@ -276,7 +242,6 @@ class TC_02_Symbols(RegressionTestCase):
         'DkThreadExit',
         'DkThreadResume',
         'DkSetExceptionHandler',
-        'DkExceptionReturn',
         'DkMutexCreate',
         'DkMutexRelease',
         'DkNotificationEventCreate',
@@ -292,7 +257,8 @@ class TC_02_Symbols(RegressionTestCase):
         'DkMemoryAvailableQuota',
     ]
     if ON_X86:
-        ALL_SYMBOLS.append('DkSegmentRegister')
+        ALL_SYMBOLS.append('DkSegmentRegisterGet')
+        ALL_SYMBOLS.append('DkSegmentRegisterSet')
 
     def test_000_symbols(self):
         _, stderr = self.run_binary(['Symbols'])
@@ -306,7 +272,7 @@ class TC_02_Symbols(RegressionTestCase):
 class TC_10_Exception(RegressionTestCase):
     def is_altstack_different_from_main_stack(self, output):
         mainstack = 0
-        altstack  = 0
+        altstack = 0
         for line in output.splitlines():
             if line.startswith('Stack in main:'):
                 mainstack = int(line.split(':')[1], 0)
@@ -411,19 +377,6 @@ class TC_20_SingleProcess(RegressionTestCase):
 
         # File Deletion
         self.assertFalse(pathlib.Path('file_delete.tmp').exists())
-
-    @unittest.skipUnless(HAS_SGX, 'this test requires SGX')
-    def test_101_nonexist_file(self):
-        # Explicitly remove the file file_nonexist_disallowed.tmp before
-        # running binary. Otherwise this test will fail if these tests are
-        # run repeatedly.
-        os.remove('file_nonexist_disallowed.tmp')
-
-        _, stderr = self.run_binary(['File'])
-
-        # Run file creation for non-existing file. This behavior is
-        # disallowed unless sgx.allow_file_creation is explicitly set to 1.
-        self.assertIn('File Creation Test 4 OK', stderr)
 
     def test_110_directory(self):
         for path in ['dir_exist.tmp', 'dir_nonexist.tmp', 'dir_delete.tmp']:
@@ -599,8 +552,7 @@ class TC_20_SingleProcess(RegressionTestCase):
 
     @unittest.skipUnless(HAS_SGX, 'This test is only meaningful on SGX PAL')
     def test_511_thread2_exitless(self):
-        manifest = self.get_manifest('Thread2_exitless')
-        _, stderr = self.run_binary([manifest], timeout=60)
+        _, stderr = self.run_binary(['Thread2_exitless'], timeout=60)
 
         # Thread Cleanup: Exit by return.
         self.assertIn('Thread 2 ok.', stderr)
@@ -661,6 +613,7 @@ class TC_21_ProcessCreation(RegressionTestCase):
         counter = collections.Counter(stderr.split('\n'))
         self.assertEqual(counter['Binary 1 Preloaded'], 2)
         self.assertEqual(counter['Binary 2 Preloaded'], 2)
+        self.assertEqual(counter['Creating child OK'], 1)
 
 class TC_23_SendHandle(RegressionTestCase):
     def test_000_send_handle(self):

@@ -2,8 +2,6 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_event.c
- *
  * This file contains implementation of Drawbridge event synchronization APIs.
  */
 
@@ -17,7 +15,7 @@ PAL_HANDLE DkNotificationEventCreate(PAL_BOL initialState) {
     ENTER_PAL_CALL(DkNotificationEventCreate);
 
     PAL_HANDLE handle = NULL;
-    int ret           = _DkEventCreate(&handle, initialState, true);
+    int ret = _DkEventCreate(&handle, initialState, true);
 
     if (ret < 0) {
         _DkRaiseFailure(-ret);
@@ -31,7 +29,7 @@ PAL_HANDLE DkSynchronizationEventCreate(PAL_BOL initialState) {
     ENTER_PAL_CALL(DkSynchronizationEventCreate);
 
     PAL_HANDLE handle = NULL;
-    int ret           = _DkEventCreate(&handle, initialState, false);
+    int ret = _DkEventCreate(&handle, initialState, false);
 
     if (ret < 0) {
         _DkRaiseFailure(-ret);
@@ -52,22 +50,6 @@ void DkEventSet(PAL_HANDLE handle) {
     }
 
     int ret = _DkEventSet(handle, -1);
-
-    if (ret < 0)
-        _DkRaiseFailure(-ret);
-
-    LEAVE_PAL_CALL();
-}
-
-void DkEventWait(PAL_HANDLE handle) {
-    ENTER_PAL_CALL(DkEventWait);
-
-    if (!handle || !IS_HANDLE_TYPE(handle, event)) {
-        _DkRaiseFailure(PAL_ERROR_INVAL);
-        LEAVE_PAL_CALL();
-    }
-
-    int ret = _DkEventWait(handle);
 
     if (ret < 0)
         _DkRaiseFailure(-ret);

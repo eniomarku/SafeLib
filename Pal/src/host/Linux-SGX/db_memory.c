@@ -2,9 +2,7 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_memory.c
- *
- * This files contains APIs that allocate, free or protect virtual memory.
+ * This file contains APIs that allocate, free or protect virtual memory.
  */
 
 #include "api.h"
@@ -54,6 +52,7 @@ int _DkVirtualMemoryAlloc(void** paddr, uint64_t size, int alloc_type, int prot)
     if (!mem)
         return addr ? -PAL_ERROR_DENIED : -PAL_ERROR_NOMEM;
 
+    /* initialize contents of new memory region to zero (LibOS layer expects zeroed-out memory) */
     memset(mem, 0, size);
 
     *paddr = mem;
@@ -82,8 +81,8 @@ int _DkVirtualMemoryProtect(void* addr, uint64_t size, int prot) {
 
     static struct atomic_int at_cnt = {.counter = 0};
     int64_t t = 0;
-    if (__atomic_compare_exchange_n(&at_cnt.counter, &t, 1, /*weak=*/false,
-                                    __ATOMIC_SEQ_CST, __ATOMIC_RELAXED))
+    if (__atomic_compare_exchange_n(&at_cnt.counter, &t, 1, /*weak=*/false, __ATOMIC_SEQ_CST,
+                                    __ATOMIC_RELAXED))
         SGX_DBG(DBG_M, "[Warning] DkVirtualMemoryProtect is unimplemented in Linux-SGX PAL");
     return 0;
 }

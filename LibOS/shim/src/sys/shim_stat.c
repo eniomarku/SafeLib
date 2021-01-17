@@ -2,21 +2,19 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_stat.c
- *
- * Implementation of system call "stat", "lstat", "fstat" and "readlink".
+ * Implementation of system calls "stat", "lstat", "fstat" and "readlink".
  */
 
 #include <errno.h>
 #include <linux/fcntl.h>
 
-#include <pal.h>
-#include <pal_error.h>
-#include <shim_fs.h>
-#include <shim_handle.h>
-#include <shim_internal.h>
-#include <shim_table.h>
-#include <shim_thread.h>
+#include "pal.h"
+#include "pal_error.h"
+#include "shim_fs.h"
+#include "shim_handle.h"
+#include "shim_internal.h"
+#include "shim_process.h"
+#include "shim_table.h"
 
 int shim_do_stat(const char* file, struct stat* stat) {
     if (!file || test_user_string(file))
@@ -92,22 +90,27 @@ out:
     return ret;
 }
 
-int shim_do_readlink(const char* file, char* buf, size_t bufsize) {
+int shim_do_readlinkat(int dirfd, const char* file, char* buf, int bufsize) {
+    int ret;
     if (!file || test_user_string(file))
-        return -EFAULT;
-
-    if (!buf || !bufsize || test_user_memory(buf, bufsize, true))
         return -EFAULT;
 
     if (bufsize <= 0)
         return -EINVAL;
 
-    int ret;
+    if (test_user_memory(buf, bufsize, true))
+        return -EFAULT;
+
     struct shim_dentry* dent = NULL;
+    struct shim_dentry* dir = NULL;
+
+    if (*file != '/' && (ret = get_dirfd_dentry(dirfd, &dir)) < 0)
+        goto out;
+
     struct shim_qstr qstr = QSTR_INIT;
 
-    if ((ret = path_lookupat(NULL, file, LOOKUP_ACCESS, &dent, NULL)) < 0)
-        return ret;
+    if ((ret = path_lookupat(dir, file, LOOKUP_ACCESS, &dent, NULL)) < 0)
+        goto out;
 
     ret = -EINVAL;
     /* The correct behavior is to return -EINVAL if file is not a
@@ -122,15 +125,23 @@ int shim_do_readlink(const char* file, char* buf, size_t bufsize) {
     if (ret < 0)
         goto out;
 
-    ret = -ENAMETOOLONG;
-    if (qstr.len >= bufsize)
-        goto out;
+    ret = bufsize;
+    if (qstr.len < (size_t)bufsize)
+        ret = qstr.len;
 
-    memcpy(buf, qstrgetstr(&qstr), qstr.len);
-    ret = qstr.len;
+    memcpy(buf, qstrgetstr(&qstr), ret);
 out:
-    put_dentry(dent);
+    if (dent) {
+        put_dentry(dent);
+    }
+    if (dir) {
+        put_dentry(dir);
+    }
     return ret;
+}
+
+int shim_do_readlink(const char* file, char* buf, int bufsize) {
+    return shim_do_readlinkat(AT_FDCWD, file, buf, bufsize);
 }
 
 static int __do_statfs(struct shim_mount* fs, struct statfs* buf) {
@@ -191,15 +202,25 @@ int shim_do_newfstatat(int dirfd, const char* pathname, struct stat* statbuf, in
         debug("ignoring AT_NO_AUTOMOUNT.");
     }
 
+    int ret = 0;
+
     if (!*pathname) {
         if (!(flags & AT_EMPTY_PATH))
             return -ENOENT;
 
         if (dirfd == AT_FDCWD) {
-            struct shim_dentry* cwd  = get_cur_thread()->cwd;
+            lock(&g_process.fs_lock);
+            struct shim_dentry* cwd  = g_process.cwd;
+            get_dentry(cwd);
+            unlock(&g_process.fs_lock);
+
             struct shim_d_ops* d_ops = cwd->fs->d_ops;
-            if (d_ops && d_ops->stat)
-                return d_ops->stat(cwd, statbuf);
+            if (d_ops && d_ops->stat) {
+                ret = d_ops->stat(cwd, statbuf);
+                put_dentry(cwd);
+                return ret;
+            }
+            put_dentry(cwd);
             return -EACCES;
         }
         return shim_do_fstat(dirfd, statbuf);
@@ -207,13 +228,13 @@ int shim_do_newfstatat(int dirfd, const char* pathname, struct stat* statbuf, in
 
     struct shim_dentry* dir = NULL;
     if (*pathname != '/') {
-        int ret = get_dirfd_dentry(dirfd, &dir);
+        ret = get_dirfd_dentry(dirfd, &dir);
         if (ret < 0)
             return ret;
     }
 
-    struct shim_dentry* dent;
-    int ret = path_lookupat(dir, pathname, lookup_flags, &dent, NULL);
+    struct shim_dentry* dent = NULL;
+    ret = path_lookupat(dir, pathname, lookup_flags, &dent, NULL);
     if (ret >= 0) {
         struct shim_d_ops* d_ops = dent->fs->d_ops;
         if (d_ops && d_ops->stat)

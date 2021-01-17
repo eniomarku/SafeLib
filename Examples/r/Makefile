@@ -68,13 +68,13 @@ R-trusted-libs: R-deps
 	@R_LIBS="$(R_TARGETS)" && \
 	for F in `cat R-deps`; do \
 		P=`ldd $$R_LIBS | grep $$F | awk '{print $$3; exit}'`; \
-		N=`echo $$F | tr --delete '-'`; \
-		echo -n "sgx.trusted_files.$$N = file:$$P\\\\n"; \
+		N=`echo $$F | tr --delete '.' | tr --delete '-' | tr --delete '+'`; \
+		echo -n "sgx.trusted_files.$$N = \\\"file:$$P\\\"\\\\n"; \
 	done > $@
 
 # R manifests:
 #   For each dependency, generate a rule as follows:
-#       sgx.trusted_files.xxxx = file:xxxx
+#       sgx.trusted_files.xxxx = "file:xxxx"
 
 R.manifest: R.manifest.template R-trusted-libs
 	sed -e 's|$$(GRAPHENEDIR)|'"$(GRAPHENEDIR)"'|g' \
@@ -117,9 +117,15 @@ sh.manifest.sgx: rm.sig
 pal_loader:
 	ln -s $(GRAPHENEDIR)/Runtime/pal_loader $@
 
+.PHONY: check
+check: all
+	./pal_loader ./R --slave --vanilla -f scripts/sample.r > OUTPUT 2> /dev/null
+	@grep -q "success" OUTPUT && echo "[ Success 1/1 ]"
+	@$(RM) OUTPUT
+
 .PHONY: clean
 clean:
-	$(RM) *.manifest *.manifest.sgx *.token *.sig pal_loader
+	$(RM) *.manifest *.manifest.sgx *.token *.sig pal_loader OUTPUT
 
 .PHONY: distclean
 distclean: clean

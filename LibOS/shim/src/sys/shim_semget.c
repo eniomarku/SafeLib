@@ -2,21 +2,21 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_semget.c
- *
- * Implementation of system call "semget", "semop", "semtimedop" and "semctl".
+ * Implementation of system calls "semget", "semop", "semtimedop" and "semctl".
  */
 
 #include <errno.h>
-#include <list.h>
-#include <pal.h>
-#include <pal_error.h>
-#include <shim_handle.h>
-#include <shim_internal.h>
-#include <shim_ipc.h>
-#include <shim_sysv.h>
-#include <shim_table.h>
-#include <shim_utils.h>
+
+#include "list.h"
+#include "pal.h"
+#include "pal_error.h"
+#include "shim_handle.h"
+#include "shim_internal.h"
+#include "shim_ipc.h"
+#include "shim_lock.h"
+#include "shim_sysv.h"
+#include "shim_table.h"
+#include "shim_utils.h"
 
 #define SEM_HASH_LEN  8
 #define SEM_HASH_NUM  (1 << SEM_HASH_LEN)
@@ -232,14 +232,14 @@ int shim_do_semget(key_t key, int nsems, int semflg) {
 
     if (semflg & IPC_CREAT) {
         do {
-            semid = allocate_sysv(0, 0);
+            semid = allocate_ipc_id(0, 0);
             if (!semid)
-                semid = ipc_sysv_lease_send(NULL);
+                semid = ipc_lease_send();
         } while (!semid);
 
         if (key != IPC_PRIVATE) {
             if ((ret = ipc_sysv_tellkey_send(NULL, 0, &k, semid, 0)) < 0) {
-                release_sysv(semid);
+                release_ipc_id(semid);
                 return ret;
             }
         }
@@ -250,7 +250,7 @@ int shim_do_semget(key_t key, int nsems, int semflg) {
             return ret;
 
         semid = ret;
-        if ((ret = ipc_sysv_query_send(semid)) < 0)
+        if ((ret = ipc_query_send(semid)) < 0)
             return ret;
     }
 
@@ -262,7 +262,7 @@ static int connect_sem_handle(int semid, int nsems, struct shim_sem_handle** sem
     int ret;
 
     if (!sem) {
-        if ((ret = ipc_sysv_query_send(semid)) < 0)
+        if ((ret = ipc_query_send(semid)) < 0)
             return ret;
 
         if (!sem) {
@@ -275,51 +275,6 @@ static int connect_sem_handle(int semid, int nsems, struct shim_sem_handle** sem
     }
 
     *semp = sem;
-    return 0;
-}
-
-int recover_sem_ownership(struct shim_sem_handle* sem, struct sem_backup* backups, int nbackups,
-                          struct sem_client_backup* clients, int nclients) {
-    struct shim_handle* hdl = SEM_TO_HANDLE(sem);
-    lock(&hdl->lock);
-    assert(!sem->owned);
-    assert(!sem->nsems && !sem->sems);
-
-    sem->nsems = nbackups;
-    if (!sem->sems && !(sem->sems = malloc(sizeof(struct sem_obj) * nbackups)))
-        goto out;
-
-    for (int i = 0; i < nbackups; i++) {
-        sem->sems[i].num  = i;
-        sem->sems[i].val  = backups[i].val;
-        sem->sems[i].zcnt = backups[i].zcnt;
-        sem->sems[i].ncnt = backups[i].ncnt;
-        sem->sems[i].pid  = backups[i].pid;
-        INIT_LISTP(&sem->sems[i].ops);
-        INIT_LISTP(&sem->sems[i].next_ops);
-    }
-
-    for (int i = 0; i < nclients; i++) {
-        struct sem_ops* op = malloc(sizeof(struct sem_ops));
-        if (!op)
-            continue;
-
-        op->stat.completed = false;
-        op->stat.failed    = false;
-        op->stat.nops      = clients[i].nops;
-        op->stat.current   = clients[i].current;
-        op->stat.timeout   = -1;
-        op->client.vmid    = clients[i].vmid;
-        op->client.port    = NULL;
-        op->client.seq     = clients[i].seq;
-        INIT_LIST_HEAD(op, progress);
-        LISTP_ADD_TAIL(op, &sem->migrated, progress);
-    }
-
-    sem->owned = true;
-    DkEventSet(sem->event);
-out:
-    unlock(&hdl->lock);
     return 0;
 }
 
@@ -537,7 +492,7 @@ static bool __handle_sysv_sems(struct shim_sem_handle* sem) {
 
             size_t total_msg_size         = get_ipc_msg_size(sizeof(struct shim_ipc_resp));
             struct shim_ipc_msg* resp_msg = __alloca(total_msg_size);
-            init_ipc_msg(resp_msg, IPC_RESP, total_msg_size, sops->client.vmid);
+            init_ipc_msg(resp_msg, IPC_MSG_RESP, total_msg_size, sops->client.vmid);
             resp_msg->seq = sops->client.seq;
 
             struct shim_ipc_resp* resp = (struct shim_ipc_resp*)resp_msg->msg;
@@ -611,17 +566,6 @@ failed:
     }
 }
 
-#if MIGRATE_SYSV_SEM == 1
-static int sem_balance_migrate(struct shim_handle* hdl, struct sysv_client* client);
-
-static struct sysv_balance_policy sem_policy = {
-    .score_decay       = SEM_SCORE_DECAY,
-    .score_max         = SEM_SCORE_MAX,
-    .balance_threshold = SEM_BALANCE_THRESHOLD,
-    .migrate           = &sem_balance_migrate,
-};
-#endif
-
 int submit_sysv_sem(struct shim_sem_handle* sem, struct sembuf* sops, int nsops,
                     unsigned long timeout, struct sysv_client* client) {
     int ret = 0;
@@ -645,18 +589,13 @@ int submit_sysv_sem(struct shim_sem_handle* sem, struct sembuf* sops, int nsops,
     IDTYPE semid      = sem->semid;
     bool sendreply    = false;
     unsigned long seq = client ? client->seq : 0;
-    int score         = 0;
 
     for (int i = 0; i < nsops; i++) {
         struct sembuf* op = &sops[i];
 
         if (op->sem_op > 0) {
-            score += SEM_POSITIVE_SCORE(op->sem_num);
-        } else if (op->sem_op < 0) {
-            score += SEM_NEGATIVE_SCORE(-op->sem_num);
-            sendreply = true;
+            /* nothing to do */
         } else {
-            score += SEM_ZERO_SCORE;
             sendreply = true;
         }
     }
@@ -671,25 +610,11 @@ int submit_sysv_sem(struct shim_sem_handle* sem, struct sembuf* sops, int nsops,
         goto out_locked;
     }
 
-#if MIGRATE_SYSV_SEM == 1
-    if (sem->owned) {
-        __balance_sysv_score(&sem_policy, hdl, sem->scores, MAX_SYSV_CLIENTS, client, score);
-
-        if (!sem->owned && client) {
-            struct shim_ipc_info* owner = sem->owner;
-            assert(owner);
-            ret = ipc_sysv_movres_send(client, owner->vmid, qstrgetstr(&owner->uri), sem->lease,
-                                       sem->semid, SYSV_SEM);
-            goto out_locked;
-        }
-    }
-#endif
-
     if (!sem->owned) {
         if (client) {
             struct shim_ipc_info* owner = sem->owner;
             ret = owner ? ipc_sysv_movres_send(client, owner->vmid, qstrgetstr(&owner->uri),
-                                               sem->lease, sem->semid, SYSV_SEM)
+                                               sem->semid, SYSV_SEM)
                         : -ECONNREFUSED;
             goto out_locked;
         }
@@ -709,7 +634,7 @@ int submit_sysv_sem(struct shim_sem_handle* sem, struct sembuf* sops, int nsops,
         struct sem_ops* op;
 
         LISTP_FOR_EACH_ENTRY(op, &sem->migrated, progress) {
-            if (op->client.vmid == (client ? client->vmid : cur_process.vmid) &&
+            if (op->client.vmid == (client ? client->vmid : g_process_ipc_info.vmid) &&
                 seq == op->client.seq) {
                 LISTP_DEL_INIT(op, &sem->migrated, progress);
                 sem_ops  = op;
@@ -727,7 +652,7 @@ int submit_sysv_sem(struct shim_sem_handle* sem, struct sembuf* sops, int nsops,
         if (client && sendreply) {
             size_t total_msg_size         = get_ipc_msg_size(sizeof(struct shim_ipc_resp));
             struct shim_ipc_msg* resp_msg = __alloca(total_msg_size);
-            init_ipc_msg(resp_msg, IPC_RESP, total_msg_size, client->vmid);
+            init_ipc_msg(resp_msg, IPC_MSG_RESP, total_msg_size, client->vmid);
             resp_msg->seq = client->seq;
 
             struct shim_ipc_resp* resp = (struct shim_ipc_resp*)resp_msg->msg;
@@ -776,7 +701,7 @@ int submit_sysv_sem(struct shim_sem_handle* sem, struct sembuf* sops, int nsops,
 
     if (client) {
         assert(sendreply);
-        add_ipc_port(client->port, client->vmid, IPC_PORT_SYSVCON, NULL);
+        add_ipc_port(client->port, client->vmid, IPC_PORT_CONNECTION, NULL);
         get_ipc_port(client->port);
         sem_ops->client = *client;
         sem_ops         = NULL;
@@ -806,82 +731,3 @@ out:
         free(sem_ops);
     return ret;
 }
-
-#if MIGRATE_SYSV_SEM == 1
-static int sem_balance_migrate(struct shim_handle* hdl, struct sysv_client* src) {
-    struct shim_sem_handle* sem = &hdl->info.sem;
-    int ret                     = 0;
-
-    debug("trigger semaphore balancing, migrate to process %u\n", src->vmid);
-
-    struct sem_backup* sem_backups = __alloca(sizeof(struct sem_backup) * sem->nsems);
-
-    struct sem_client_backup* clients = __alloca(sizeof(struct sem_client_backup) * sem->nreqs);
-
-    int sem_cnt = 0, client_cnt = 0;
-
-    struct sem_obj* sobj;
-    for (sobj = sem->sems; sobj < &sem->sems[sem->nsems]; sobj++) {
-        assert(sem_cnt < sem->nsems);
-        struct sem_backup* b = sem_backups + (sem_cnt++);
-        b->val               = sobj->val;
-        b->zcnt              = sobj->zcnt;
-        b->ncnt              = sobj->ncnt;
-        b->pid               = sobj->pid;
-
-        LISTP_SPLICE_TAIL(&sobj->next_ops, &sobj->ops, progress, sem_ops);
-
-        struct sem_ops* sops;
-        LISTP_FOR_EACH_ENTRY(sops, &sobj->ops, progress) {
-            assert(client_cnt < sem->nreqs);
-            struct sem_client_backup* c = clients + (client_cnt)++;
-            c->vmid                     = sops->client.vmid;
-            c->seq                      = sops->client.seq;
-            c->current                  = sops->stat.current;
-            c->nops                     = sops->stat.nops;
-        }
-    }
-
-    struct shim_ipc_info* info = lookup_ipc_info(src->vmid);
-    if (!info)
-        goto out;
-
-    ipc_sysv_sublease_send(src->vmid, sem->semid, qstrgetstr(&info->uri), &sem->lease);
-
-    ret = ipc_sysv_semmov_send(src->port, src->vmid, sem->semid, sem->lease, sem_backups, sem_cnt,
-                               clients, client_cnt, sem->scores, MAX_SYSV_CLIENTS);
-    if (ret < 0)
-        goto failed_info;
-
-    sem->owned = false;
-    sem->owner = info;
-
-    for (sobj = sem->sems; sobj < &sem->sems[sem->nsems]; sobj++) {
-        struct sem_ops* sops;
-        struct sem_ops* n;
-        LISTP_FOR_EACH_ENTRY_SAFE(sops, n, &sobj->ops, progress) {
-            LISTP_DEL_INIT(sops, &sobj->ops, progress);
-            sem->nreqs--;
-            sops->stat.failed = true;
-            if (!sops->client.vmid)
-                continue;
-            ipc_sysv_movres_send(&sops->client, src->vmid, qstrgetstr(&info->uri), sem->lease,
-                                 sem->semid, SYSV_SEM);
-            put_ipc_port(sops->client.port);
-            free(sops);
-        }
-    }
-
-    sem->nsems = 0;
-    free(sem->sems);
-    sem->sems = NULL;
-    ret       = 0;
-    DkEventSet(sem->event);
-    goto out;
-
-failed_info:
-    put_ipc_info(info);
-out:
-    return ret;
-}
-#endif

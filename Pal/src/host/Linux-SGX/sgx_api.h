@@ -18,8 +18,8 @@ void* sgx_alloc_on_ustack(uint64_t size);
 void* sgx_copy_to_ustack(const void* ptr, uint64_t size);
 void sgx_reset_ustack(const void* old_ustack);
 
-bool sgx_copy_ptr_to_enclave(void** ptr, void* uptr, uint64_t size);
-uint64_t sgx_copy_to_enclave(const void* ptr, uint64_t maxsize, const void* uptr, uint64_t usize);
+bool sgx_copy_ptr_to_enclave(void** ptr, void* uptr, size_t size);
+bool sgx_copy_to_enclave(void* ptr, size_t maxsize, const void* uptr, size_t usize);
 
 /*!
  * \brief Low-level wrapper around EREPORT instruction leaf.
@@ -27,8 +27,8 @@ uint64_t sgx_copy_to_enclave(const void* ptr, uint64_t maxsize, const void* uptr
  * Caller is responsible for parameter alignment: 512B for `targetinfo`, 128B for `reportdata`,
  * and 512B for `report`.
  */
-static inline int sgx_report(const sgx_target_info_t* targetinfo,
-                             const void* reportdata, sgx_report_t* report) {
+static inline int sgx_report(const sgx_target_info_t* targetinfo, const void* reportdata,
+                             sgx_report_t* report) {
     __asm__ volatile(
         ENCLU "\n"
         :: "a"(EREPORT), "b"(targetinfo), "c"(reportdata), "d"(report)
@@ -49,39 +49,6 @@ static inline int64_t sgx_getkey(sgx_key_request_t* keyrequest, sgx_key_128bit_t
         : "b"(keyrequest), "c"(key)
         : "memory");
     return rax;
-}
-
-/*!
- * \brief Low-level wrapper around RDRAND instruction (get hardware-generated random value).
- */
-static inline uint32_t rdrand(void) {
-    uint32_t ret;
-    __asm__ volatile(
-        "1: .byte 0x0f, 0xc7, 0xf0\n" /* RDRAND %EAX */
-        "jnc 1b\n"
-        :"=a"(ret)
-        :: "cc");
-    return ret;
-}
-
-/*!
- * \brief Low-level wrapper around RDFSBASE instruction (read FS register; allowed in enclaves).
- */
-static inline uint64_t rdfsbase(void) {
-    uint64_t fsbase;
-    __asm__ volatile(
-        ".byte 0xf3, 0x48, 0x0f, 0xae, 0xc0\n" /* RDFSBASE %RAX */
-        : "=a"(fsbase));
-    return fsbase;
-}
-
-/*!
- * \brief Low-level wrapper around WRFSBASE instruction (modify FS register; allowed in enclaves).
- */
-static inline void wrfsbase(uint64_t addr) {
-    __asm__ volatile(
-        ".byte 0xf3, 0x48, 0x0f, 0xae, 0xd7\n" /* WRFSBASE %RDI */
-        :: "D"(addr));
 }
 
 #endif /* SGX_API_H */

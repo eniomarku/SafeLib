@@ -2,8 +2,6 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * pal_host.h
- *
  * This file contains definition of PAL host ABI.
  */
 
@@ -59,7 +57,6 @@ typedef struct pal_handle {
 
         struct {
             PAL_IDX fd;
-            PAL_IDX dev_type;
         } dev;
 
         struct {

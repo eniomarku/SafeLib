@@ -6,9 +6,10 @@
 #include "pal.h"
 
 struct untrusted_area {
-    void* mem;
-    uint64_t size;
-    uint64_t in_use;
+    void* addr;
+    size_t size;
+    uint64_t in_use; /* must be uint64_t, because SET_ENCLAVE_TLS() currently supports only 8-byte
+                      * types. TODO: fix this. */
     bool valid;
 };
 
@@ -53,33 +54,43 @@ struct enclave_tls {
 extern uint64_t dummy_debug_variable;
 #endif
 
-# ifdef IN_ENCLAVE
+#ifdef IN_ENCLAVE
 
 static inline struct enclave_tls* get_tcb_trts(void) {
     return (struct enclave_tls*)pal_get_tcb();
 }
 
-#  define GET_ENCLAVE_TLS(member)                                   \
-    ({                                                              \
-        struct enclave_tls * tmp;                                   \
-        uint64_t val;                                               \
-        static_assert(sizeof(tmp->member) == 8,                     \
-                      "sgx_tls member should have 8-byte type");    \
-        __asm__ ("movq %%gs:%c1, %q0": "=r" (val)                   \
-             : "i" (offsetof(struct enclave_tls, member)));         \
-        (__typeof(tmp->member)) val;                                \
+#define GET_ENCLAVE_TLS(member)                                                                \
+    ({                                                                                         \
+        struct enclave_tls* tmp;                                                               \
+        uint64_t val;                                                                          \
+        static_assert(sizeof(tmp->member) == 8, "sgx_tls member should have 8-byte type");     \
+        __asm__("movq %%gs:%c1, %0"                                                            \
+                : "=r"(val)                                                                    \
+                : "i"(offsetof(struct enclave_tls, member))                                    \
+                : "memory");                                                                   \
+        (__typeof(tmp->member))val;                                                            \
     })
-#  define SET_ENCLAVE_TLS(member, value)                            \
-    do {                                                            \
-        struct enclave_tls * tmp;                                   \
-        static_assert(sizeof(tmp->member) == 8,                     \
-                      "sgx_tls member should have 8-byte type");    \
-        static_assert(sizeof(value) == 8,                           \
-                      "only 8-byte type can be set to sgx_tls");    \
-        __asm__ ("movq %q0, %%gs:%c1":: "r" (value),                \
-             "i" (offsetof(struct enclave_tls, member)));           \
+#define SET_ENCLAVE_TLS(member, value)                                                         \
+    do {                                                                                       \
+        struct enclave_tls* tmp;                                                               \
+        static_assert(sizeof(tmp->member) == 8, "sgx_tls member should have 8-byte type");     \
+        static_assert(sizeof(value) == 8, "only 8-byte type can be set to sgx_tls");           \
+        __asm__("movq %0, %%gs:%c1"                                                            \
+                :                                                                              \
+                : "ir"(value), "i"(offsetof(struct enclave_tls, member))                       \
+                : "memory");                                                                   \
     } while (0)
-# else
+
+
+__attribute__((__optimize__("-fno-stack-protector")))
+static inline void pal_set_tcb_stack_canary(uint64_t canary) {
+    ((char*)&canary)[0] = 0; /* prevent C-string-based stack leaks from exposing the cookie */
+    SET_ENCLAVE_TLS(common.stack_protector_canary, canary);
+}
+
+#else /* IN_ENCLAVE */
+
 /* private to untrusted Linux PAL, unique to each untrusted thread */
 typedef struct pal_tcb_urts {
     struct pal_tcb_urts* self;
@@ -91,20 +102,22 @@ typedef struct pal_tcb_urts {
     atomic_ulong aex_cnt;          /* # of AEXs, corresponds to # of interrupts/signals */
     atomic_ulong sync_signal_cnt;  /* # of sync signals, corresponds to # of SIGSEGV/SIGILL/.. */
     atomic_ulong async_signal_cnt; /* # of async signals, corresponds to # of SIGINT/SIGCONT/.. */
+    uint64_t profile_sample_time;  /* last time sgx_profile_sample() recorded a sample */
 } PAL_TCB_URTS;
 
 extern void pal_tcb_urts_init(PAL_TCB_URTS* tcb, void* stack, void* alt_stack);
 
 static inline PAL_TCB_URTS* get_tcb_urts(void) {
     PAL_TCB_URTS* tcb;
-    __asm__ ("movq %%gs:%c1, %q0\n"
-             : "=r" (tcb)
-             : "i" (offsetof(PAL_TCB_URTS, self)));
+    __asm__("movq %%gs:%c1, %0\n"
+            : "=r"(tcb)
+            : "i"(offsetof(PAL_TCB_URTS, self))
+            : "memory");
     return tcb;
 }
 
 extern bool g_sgx_enable_stats;
 void update_and_print_stats(bool process_wide);
-# endif
+#endif /* IN_ENCLAVE */
 
 #endif /* __SGX_TLS_H__ */

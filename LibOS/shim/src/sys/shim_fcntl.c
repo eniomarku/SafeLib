@@ -2,24 +2,44 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * shim_fcntl.c
- *
  * Implementation of system call "fcntl".
  */
 
 #include <errno.h>
 #include <linux/fcntl.h>
-#include <pal.h>
-#include <pal_error.h>
-#include <shim_fs.h>
-#include <shim_handle.h>
-#include <shim_internal.h>
-#include <shim_table.h>
-#include <shim_thread.h>
-#include <shim_utils.h>
+
+#include "pal.h"
+#include "pal_error.h"
+#include "shim_fs.h"
+#include "shim_handle.h"
+#include "shim_internal.h"
+#include "shim_lock.h"
+#include "shim_table.h"
+#include "shim_thread.h"
+#include "shim_utils.h"
+
+#define FCNTL_SETFL_MASK (O_APPEND | O_NONBLOCK)
+
+static int _set_handle_flags(struct shim_handle* hdl, unsigned long arg) {
+    if (hdl->fs && hdl->fs->fs_ops && hdl->fs->fs_ops->setflags) {
+        int ret = hdl->fs->fs_ops->setflags(hdl, arg & FCNTL_SETFL_MASK);
+        if (ret < 0) {
+            return ret;
+        }
+    }
+    hdl->flags = (hdl->flags & ~FCNTL_SETFL_MASK) | (arg & FCNTL_SETFL_MASK);
+    return 0;
+}
+
+int set_handle_nonblocking(struct shim_handle* hdl) {
+    lock(&hdl->lock);
+    int ret = _set_handle_flags(hdl, hdl->flags | O_NONBLOCK);
+    unlock(&hdl->lock);
+    return ret;
+}
 
 int shim_do_fcntl(int fd, int cmd, unsigned long arg) {
-    struct shim_handle_map* handle_map = get_cur_handle_map(NULL);
+    struct shim_handle_map* handle_map = get_thread_handle_map(NULL);
     int flags;
     int ret = -ENOSYS;
 
@@ -35,15 +55,7 @@ int shim_do_fcntl(int fd, int cmd, unsigned long arg) {
          *   On success, the new descriptor is returned.
          */
         case F_DUPFD: {
-            int vfd = arg;
-
-            while (1) {
-                if (set_new_fd_handle_by_fd(vfd, hdl, flags, handle_map) == vfd)
-                    break;
-                vfd++;
-            };
-
-            ret = vfd;
+            ret = set_new_fd_handle_above_fd(arg, hdl, flags, handle_map);
             break;
         }
 
@@ -55,16 +67,8 @@ int shim_do_fcntl(int fd, int cmd, unsigned long arg) {
          *   useful, see the description of O_CLOEXEC in open(2).
          */
         case F_DUPFD_CLOEXEC: {
-            int vfd = arg;
             flags |= FD_CLOEXEC;
-
-            while (1) {
-                if (set_new_fd_handle_by_fd(vfd, hdl, flags, handle_map) == vfd)
-                    break;
-                vfd++;
-            };
-
-            ret = vfd;
+            ret = set_new_fd_handle_above_fd(arg, hdl, flags, handle_map);
             break;
         }
 
@@ -118,14 +122,10 @@ int shim_do_fcntl(int fd, int cmd, unsigned long arg) {
          *   Linux this command can only change the O_APPEND, O_DIRECT,
          *   O_NOATIME, and O_NONBLOCK flags.
          */
-#define FCNTL_SETFL_MASK (O_APPEND | O_NONBLOCK)
         case F_SETFL:
             lock(&hdl->lock);
-            if (hdl->fs && hdl->fs->fs_ops && hdl->fs->fs_ops->setflags)
-                hdl->fs->fs_ops->setflags(hdl, arg & FCNTL_SETFL_MASK);
-            hdl->flags = (hdl->flags & ~FCNTL_SETFL_MASK) | (arg & FCNTL_SETFL_MASK);
+            ret = _set_handle_flags(hdl, arg);
             unlock(&hdl->lock);
-            ret = 0;
             break;
 
         /* Advisory locking

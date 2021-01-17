@@ -1,5 +1,7 @@
-How to deploy Graphene in the cloud?
-====================================
+Cloud Deployment
+================
+
+.. highlight:: sh
 
 Graphene without Intel SGX can be deployed on arbitrary cloud VMs. Please see
 our :doc:`quickstart` guide for the details.
@@ -8,7 +10,7 @@ To deploy Graphene with Intel SGX, the cloud VM has to support Intel SGX. Please
 see the installation and usage guide for each cloud VM offering individually
 below (currently only for Microsoft Azure).
 
-Azure Confidential Computing VMs
+Azure confidential computing VMs
 --------------------------------
 
 `Azure confidential computing services
@@ -16,86 +18,167 @@ Azure Confidential Computing VMs
 generally available and provide access to VMs with Intel SGX enabled in `DCsv2
 VM instances
 <https://docs.microsoft.com/en-us/azure/virtual-machines/dcv2-series>`__. The
-description below uses a VM running Ubuntu 18.04 with a the preinstalled `Intel
-SGX DCAP driver
-<https://github.com/intel/SGXDataCenterAttestationPrimitives/tree/LD_1.22>`__
-(version ``LD_1.22``). To use a different Intel SGX driver, please follow the
-instructions to uninstall the driver.
+description below uses a VM running Ubuntu 18.04.
 
 Prerequisites
 ^^^^^^^^^^^^^
 
-Update and install the required packages for Graphene:
+Update and install the required packages for Graphene::
 
-      .. code-block:: sh
+   sudo apt update
+   sudo apt install -y build-essential autoconf gawk bison python3-protobuf \
+                       libprotobuf-c-dev protobuf-c-compiler libcurl4 python3
 
-            sudo apt update
-            sudo apt install -y build-essential autoconf gawk bison python3-protobuf \
-                              libprotobuf-c-dev protobuf-c-compiler libcurl4 python3
+Graphene requires the kernel to support FSGSBASE x86 instructions. Older Azure
+Confidential Compute VMs may not contain the required kernel patches and need to
+be updated.
 
-Build and Test
-^^^^^^^^^^^^^^
+Building
+^^^^^^^^
 
-#. Clone Graphene:
+#. Clone Graphene::
 
-      .. code-block:: sh
+       git clone https://github.com/oscarlab/graphene.git
+       cd graphene
 
-            git clone https://github.com/oscarlab/graphene.git
-            cd graphene
-            git submodule update --init -- Pal/src/host/Linux-SGX/sgx-driver/
+#. Prepare the signing keys::
 
-#. Prepare the signing keys and Graphene kernel driver:
+       openssl genrsa -3 -out enclave-key.pem 3072
+       cp enclave-key.pem Pal/src/host/Linux-SGX/signer
 
-      .. code-block:: sh
+#. Build Graphene::
 
-            openssl genrsa -3 -out enclave-key.pem 3072
-            cp enclave-key.pem Pal/src/host/Linux-SGX/signer
-            cd Pal/src/host/Linux-SGX/sgx-driver
-            ISGX_DRIVER_PATH=/usr/src/linux-azure-headers-`uname -r`/arch/x86/ make
-            # WARNING: read "Security Implications" section before running this command
-            sudo insmod gsgx.ko
-            cd -
+       ISGX_DRIVER_PATH=/usr/src/linux-headers-`uname -r`/arch/x86/ make SGX=1
 
-#. Build Graphene:
+#. Build and run :program:`helloworld`::
 
-      .. code-block:: sh
+       cd LibOS/shim/test/native
+       make SGX=1 sgx-tokens
+       SGX=1 ../../../../Runtime/pal_loader helloworld
 
-            ISGX_DRIVER_PATH=/usr/src/linux-azure-headers-`uname -r`/arch/x86/ \
-                  make SGX=1
+Azure Kubernetes Services (AKS)
+-------------------------------
 
-#. Set ``vm.mmap_min_addr=0`` in the system:
+Azure Kubernetes Service (AKS) offers a popular deployment technique relying on
+Azure's cloud resources. AKS hosts Kubernetes pods in Azure confidential compute
+VMs and exposes the underlying confidential compute hardware. In particular,
+`Graphene Shielded Containers (GSC)
+<https://graphene.readthedocs.io/en/latest/manpages/gsc.html>`__ translate
+existing Docker images to graphenized Docker images, which can be deployed in
+AKS. Graphenized Docker images execute the application inside an Intel SGX
+enclave using the Graphene Library OS, thus enabling confidential containers
+functions on AKS.
 
-      .. code-block:: sh
+This section describes the workflow to create an AKS cluster with confidential
+compute VMs, graphenize a simple application, and deploy the graphenized Docker
+image in an AKS cluster.
 
-            # WARNING: read "Security Implications" section before running this command
-            sudo sysctl vm.mmap_min_addr=0
+Prerequisites
+^^^^^^^^^^^^^
 
-#. Build and Run :program:`helloworld`:
+Follow the instructions on the `AKS Confidential Computing Quick Start guide
+<https://docs.microsoft.com/en-us/azure/confidential-computing/confidential-nodes-aks-get-started>`__
+to provision an AKS cluster with Intel SGX enabled worker nodes.
 
-      .. code-block:: sh
+Follow the `instructions
+<https://graphene.readthedocs.io/en/latest/manpages/gsc.html>`__ to set up
+Graphene Shielded Containers and create your own enclave key.
 
-            cd LibOS/shim/test/native
-            make SGX=1 sgx-tokens
-            SGX=1 ./pal_loader helloworld
+Graphenizing Python Docker image
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+This section demonstrate how to translate the Python Docker Hub image to a
+graphenized image, which is ready to deploy in a confidential compute AKS
+cluster.
 
-Security Implications
-^^^^^^^^^^^^^^^^^^^^^
+.. warning::
 
-Note that this guide assumes that you deploy Graphene on an untrusted cloud VM.
-The two steps in this guide significantly weaken the security of the cloud VM's
-Linux kernel.
+       This example relies on insecure arguments provided at runtime and should
+       not be used production. To use trusted arguments, please see the `manpage
+       of GSC
+       <https://graphene.readthedocs.io/en/latest/manpages/gsc.html#using-graphene-s-trusted-command-line-arguments>`__.
 
-In particular, ``sudo insmod gsgx.ko`` introduces a local privilege escalation
-vulnerability. This kernel module enables the FSGSBASE processor feature
-without proper enabling in the host Linux kernel. Please refer to the
-documentation under ``Pal/src/host/Linux-SGX/sgx-driver`` for more information.
+#. Pull Python image::
 
-Also, ``sudo sysctl vm.mmap_min_addr=0`` weakens the security of the Linux
-kernel. This kernel tunable specifies the minimum virtual address that a
-process is allowed to mmap. Setting it to zero makes it easier for attackers to
-exploit "kernel NULL pointer dereference" defects.
+       docker pull python
 
-Both these steps are temporary workarounds and will not be required in the
-future. Be aware that the current guide must not be used to set up production
-environments.
+#. Configure GSC to build graphenized images for AKS with the
+   `Graphene Docker Image for AKS from Docker Hub
+   <https://hub.docker.com/r/graphenelibos/aks>`__ by creating the following
+   configuration file :file:`config.aks.yaml`::
+
+       Distro: ubuntu18.04
+       Graphene:
+              Image: graphenelibos/aks:latest
+
+#. Create the application-specific Manifest file :file:`python.manifest`::
+
+       sgx.enclave_size = "256M"
+       sgx.thread_num = 4
+
+#. Graphenize the Python image and allow insecure runtime arguments::
+
+       ./gsc build --insecure-args -c config.aks.yaml python python.manifest
+
+#. Sign the graphenized image with your enclave signing key::
+
+       ./gsc sign-image python enclave-key.pem
+
+#. Push resulting image to Docker Hub or your preferred registry::
+
+       docker tag gsc-python <dockerhubusername>/python:gsc-aks
+       docker push <dockerhubusername>/python:gsc-aks
+
+Deploying a "HelloWorld" Python Application in a confidential compute AKS cluster
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This example first created an AKS cluster capable to create Intel SGX enclaves
+and then, created a graphenized Docker image of Python. The goal of this section
+is to combine both by deploying the Python application in the AKS cluster.
+
+#. Create job deployment file :file:`gsc-aks-python.yaml` for AKS. It specifies
+   the underlying Docker image and the insecure arguments (in this case Python
+   code to print "HelloWorld!")::
+
+       apiVersion: batch/v1
+       kind: Job
+       metadata:
+          name: gsc-aks-python
+          labels:
+             app: gsc-aks-python
+       spec:
+          template:
+             metadata:
+                labels:
+                   app: gsc-aks-python
+             spec:
+                containers:
+                - name: gsc-aks-python
+                  image:  index.docker.io/<dockerhubusername>/python:gsc-aks
+                  imagePullPolicy: Always
+                  args: ["-c", "print('HelloWorld!')"]
+                  resources:
+                     limits:
+                        kubernetes.azure.com/sgx_epc_mem_in_MiB: 25
+                restartPolicy: Never
+          backoffLimit: 0
+
+#. You may need to follow this
+   `guide <https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/>`__
+   to pull from a private registry.
+
+#. Deploy `gsc-aks-python` job::
+
+       kubectl apply -f gsc-aks-python.yaml
+
+#. Test job status::
+
+       kubectl get jobs -l app=gsc-aks-python
+
+#. Receive logs of job::
+
+       kubectl logs -l app=gsc-aks-python
+
+#. Delete job after completion::
+
+       kubectl delete -f gsc-aks-python.yaml

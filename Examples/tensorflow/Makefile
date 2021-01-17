@@ -58,7 +58,7 @@ label_image.manifest: label_image.manifest.template
 		-e 's|$$(GRAPHENEDEBUG)|'"$(GRAPHENEDEBUG)"'|g' \
 		$< > $@
 
-label_image.manifest.sgx: label_image label_image.manifest inception_v3.tflite labels.txt
+label_image.manifest.sgx: label_image.manifest
 	$(GRAPHENEDIR)/Pal/src/host/Linux-SGX/signer/pal-sgx-sign \
 		-libpal $(GRAPHENEDIR)/Runtime/libpal-Linux-SGX.so \
 		-key $(SGX_SIGNER_KEY) \
@@ -68,15 +68,15 @@ label_image.manifest.sgx: label_image label_image.manifest inception_v3.tflite l
 		-output label_image.token -sig label_image.sig
 
 .PHONY: check
-check: all
+check: default
 	$(GRAPHENEDIR)/Runtime/pal_loader ./label_image -m inception_v3.tflite -i image.bmp -t 4
 
 .PHONY: run-native
-run-native: all
+run-native: default
 	./label_image -m inception_v3.tflite -i image.bmp -t 4
 
 .PHONY: run-graphene
-run-graphene: all
+run-graphene: default
 	$(GRAPHENEDIR)/Runtime/pal_loader ./label_image -m inception_v3.tflite -i image.bmp -t 4
 
 .PHONY: clean

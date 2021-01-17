@@ -2,21 +2,18 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_mutex.c
- *
- * This file contains APIs that provide operations of (futex based) mutexes.
- * Based on "Mutexes and Condition Variables using Futexes"
- * (http://locklessinc.com/articles/mutex_cv_futex)
+ * This file contains APIs that provide operations of (futex based) mutexes. Based on "Mutexes and
+ * Condition Variables using Futexes" (http://locklessinc.com/articles/mutex_cv_futex)
  */
 
 #include <asm/errno.h>
-#include <atomic.h>
 #include <errno.h>
 #include <limits.h>
 #include <linux/futex.h>
 #include <linux/time.h>
 
 #include "api.h"
+#include "atomic.h"
 #include "pal.h"
 #include "pal_debug.h"
 #include "pal_defs.h"
@@ -48,8 +45,8 @@ int _DkMutexLockTimeout(struct mutex_handle* m, int64_t timeout_us) {
     int ret = 0;
 
     uint32_t t = MUTEX_UNLOCKED;
-    if (__atomic_compare_exchange_n(m->locked, &t, MUTEX_LOCKED, /*weak=*/false,
-                                    __ATOMIC_ACQUIRE, __ATOMIC_RELAXED))
+    if (__atomic_compare_exchange_n(m->locked, &t, MUTEX_LOCKED, /*weak=*/false, __ATOMIC_ACQUIRE,
+                                    __ATOMIC_RELAXED))
         goto success;
 
     if (timeout_us == 0) {
@@ -117,7 +114,7 @@ int _DkMutexUnlock(struct mutex_handle* m) {
 
 void _DkMutexRelease(PAL_HANDLE handle) {
     struct mutex_handle* mut = &handle->mutex.mut;
-    int ret                  = _DkMutexUnlock(mut);
+    int ret = _DkMutexUnlock(mut);
     if (ret < 0)
         _DkRaiseFailure(ret);
     return;

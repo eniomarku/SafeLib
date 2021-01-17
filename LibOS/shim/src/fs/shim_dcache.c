@@ -4,17 +4,16 @@
  */
 
 /*
- * shim_dcache.c
- *
- * This file contains codes for maintaining directory cache in library OS.
+ * This file contains code for maintaining directory cache in library OS.
  */
 
-#include <list.h>
-#include <shim_checkpoint.h>
-#include <shim_fs.h>
-#include <shim_handle.h>
-#include <shim_internal.h>
-#include <shim_types.h>
+#include "list.h"
+#include "shim_checkpoint.h"
+#include "shim_fs.h"
+#include "shim_handle.h"
+#include "shim_internal.h"
+#include "shim_lock.h"
+#include "shim_types.h"
 
 static struct shim_lock dcache_mgr_lock;
 
@@ -25,7 +24,7 @@ static struct shim_lock dcache_mgr_lock;
 #define DCACHE_MGR_ALLOC 64
 
 #define OBJ_TYPE struct shim_dentry
-#include <memmgr.h>
+#include "memmgr.h"
 
 struct shim_lock dcache_lock;
 
@@ -45,11 +44,9 @@ static struct shim_dentry* alloc_dentry(void) {
 
     memset(dent, 0, sizeof(struct shim_dentry));
 
-    REF_SET(dent->ref_count, 0);
+    REF_SET(dent->ref_count, 1);
     dent->mode = NO_MODE;
 
-    INIT_LIST_HEAD(dent, hlist);
-    INIT_LIST_HEAD(dent, list);
     INIT_LISTP(&dent->children);
     INIT_LIST_HEAD(dent, siblings);
 
@@ -69,9 +66,12 @@ int init_dcache(void) {
     dentry_mgr = create_mem_mgr(init_align_up(DCACHE_MGR_ALLOC));
 
     dentry_root = alloc_dentry();
+    if (!dentry_root) {
+        return -ENOMEM;
+    }
 
-    /* The root is special; we assume it won't change or be freed, and
-     * set its refcount to 1. */
+    /* The root is special; we assume it won't change or be freed, so we artificially increase its
+     * refcount by 1. */
     get_dentry(dentry_root);
 
     /* Initialize the root to a valid state, as a low-level lookup
@@ -84,7 +84,6 @@ int init_dcache(void) {
     qstrsetstr(&dentry_root->name, "", 0);
     qstrsetstr(&dentry_root->rel_path, "", 0);
 
-    get_dentry(dentry_root);
     return 0;
 }
 
@@ -101,35 +100,70 @@ void get_dentry(struct shim_dentry* dent) {
 }
 
 static void free_dentry(struct shim_dentry* dent) {
+    if (dent->fs) {
+        put_mount(dent->fs);
+    }
+
+    qstrfree(&dent->rel_path);
+    qstrfree(&dent->name);
+
+    if (dent->parent) {
+        put_dentry(dent->parent);
+    }
+
+    assert(dent->nchildren == 0);
+    assert(LISTP_EMPTY(&dent->children));
+    assert(LIST_EMPTY(dent, siblings));
+
+    if (dent->mounted) {
+        put_mount(dent->mounted);
+    }
+
+    /* XXX: We are leaking `data` field here. This field seems to have different meaning for
+     * different dentries and how to free it is a mystery to me. */
+
     destroy_lock(&dent->lock);
+
     free_mem_obj_to_mgr(dentry_mgr, dent);
 }
 
-/* Decrement the reference count on dent.
+/*
+ * Decrement the reference count on dent.
  *
- * For now, we don't have an eviction policy, so just
- * keep everything.
- *
- * If a dentry is on the children list of a parent, it has
- * a refcount of at least 1.
- *
- * If the ref count ever hits zero, we free the dentry.
- *
+ * If we notice that dentry is negative and there are only 2 references left (ours and 1 for
+ * parent's children list) we try to free this dentry - try, because somebody could get another
+ * reference asynchronously.
  */
+void put_dentry_maybe_delete(struct shim_dentry* dent) {
+    long count = REF_GET(dent->ref_count);
+    assert(count >= 0);
+
+    /* First try without the lock. This check is racy - in some cases dentry might be left alive,
+     * but this is a opportunistic free anyway. */
+    if (count == 2) {
+        lock(&dcache_lock);
+
+        count = REF_GET(dent->ref_count);
+        /* If the dentry does not exist on fs anymore, let's delete it. */
+        if (count == 2 && dent->state & DENTRY_NEGATIVE && dent->parent) {
+            LISTP_DEL_INIT(dent, &dent->parent->children, siblings);
+            put_dentry(dent);
+        }
+
+        unlock(&dcache_lock);
+    }
+
+    /* This might free `dent`. */
+    put_dentry(dent);
+}
+
 void put_dentry(struct shim_dentry* dent) {
     int count = REF_DEC(dent->ref_count);
     assert(count >= 0);
-    // We don't expect this to commonly free a dentry, and may represent a
-    // reference counting bug.
     if (count == 0) {
-        debug("XXX Churn Warning: Freeing dentry %p; may not be expected\n", dent);
-        // Add some assertions that the dentry is properly cleaned up, like it
-        // isn't on a parent's children list
         assert(LIST_EMPTY(dent, siblings));
         free_dentry(dent);
     }
-
-    return;
 }
 
 /* Allocate and initialize a new dentry for path name, under
@@ -155,8 +189,6 @@ struct shim_dentry* get_new_dentry(struct shim_mount* mount, struct shim_dentry*
 
     if (!dent)
         return NULL;
-
-    get_dentry(dent);
 
     if (hashptr) {
 #ifdef DEBUG
@@ -337,12 +369,13 @@ BEGIN_CP_FUNC(dentry) {
 
         lock(&dent->lock);
         *new_dent = *dent;
-        INIT_LIST_HEAD(new_dent, hlist);
-        INIT_LIST_HEAD(new_dent, list);
         INIT_LISTP(&new_dent->children);
         INIT_LIST_HEAD(new_dent, siblings);
         clear_lock(&new_dent->lock);
         REF_SET(new_dent->ref_count, 0);
+
+        /* we don't checkpoint children dentries, so need to list directory again */
+        new_dent->state &= ~DENTRY_LISTED;
 
         if (new_dent->fs == &fifo_builtin_fs) {
             /* FIFO pipe, do not try to checkpoint its fs */
@@ -379,8 +412,6 @@ BEGIN_RS_FUNC(dentry) {
     __UNUSED(offset);
     struct shim_dentry* dent = (void*)(base + GET_CP_FUNC_ENTRY());
 
-    CP_REBASE(dent->hlist);
-    CP_REBASE(dent->list);
     CP_REBASE(dent->children);
     CP_REBASE(dent->siblings);
     CP_REBASE(dent->fs);
@@ -394,6 +425,8 @@ BEGIN_RS_FUNC(dentry) {
     if (!dent->fs) {
         /* special case of FIFO pipe: use built-in FIFO FS */
         dent->fs = &fifo_builtin_fs;
+    } else {
+        get_mount(dent->fs);
     }
 
     /* DEP 6/16/17: I believe the point of this line is to
@@ -405,7 +438,14 @@ BEGIN_RS_FUNC(dentry) {
         LISTP_ADD_TAIL(dent, &dent->parent->children, siblings);
     }
 
-    DEBUG_RS("hash=%08lx,path=%s,fs=%s", dent->rel_path.hash, dentry_get_path(dent, true, NULL),
+    if (dent->mounted) {
+        get_mount(dent->mounted);
+    }
+
+#if DEBUG_RESUME == 1
+    char buffer[dentry_get_path_size(dent)];
+#endif
+    DEBUG_RS("hash=%08lx,path=%s,fs=%s", dent->rel_path.hash, dentry_get_path(dent, buffer),
              dent->fs ? qstrgetstr(&dent->fs->path) : NULL);
 }
 END_RS_FUNC(dentry)

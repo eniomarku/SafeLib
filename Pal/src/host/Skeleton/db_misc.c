@@ -2,8 +2,6 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_misc.c
- *
  * This file contains APIs for miscellaneous use.
  */
 
@@ -34,11 +32,11 @@ size_t _DkRandomBitsRead(void* buffer, size_t size) {
     return -PAL_ERROR_NOTIMPLEMENTED;
 }
 
-int _DkSegmentRegisterSet(int reg, const void* addr) {
+int _DkSegmentRegisterGet(int reg, void** addr) {
     return -PAL_ERROR_NOTIMPLEMENTED;
 }
 
-int _DkSegmentRegisterGet(int reg, void** addr) {
+int _DkSegmentRegisterSet(int reg, void* addr) {
     return -PAL_ERROR_NOTIMPLEMENTED;
 }
 
@@ -51,8 +49,8 @@ int _DkCpuIdRetrieve(unsigned int leaf, unsigned int subleaf, unsigned int value
 }
 
 int _DkAttestationReport(PAL_PTR user_report_data, PAL_NUM* user_report_data_size,
-                         PAL_PTR target_info, PAL_NUM* target_info_size,
-                         PAL_PTR report, PAL_NUM* report_size) {
+                         PAL_PTR target_info, PAL_NUM* target_info_size, PAL_PTR report,
+                         PAL_NUM* report_size) {
     __UNUSED(user_report_data);
     __UNUSED(user_report_data_size);
     __UNUSED(target_info);
@@ -62,8 +60,8 @@ int _DkAttestationReport(PAL_PTR user_report_data, PAL_NUM* user_report_data_siz
     return -PAL_ERROR_NOTIMPLEMENTED;
 }
 
-int _DkAttestationQuote(PAL_PTR user_report_data, PAL_NUM user_report_data_size,
-                        PAL_PTR quote, PAL_NUM* quote_size) {
+int _DkAttestationQuote(PAL_PTR user_report_data, PAL_NUM user_report_data_size, PAL_PTR quote,
+                        PAL_NUM* quote_size) {
     __UNUSED(user_report_data);
     __UNUSED(user_report_data_size);
     __UNUSED(quote);

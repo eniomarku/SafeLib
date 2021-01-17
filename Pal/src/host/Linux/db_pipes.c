@@ -2,11 +2,17 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_pipes.c
- *
- * This file contains oeprands to handle streams with URIs that start with
- * "pipe:" or "pipe.srv:".
+ * This file contains operands to handle streams with URIs that start with "pipe:" or "pipe.srv:".
  */
+
+#include <asm/errno.h>
+#include <asm/fcntl.h>
+#include <asm/ioctls.h>
+#include <asm/poll.h>
+#include <linux/time.h>
+#include <linux/types.h>
+#include <linux/un.h>
+#include <sys/socket.h>
 
 #include "api.h"
 #include "pal.h"
@@ -17,15 +23,6 @@
 #include "pal_linux.h"
 #include "pal_linux_defs.h"
 #include "pal_security.h"
-
-typedef __kernel_pid_t pid_t;
-#include <asm/errno.h>
-#include <asm/fcntl.h>
-#include <asm/poll.h>
-#include <linux/time.h>
-#include <linux/types.h>
-#include <linux/un.h>
-#include <sys/socket.h>
 
 static int pipe_addr(const char* name, struct sockaddr_un* addr) {
     /* use abstract UNIX sockets for pipes, with name format "@/graphene/<pipename>" */
@@ -44,9 +41,9 @@ static int pipe_addr(const char* name, struct sockaddr_un* addr) {
 /*!
  * \brief Create a listening abstract UNIX socket as preparation for connecting two ends of a pipe.
  *
- * An abstract UNIX socket with name "@/graphene/<pipename>" is opened for listening. A corresponding
- * PAL handle with type `pipesrv` is created. This PAL handle typically serves only as an
- * intermediate step to connect two ends of the pipe (`pipecli` and `pipe`). As soon as the other
+ * An abstract UNIX socket with name "@/graphene/<pipename>" is opened for listening. A
+ * corresponding PAL handle with type `pipesrv` is created. This PAL handle typically serves only as
+ * an intermediate step to connect two ends of the pipe (`pipecli` and `pipe`). As soon as the other
  * end of the pipe connects to this listening socket, a new accepted socket and the corresponding
  * PAL handle are created, and this `pipesrv` handle can be closed.
  *
@@ -144,9 +141,9 @@ static int pipe_waitforclient(PAL_HANDLE handle, PAL_HANDLE* client) {
  * \brief Connect to the other end of the pipe and create PAL handle for our end of the pipe.
  *
  * This function connects to the other end of the pipe, represented as an abstract UNIX socket
- * "@/graphene/<pipename>" opened for listening. When the connection succeeds, a new `pipe` PAL handle
- * is created with the corresponding underlying socket and is returned in `handle`. The other end of
- * the pipe is typically of type `pipecli`.
+ * "@/graphene/<pipename>" opened for listening. When the connection succeeds, a new `pipe` PAL
+ * handle is created with the corresponding underlying socket and is returned in `handle`. The other
+ * end of the pipe is typically of type `pipecli`.
  *
  * \param[out] handle  PAL handle of type `pipe` with abstract UNIX socket connected to another end.
  * \param[in]  name    String uniquely identifying the pipe.
@@ -259,16 +256,16 @@ static int pipe_open(PAL_HANDLE* handle, const char* type, const char* uri, int 
         !WITHIN_MASK(create, PAL_CREATE_MASK) || !WITHIN_MASK(options, PAL_OPTION_MASK))
         return -PAL_ERROR_INVAL;
 
-    if (!strcmp_static(type, URI_TYPE_PIPE) && !*uri)
+    if (!strcmp(type, URI_TYPE_PIPE) && !*uri)
         return pipe_private(handle, options);
 
     if (strlen(uri) + 1 > PIPE_NAME_MAX)
         return -PAL_ERROR_INVAL;
 
-    if (!strcmp_static(type, URI_TYPE_PIPE_SRV))
+    if (!strcmp(type, URI_TYPE_PIPE_SRV))
         return pipe_listen(handle, uri, options);
 
-    if (!strcmp_static(type, URI_TYPE_PIPE))
+    if (!strcmp(type, URI_TYPE_PIPE))
         return pipe_connect(handle, uri, options);
 
     return -PAL_ERROR_INVAL;

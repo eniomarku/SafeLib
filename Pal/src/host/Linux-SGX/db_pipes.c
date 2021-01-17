@@ -2,11 +2,13 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_pipes.c
- *
- * This file contains oeprands to handle streams with URIs that start with
- * "pipe:" or "pipe.srv:".
+ * This file contains operands to handle streams with URIs that start with "pipe:" or "pipe.srv:".
  */
+
+#include <asm/fcntl.h>
+#include <asm/poll.h>
+#include <linux/types.h>
+#include <linux/un.h>
 
 #include "api.h"
 #include "cpu.h"
@@ -21,11 +23,6 @@
 #include "pal_linux_error.h"
 #include "pal_security.h"
 
-typedef __kernel_pid_t pid_t;
-#include <asm/fcntl.h>
-#include <asm/poll.h>
-#include <linux/types.h>
-#include <linux/un.h>
 
 static int pipe_addr(const char* name, struct sockaddr_un* addr) {
     /* use abstract UNIX sockets for pipes, with name format "@/graphene/<pipename>" */
@@ -90,9 +87,9 @@ static int thread_handshake_func(void* param) {
 /*!
  * \brief Create a listening abstract UNIX socket as preparation for connecting two ends of a pipe.
  *
- * An abstract UNIX socket with name "@/graphene/<pipename>" is opened for listening. A corresponding
- * PAL handle with type `pipesrv` is created. This PAL handle typically serves only as an
- * intermediate step to connect two ends of the pipe (`pipecli` and `pipe`). As soon as the other
+ * An abstract UNIX socket with name "@/graphene/<pipename>" is opened for listening. A
+ * corresponding PAL handle with type `pipesrv` is created. This PAL handle typically serves only as
+ * an intermediate step to connect two ends of the pipe (`pipecli` and `pipe`). As soon as the other
  * end of the pipe connects to this listening socket, a new accepted socket and the corresponding
  * PAL handle are created, and this `pipesrv` handle can be closed.
  *
@@ -125,9 +122,9 @@ static int pipe_listen(PAL_HANDLE* handle, const char* name, int options) {
     }
 
     SET_HANDLE_TYPE(hdl, pipesrv);
-    HANDLE_HDR(hdl)->flags |= RFD(0);  /* cannot write to a listening socket */
-    hdl->pipe.fd            = ret;
-    hdl->pipe.nonblocking   = options & PAL_OPTION_NONBLOCK ? PAL_TRUE : PAL_FALSE;
+    HANDLE_HDR(hdl)->flags |= RFD(0); /* cannot write to a listening socket */
+    hdl->pipe.fd          = ret;
+    hdl->pipe.nonblocking = options & PAL_OPTION_NONBLOCK ? PAL_TRUE : PAL_FALSE;
 
     /* padding with zeros is because the whole buffer is used in key derivation */
     memset(&hdl->pipe.name.str, 0, sizeof(hdl->pipe.name.str));
@@ -136,7 +133,7 @@ static int pipe_listen(PAL_HANDLE* handle, const char* name, int options) {
     /* pipesrv handle is only intermediate so it doesn't need SSL context or session key */
     hdl->pipe.ssl_ctx        = NULL;
     hdl->pipe.is_server      = false;
-    hdl->pipe.handshake_done = 1;  /* pipesrv doesn't do any handshake so consider it done */
+    hdl->pipe.handshake_done = 1; /* pipesrv doesn't do any handshake so consider it done */
     memset(hdl->pipe.session_key, 0, sizeof(hdl->pipe.session_key));
 
     *handle = hdl;
@@ -176,9 +173,9 @@ static int pipe_waitforclient(PAL_HANDLE handle, PAL_HANDLE* client) {
 
     SET_HANDLE_TYPE(clnt, pipecli);
     HANDLE_HDR(clnt)->flags |= RFD(0) | WFD(0);
-    clnt->pipe.fd            = ret;
-    clnt->pipe.name          = handle->pipe.name;
-    clnt->pipe.nonblocking   = PAL_FALSE; /* FIXME: must set nonblocking based on `handle` value */
+    clnt->pipe.fd          = ret;
+    clnt->pipe.name        = handle->pipe.name;
+    clnt->pipe.nonblocking = PAL_FALSE; /* FIXME: must set nonblocking based on `handle` value */
 
     /* create the SSL pre-shared key for this end of the pipe; note that SSL context is initialized
      * lazily on first read/write on this pipe */
@@ -210,9 +207,9 @@ static int pipe_waitforclient(PAL_HANDLE handle, PAL_HANDLE* client) {
  * \brief Connect to the other end of the pipe and create PAL handle for our end of the pipe.
  *
  * This function connects to the other end of the pipe, represented as an abstract UNIX socket
- * "@/graphene/<pipename>" opened for listening. When the connection succeeds, a new `pipe` PAL handle
- * is created with the corresponding underlying socket and is returned in `handle`. The other end of
- * the pipe is typically of type `pipecli`.
+ * "@/graphene/<pipename>" opened for listening. When the connection succeeds, a new `pipe` PAL
+ * handle is created with the corresponding underlying socket and is returned in `handle`. The other
+ * end of the pipe is typically of type `pipecli`.
  *
  * \param[out] handle  PAL handle of type `pipe` with abstract UNIX socket connected to another end.
  * \param[in]  name    String uniquely identifying the pipe.
@@ -232,8 +229,7 @@ static int pipe_connect(PAL_HANDLE* handle, const char* name, int options) {
     int nonblock = options & PAL_OPTION_NONBLOCK ? SOCK_NONBLOCK : 0;
 
     ret = ocall_connect(AF_UNIX, SOCK_STREAM | nonblock, 0, /*ipv6_v6only=*/0,
-                        (const struct sockaddr*)&addr,
-                        addrlen, NULL, NULL, &sock_options);
+                        (const struct sockaddr*)&addr, addrlen, NULL, NULL, &sock_options);
     if (IS_ERR(ret))
         return unix_to_pal_error(ERRNO(ret));
 
@@ -349,16 +345,16 @@ static int pipe_open(PAL_HANDLE* handle, const char* type, const char* uri, int 
         !WITHIN_MASK(create, PAL_CREATE_MASK) || !WITHIN_MASK(options, PAL_OPTION_MASK))
         return -PAL_ERROR_INVAL;
 
-    if (!strcmp_static(type, URI_TYPE_PIPE) && !*uri)
+    if (!strcmp(type, URI_TYPE_PIPE) && !*uri)
         return pipe_private(handle, options);
 
     if (strlen(uri) + 1 > PIPE_NAME_MAX)
         return -PAL_ERROR_INVAL;
 
-    if (!strcmp_static(type, URI_TYPE_PIPE_SRV))
+    if (!strcmp(type, URI_TYPE_PIPE_SRV))
         return pipe_listen(handle, uri, options);
 
-    if (!strcmp_static(type, URI_TYPE_PIPE))
+    if (!strcmp(type, URI_TYPE_PIPE))
         return pipe_connect(handle, uri, options);
 
     return -PAL_ERROR_INVAL;
@@ -390,7 +386,7 @@ static int64_t pipe_read(PAL_HANDLE handle, uint64_t offset, uint64_t len, void*
     } else {
         /* normal pipe, use a secure session (should be already initialized) */
         while (!__atomic_load_n(&handle->pipe.handshake_done, __ATOMIC_ACQUIRE))
-            cpu_pause();
+            CPU_RELAX();
 
         if (!handle->pipe.ssl_ctx)
             return -PAL_ERROR_NOTCONNECTION;
@@ -430,7 +426,7 @@ static int64_t pipe_write(PAL_HANDLE handle, uint64_t offset, uint64_t len, cons
     } else {
         /* normal pipe, use a secure session (should be already initialized) */
         while (!__atomic_load_n(&handle->pipe.handshake_done, __ATOMIC_ACQUIRE))
-            cpu_pause();
+            CPU_RELAX();
 
         if (!handle->pipe.ssl_ctx)
             return -PAL_ERROR_NOTCONNECTION;
@@ -459,7 +455,7 @@ static int pipe_close(PAL_HANDLE handle) {
         }
     } else if (handle->pipe.fd != PAL_IDX_POISON) {
         while (!__atomic_load_n(&handle->pipe.handshake_done, __ATOMIC_ACQUIRE))
-            cpu_pause();
+            CPU_RELAX();
 
         if (handle->pipe.ssl_ctx) {
             _DkStreamSecureFree((LIB_SSL_CONTEXT*)handle->pipe.ssl_ctx);
@@ -507,6 +503,11 @@ static int pipe_delete(PAL_HANDLE handle, int access) {
             ocall_shutdown(handle->pipeprv.fds[1], SHUT_WR);
         }
     } else {
+        /* This pipe might use a secure session, make sure all initial work is done. */
+        while (!__atomic_load_n(&handle->pipe.handshake_done, __ATOMIC_ACQUIRE)) {
+            CPU_RELAX();
+        }
+
         /* other types of pipes have a single underlying FD, shut it down */
         if (handle->pipe.fd != PAL_IDX_POISON) {
             ocall_shutdown(handle->pipe.fd, shutdown);
@@ -556,6 +557,11 @@ static int pipe_attrquerybyhdl(PAL_HANDLE handle, PAL_STREAM_ATTR* attr) {
         attr->readable = ret >= 1 && (pfd[0].revents & (POLLIN | POLLERR | POLLHUP)) == POLLIN;
         attr->writable = ret >= 1 && (pfd[1].revents & (POLLOUT | POLLERR | POLLHUP)) == POLLOUT;
     } else {
+        /* This pipe might use a secure session, make sure all initial work is done. */
+        while (!__atomic_load_n(&handle->pipe.handshake_done, __ATOMIC_ACQUIRE)) {
+            CPU_RELAX();
+        }
+
         /* for non-private pipes, both readable and writable are queried on the same fd */
         short pfd_events = POLLIN;
         if (!IS_HANDLE_TYPE(handle, pipesrv)) {
@@ -587,6 +593,13 @@ static int pipe_attrquerybyhdl(PAL_HANDLE handle, PAL_STREAM_ATTR* attr) {
 static int pipe_attrsetbyhdl(PAL_HANDLE handle, PAL_STREAM_ATTR* attr) {
     if (handle->generic.fds[0] == PAL_IDX_POISON)
         return -PAL_ERROR_BADHANDLE;
+
+    if (!IS_HANDLE_TYPE(handle, pipeprv)) {
+        /* This pipe might use a secure session, make sure all initial work is done. */
+        while (!__atomic_load_n(&handle->pipe.handshake_done, __ATOMIC_ACQUIRE)) {
+            CPU_RELAX();
+        }
+    }
 
     PAL_BOL* nonblocking = (HANDLE_HDR(handle)->type == pal_type_pipeprv)
                                ? &handle->pipeprv.nonblocking

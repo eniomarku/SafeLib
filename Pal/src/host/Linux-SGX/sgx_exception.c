@@ -4,10 +4,23 @@
  */
 
 /*
- * db_exception.c
- *
  * This file contains APIs to set up signal handlers.
  */
+
+#include <stddef.h> /* linux/signal.h misses this dependency (for size_t), at least on Ubuntu 16.04.
+                     * We must include it ourselves before including linux/signal.h.
+                     */
+
+#include "sigset.h" /* FIXME: this include can't be sorted, otherwise we get:
+                     * In file included from sgx_exception.c:19:0:
+                     * ../../../include/arch/x86_64/Linux/ucontext.h:136:5: error: unknown type name ‘__sigset_t’
+                     *      __sigset_t uc_sigmask;
+                     */
+
+
+#include <asm/errno.h>
+#include <linux/signal.h>
+#include <stdbool.h>
 
 #include "api.h"
 #include "ecall_types.h"
@@ -16,38 +29,30 @@
 #include "rpc_queue.h"
 #include "sgx_enclave.h"
 #include "sgx_internal.h"
-
-#include <asm/errno.h>
-#include <linux/signal.h>
-#include <sigset.h>
-#include <stdbool.h>
-#include <ucontext.h>
+#include "ucontext.h"
 
 #if defined(__x86_64__)
 /* in x86_64 kernels, sigaction is required to have a user-defined restorer */
-#define DEFINE_RESTORE_RT(syscall) DEFINE_RESTORE_RT2(syscall)
-#define DEFINE_RESTORE_RT2(syscall)                 \
-    __asm__ (                                       \
-         "    nop\n"                                \
-         ".align 16\n"                              \
-         ".LSTART_restore_rt:\n"                    \
-         "    .type __restore_rt,@function\n"       \
-         "__restore_rt:\n"                          \
-         "    movq $" #syscall ", %rax\n"           \
-         "    syscall\n");
-DEFINE_RESTORE_RT(__NR_rt_sigreturn)
+__asm__(
+".align 16\n"
+".LSTART_restore_rt:\n"
+".type __restore_rt,@function\n"
+"__restore_rt:\n"
+"movq $" XSTRINGIFY(__NR_rt_sigreturn) ", %rax\n"
+"syscall\n"
+);
 
 /* workaround for an old GAS (2.27) bug that incorrectly omits relocations when referencing this
  * symbol */
 __attribute__((visibility("hidden"))) void __restore_rt(void);
-#endif  /* defined(__x86_64__) */
+#endif /* defined(__x86_64__) */
 
 void sgx_entry_return(void);
 
 static const int ASYNC_SIGNALS[] = {SIGTERM, SIGINT, SIGCONT};
 
 static int block_signal(int sig, bool block) {
-    int how = block? SIG_BLOCK: SIG_UNBLOCK;
+    int how = block ? SIG_BLOCK : SIG_UNBLOCK;
 
     __sigset_t mask;
     __sigemptyset(&mask);
@@ -85,7 +90,7 @@ int block_async_signals(bool block) {
 }
 
 static int get_pal_event(int sig) {
-    switch(sig) {
+    switch (sig) {
         case SIGFPE:
             return PAL_EVENT_ARITHMETIC_ERROR;
         case SIGSEGV:
@@ -169,10 +174,11 @@ static void handle_async_signal(int signum, siginfo_t* info, struct ucontext* uc
     }
 
     /* signal arrived while in untrusted PAL code (during syscall handling), emulate as if syscall
-     * was interrupted */
+     * was interrupted by calling sgx_entry_return(syscall_return_value=-EINTR, event) */
     /* TODO: we abandon PAL state here (possibly still holding some locks, etc) and return to
      *       enclave; ideally we must unwind/fix the state and only then jump into enclave */
-    pal_ucontext_set_function_parameters(uc, sgx_entry_return, 2, -EINTR, event);
+    greg_t func_args[2] = {-EINTR, event};
+    pal_ucontext_set_function_parameters(uc, sgx_entry_return, /*func_args_num=*/2, func_args);
 }
 
 static void handle_dummy_signal(int signum, siginfo_t* info, struct ucontext* uc) {

@@ -2,16 +2,12 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * do-rel.h
- *
- * This files contain architecture-independent macros of ELF dynamic
- * relocation function.
- * The source code is imported and modified from the GNU C Library.
+ * This file contains architecture-independent macros of ELF dynamic relocation function.
+ * The source code was imported from the GNU C Library and modified.
  */
 
-#include <pal_rtld.h>
-
 #include "dl-machine.h"
+#include "pal_rtld.h"
 
 #define elf_dynamic_do_rel       elf_dynamic_do_rela
 #define RELCOUNT_IDX             VERSYMIDX(DT_RELACOUNT)

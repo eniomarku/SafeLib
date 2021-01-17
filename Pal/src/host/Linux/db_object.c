@@ -2,8 +2,6 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_object.c
- *
  * This file contains APIs for waiting on PAL handles (polling).
  */
 
@@ -35,8 +33,8 @@ int _DkSynchronizationObjectWait(PAL_HANDLE handle, int64_t timeout_us) {
 
 /* Wait for specific events on all handles in the handle array and return multiple events
  * (including errors) reported by the host. Return 0 on success, PAL error on failure. */
-int _DkStreamsWaitEvents(size_t count, PAL_HANDLE* handle_array, PAL_FLG* events, PAL_FLG* ret_events,
-                         int64_t timeout_us) {
+int _DkStreamsWaitEvents(size_t count, PAL_HANDLE* handle_array, PAL_FLG* events,
+                         PAL_FLG* ret_events, int64_t timeout_us) {
     int ret;
 
     if (count == 0)
@@ -155,7 +153,7 @@ int _DkStreamsWaitEvents(size_t count, PAL_HANDLE* handle_array, PAL_FLG* events
         for (size_t k = 0; k < MAX_FDS; k++) {
             if (hdl->generic.fds[k] != (PAL_IDX)fds[i].fd)
                 continue;
-            if (fds[i].revents & (POLLHUP|POLLERR|POLLNVAL))
+            if (fds[i].revents & (POLLHUP | POLLERR | POLLNVAL))
                 HANDLE_HDR(hdl)->flags |= ERROR(k);
         }
     }

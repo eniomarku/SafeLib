@@ -2,12 +2,12 @@
 /* Copyright (C) 2014 Stony Brook University */
 
 /*
- * db_socket.c
- *
- * This file contains operands for streams with URIs that start with
- * "tcp:", "tcp.srv:", "udp:", "udp.srv:".
+ * This file contains operands for streams with URIs that start with "tcp:", "tcp.srv:", "udp:",
+ * "udp.srv:".
  */
 
+#include <asm-generic/socket.h>
+#include <asm/fcntl.h>
 #include <linux/in.h>
 #include <linux/in6.h>
 #include <linux/poll.h>
@@ -23,9 +23,6 @@
 #include "pal_linux_defs.h"
 #include "pal_linux_error.h"
 #include "pal_security.h"
-typedef __kernel_pid_t pid_t;
-#include <asm-generic/socket.h>
-#include <asm/fcntl.h>
 
 #ifndef SOL_TCP
 #define SOL_TCP 6
@@ -257,51 +254,6 @@ static inline PAL_HANDLE socket_create_handle(int type, int fd, int options,
     return hdl;
 }
 
-#if ALLOW_BIND_ANY == 0
-static bool check_zero(void* mem, size_t size) {
-    void* p = mem;
-    void* q = mem + size;
-
-    while (p < q) {
-        if (p <= q - sizeof(long)) {
-            if (*(long*)p)
-                return false;
-            p += sizeof(long);
-        } else if (p <= q - sizeof(int)) {
-            if (*(int*)p)
-                return false;
-            p += sizeof(int);
-        } else if (p <= q - sizeof(short)) {
-            if (*(short*)p)
-                return false;
-            p += sizeof(short);
-        } else {
-            if (*(char*)p)
-                return false;
-            p++;
-        }
-    }
-
-    return true;
-}
-
-/* check if an address is "Any" */
-static bool check_any_addr(struct sockaddr* addr) {
-    if (addr->sa_family == AF_INET) {
-        struct sockaddr_in* addr_in = (struct sockaddr_in*)addr;
-
-        return addr_in->sin_port == 0 && check_zero(&addr_in->sin_addr, sizeof(addr_in->sin_addr));
-    } else if (addr->sa_family == AF_INET6) {
-        struct sockaddr_in6* addr_in6 = (struct sockaddr_in6*)addr;
-
-        return addr_in6->sin6_port == 0 &&
-               check_zero(&addr_in6->sin6_addr, sizeof(addr_in6->sin6_addr));
-    }
-
-    return false;
-}
-#endif
-
 static inline int sock_type(int type, int options) {
     if (options & PAL_OPTION_NONBLOCK)
         type |= SOCK_NONBLOCK;
@@ -317,13 +269,6 @@ static int tcp_listen(PAL_HANDLE* handle, char* uri, int create, int options) {
 
     if ((ret = socket_parse_uri(uri, &bind_addr, &bind_addrlen, NULL, NULL)) < 0)
         return ret;
-
-#if ALLOW_BIND_ANY == 0
-    /* the socket need to have a binding address, a null address or an
-       any address is not allowed */
-    if (check_any_addr(bind_addr))
-        return -PAL_ERROR_INVAL;
-#endif
 
     struct sockopt sock_options;
 
@@ -400,13 +345,6 @@ static int tcp_connect(PAL_HANDLE* handle, char* uri, int options) {
     if (bind_addr && bind_addr->sa_family != dest_addr->sa_family)
         return -PAL_ERROR_INVAL;
 
-#if ALLOW_BIND_ANY == 0
-    /* the socket need to have a binding address, a null address or an
-       any address is not allowed */
-    if (bind_addr && addr_check_any(bind_addr))
-        return -PAL_ERROR_INVAL;
-#endif
-
     struct sockopt sock_options;
 
     memset(&sock_options, 0, sizeof(sock_options));
@@ -447,10 +385,10 @@ static int tcp_open(PAL_HANDLE* handle, const char* type, const char* uri, int a
     char uri_buf[PAL_SOCKADDR_SIZE];
     memcpy(uri_buf, uri, uri_len);
 
-    if (!strcmp_static(type, URI_TYPE_TCP_SRV))
+    if (!strcmp(type, URI_TYPE_TCP_SRV))
         return tcp_listen(handle, uri_buf, create, options);
 
-    if (!strcmp_static(type, URI_TYPE_TCP))
+    if (!strcmp(type, URI_TYPE_TCP))
         return tcp_connect(handle, uri_buf, options);
 
     return -PAL_ERROR_NOTSUPPORT;
@@ -515,13 +453,6 @@ static int udp_bind(PAL_HANDLE* handle, char* uri, int create, int options) {
     assert(bind_addr);
     assert(bind_addrlen == addr_size(bind_addr));
 
-#if ALLOW_BIND_ANY == 0
-    /* the socket need to have a binding address, a null address or an
-       any address is not allowed */
-    if (addr_check_any(bind_addr))
-        return -PAL_ERROR_INVAL;
-#endif
-
     struct sockopt sock_options;
 
     memset(&sock_options, 0, sizeof(sock_options));
@@ -555,13 +486,6 @@ static int udp_connect(PAL_HANDLE* handle, char* uri, int create, int options) {
 
     if ((ret = socket_parse_uri(uri, &bind_addr, &bind_addrlen, &dest_addr, &dest_addrlen)) < 0)
         return ret;
-
-#if ALLOW_BIND_ANY == 0
-    /* the socket need to have a binding address, a null address or an
-       any address is not allowed */
-    if (bind_addr && addr_check_any(bind_addr))
-        return -PAL_ERROR_INVAL;
-#endif
 
     struct sockopt sock_options;
 
@@ -605,10 +529,10 @@ static int udp_open(PAL_HANDLE* hdl, const char* type, const char* uri, int acce
 
     memcpy(buf, uri, len + 1);
 
-    if (!strcmp_static(type, URI_TYPE_UDP_SRV))
+    if (!strcmp(type, URI_TYPE_UDP_SRV))
         return udp_bind(hdl, buf, create, options);
 
-    if (!strcmp_static(type, URI_TYPE_UDP))
+    if (!strcmp(type, URI_TYPE_UDP))
         return udp_connect(hdl, buf, create, options);
 
     return -PAL_ERROR_NOTSUPPORT;
@@ -648,8 +572,8 @@ static int64_t udp_receivebyaddr(PAL_HANDLE handle, uint64_t offset, uint64_t le
     struct sockaddr_storage conn_addr;
     size_t conn_addrlen = sizeof(conn_addr);
 
-    ssize_t bytes = ocall_recv(handle->sock.fd, buf, len,
-                               (struct sockaddr*)&conn_addr, &conn_addrlen, NULL, NULL);
+    ssize_t bytes = ocall_recv(handle->sock.fd, buf, len, (struct sockaddr*)&conn_addr,
+                               &conn_addrlen, NULL, NULL);
 
     if (IS_ERR(bytes))
         return unix_to_pal_error(ERRNO(bytes));
@@ -658,8 +582,8 @@ static int64_t udp_receivebyaddr(PAL_HANDLE handle, uint64_t offset, uint64_t le
     if (!addr_uri)
         return -PAL_ERROR_OVERFLOW;
 
-    int ret = inet_create_uri(addr_uri, addr + addrlen - addr_uri,
-                              (struct sockaddr*)&conn_addr, conn_addrlen);
+    int ret = inet_create_uri(addr_uri, addr + addrlen - addr_uri, (struct sockaddr*)&conn_addr,
+                              conn_addrlen);
     if (ret < 0)
         return ret;
 
@@ -697,7 +621,7 @@ static int64_t udp_sendbyaddr(PAL_HANDLE handle, uint64_t offset, uint64_t len, 
     if (handle->sock.fd == PAL_IDX_POISON)
         return -PAL_ERROR_BADHANDLE;
 
-    if (!strstartswith_static(addr, URI_PREFIX_UDP))
+    if (!strstartswith(addr, URI_PREFIX_UDP))
         return -PAL_ERROR_INVAL;
 
     if (len != (uint32_t)len)
@@ -716,8 +640,8 @@ static int64_t udp_sendbyaddr(PAL_HANDLE handle, uint64_t offset, uint64_t len, 
     if (ret < 0)
         return ret;
 
-    ssize_t bytes = ocall_send(handle->sock.fd, buf, len,
-                               (struct sockaddr*)&conn_addr, conn_addrlen, NULL, 0);
+    ssize_t bytes = ocall_send(handle->sock.fd, buf, len, (struct sockaddr*)&conn_addr,
+                               conn_addrlen, NULL, 0);
     if (IS_ERR(bytes))
         return unix_to_pal_error(ERRNO(bytes));
 
