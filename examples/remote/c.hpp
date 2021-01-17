@@ -1,2 +1,0 @@
-#define MAXCON 100
-#define MAXEVENTS 110
