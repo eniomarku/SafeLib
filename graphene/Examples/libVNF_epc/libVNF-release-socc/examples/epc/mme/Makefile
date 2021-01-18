@@ -13,12 +13,12 @@ DPDK_INC=/include
 DPDK_LIB=/lib/
 
 # mtcp library and header 
-MTCP_FLD    =/home/nuc/graphene_test/mtcp/mtcp
+MTCP_FLD    =/home/nuc/SafeLib/mtcp/mtcp
 MTCP_INC    =-I${MTCP_FLD}/include
 MTCP_LIB    =-L${MTCP_FLD}/lib
 MTCP_TARGET = ${MTCP_LIB}/libmtcp.a
 
-UTIL_FLD = /home/nuc/graphene_test/mtcp/util
+UTIL_FLD = /home/nuc/SafeLib/mtcp/util
 UTIL_INC = -I${UTIL_FLD}/include
 UTIL_OBJ = ${UTIL_FLD}/http_parsing.o ${UTIL_FLD}/tdate_parse.o ${UTIL_FLD}/netlib.o
 
