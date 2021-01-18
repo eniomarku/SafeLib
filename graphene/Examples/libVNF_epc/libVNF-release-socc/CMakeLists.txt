@@ -51,6 +51,7 @@ elseif (${STACK} STREQUAL KERNEL_BYPASS)
     set(CMAKE_CXX_FLAGS "-fpermissive -lnuma -lrt -Wno-write-strings -Wall -DLIBVNF_STACK=2")
 
     # Include
+    #add your own path 
     include_directories(include)
     include_directories(/home/nuc/SafeLib/mtcp/mtcp/include)
     include_directories(/home/nuc/SafeLib/mtcp/util/include)
