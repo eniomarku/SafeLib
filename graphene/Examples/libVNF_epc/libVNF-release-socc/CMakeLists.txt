@@ -52,8 +52,8 @@ elseif (${STACK} STREQUAL KERNEL_BYPASS)
 
     # Include
     include_directories(include)
-    include_directories(/home/nuc/graphene_test/mtcp/mtcp/include)
-    include_directories(/home/nuc/graphene_test/mtcp/util/include)
+    include_directories(/home/nuc/SafeLib/mtcp/mtcp/include)
+    include_directories(/home/nuc/SafeLib/mtcp/util/include)
 
     # Sources and Headers
     file(GLOB_RECURSE HEADERS "include/*hpp")
