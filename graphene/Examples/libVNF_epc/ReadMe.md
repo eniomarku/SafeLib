@@ -20,10 +20,11 @@
 >>cd SafeLib/graphene/Examples/libVNF_epc/
 
 >> cp libVNF-release-socc/examples/epc/mme/mme ./\
->>cp libVNF-release-socc/examples/epc/mme/server.conf ./\ 
+>>cp libVNF-release-socc/examples/epc/mme/server.conf ./
+
 >>cp libVNF-release-socc/examples/epc/mme/ipsec.cfg ./
 
 >>make SGX=1 distclean && make SGX=1\
->>ifconfig dpdk0 169.254.9.10 netmask 255.255.255.0 up\
+>>ifconfig dpdk0 169.254.9.10 netmask 255.255.255.0 up
 
 >>SGX=1 ./pal_loader mme 1
