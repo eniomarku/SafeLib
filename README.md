@@ -66,7 +66,7 @@ Installation:
 
 >>cd /SafeLib/mtcp\ 
 >>export RTE_SDK=`echo $PWD`/dpdk\
->>export RTE_TARGET=x86_64-native-linuxapp-gcc\ 
+>>export RTE_TARGET=x86_64-native-linuxapp-gcc 
 >>cd /SafeLib/graphene/Examples/libVNF_epc/libVNF-release-socc/ \
 >>rm -rf build \
 >>mkdir build\
@@ -90,8 +90,10 @@ Installation:
 
   >>cd /SafeLib/mtcp\
   >> export RTE_SDK=`echo $PWD`/dpdk\
-  >> export RTE_TARGET=x86_64-native-linuxapp-gcc\ 
-  >> ./configure --with-dpdk-lib=$RTE_SDK/$RTE_TARGET CFLAGS="-DMAX_CPUS=#numberOFMaxCPUCores "\                 
+  >> export RTE_TARGET=x86_64-native-linuxapp-gcc
+  
+  >> ./configure --with-dpdk-lib=$RTE_SDK/$RTE_TARGET CFLAGS="-DMAX_CPUS=#numberOFMaxCPUCores "
+  
   >>make clean\
   >>make
 
@@ -111,7 +113,8 @@ Installation:
 >>export ISGX_DRIVER_PATH="#the path of linux-sgx-driver"\
 >>cd /SafeLib/mtcp\
 >>export RTE_SDK=`echo $PWD`/dpdk\
->>export RTE_TARGET=x86_64-native-linuxapp-gcc\ 
+>>export RTE_TARGET=x86_64-native-linuxapp-gcc
+
 >>cd /home/nuc/SafeLib/graphene\
 >> make SGX=1 distclean\
 >>make SGX=1 DEBUG=1
@@ -122,12 +125,17 @@ Installation:
 
 9. Build mme executable
 
->> cd /SafeLib/mtcp\ 
->> export RTE_SDK=`echo $PWD`/dpdk \ 
->> export RTE_TARGET=x86_64-native-linuxapp-gcc\ 
->> cd /SafeLib/graphene/Examples/libVNF_epc/libVNF-release-socc/examples/epc/mme/\       
+>> cd /SafeLib/mtcp
+
+>> export RTE_SDK=`echo $PWD`/dpdk 
+
+>> export RTE_TARGET=x86_64-native-linuxapp-gcc
+
+>> cd /SafeLib/graphene/Examples/libVNF_epc/libVNF-release-socc/examples/epc/mme/
+
 >> make clean\
->> make\ 
+>> make
+
 >> ifconfig dpdk0 x.x.x.x netmask 255.255.255.0 up
 
     Note that before building mme add your own path for mtcp library and header at Makefile
