@@ -67,7 +67,9 @@ Installation:
 >>cd /SafeLib/mtcp\ 
 >>export RTE_SDK=`echo $PWD`/dpdk\
 >>export RTE_TARGET=x86_64-native-linuxapp-gcc 
->>cd /SafeLib/graphene/Examples/libVNF_epc/libVNF-release-socc/ \
+
+>>cd /SafeLib/graphene/Examples/libVNF_epc/libVNF-release-socc/ 
+
 >>rm -rf build \
 >>mkdir build\
 >>cd build\
@@ -115,7 +117,7 @@ Installation:
 >>export RTE_SDK=`echo $PWD`/dpdk\
 >>export RTE_TARGET=x86_64-native-linuxapp-gcc
 
->>cd /home/nuc/SafeLib/graphene\
+>>cd /SafeLib/graphene\
 >> make SGX=1 distclean\
 >>make SGX=1 DEBUG=1
 
