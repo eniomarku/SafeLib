@@ -18,11 +18,11 @@ Prerequisites
  Preliminary steps:
 1.	Install Intel SGX driver/DCAP , SDK, and psw. To install them follow the instructions given in https://github.com/intel/linux-sgx
 2.	Install nasm 2.14 as follows;
-        >> wget http://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.tar.xz
-        >> tar -xf ./nasm-2.14.02-xdoc.tar.xz –strip-components=1
-        >> ./configure –prefix=/usr
-        >> make
-        >> make install
+         -wget http://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.tar.xz
+         -tar -xf ./nasm-2.14.02-xdoc.tar.xz –strip-components=1
+         -./configure –prefix=/usr
+         -make
+         -make install
 3.	Install intel-ipsec-mb. Instructions can be found at https://github.com/intel/intel-ipsec-mb
 4.	Install spdlog. Instructions can be found at https://github.com/gabime/spdlog
 5.	Install boost (libboost-all-dev)
@@ -33,19 +33,19 @@ Prerequisites
 Installation:
 
 1. Build dpdk as follows:
-      >> cd /SafeLib/mtcp
-      >> export RTE_SDK=`echo $PWD`/dpdk
-      >> export RTE_TARGET=x86_64-native-linuxapp-gcc
-      >> ./setup_mtcp_dpdk_env.sh
-       step 38,
-       step 45, 
-       step 48: huge pages
-	2048
-      step 51: 
+ -cd /SafeLib/mtcp
+ -export RTE_SDK=`echo $PWD`/dpdk
+ -export RTE_TARGET=x86_64-native-linuxapp-gcc
+ -./setup_mtcp_dpdk_env.sh
+    step 38,
+    step 45, 
+    step 48: huge pages
+      2048
+    step 51: 
 #here register ethernet port corresponding to the NIC of your machine
-      step 62
-	y
-      >> ifconfig dpdk0 x.x.x.x netmask 255.255.255.0 up
+    step 62
+       y
+ -ifconfig dpdk0 x.x.x.x netmask 255.255.255.0 up
 
 2. Build mtcp trusted
 
