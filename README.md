@@ -1,7 +1,7 @@
 •	SafeLib is a library used for securely outsourcing VNFs in a third party service provider.\
 •	This is an implementation of paper: “SafeLib: a practical library for outsourcing stateful network functions securely” submitted at NetSoft 2021
 
-Features:\
+Features:
 
 •	Written entirely in C/C++\
 •	Provide integrity and confidentiality protection of user traffic, VNF policies, and integrity of VNF code.\
@@ -18,7 +18,8 @@ Prerequisites
 
  Preliminary steps:
 1.	Install Intel SGX driver/DCAP , SDK, and psw. To install them follow the instructions given in https://github.com/intel/linux-sgx
-2.	Install nasm 2.14 as follows;\
+2.	Install nasm 2.14 as follows;
+
  >> wget http://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.tar.xz \
  >> tar -xf ./nasm-2.14.02-xdoc.tar.xz –strip-components=1 \
  >> ./configure –prefix=/usr \
