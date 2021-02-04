@@ -16,7 +16,7 @@
 
     Note that before building mme add your own path for mtcp library and header at Makefile
     
-# Build and run mme
+# Build and run mme (on the machine you built SafeLib)
 >>cd SafeLib/graphene/Examples/libVNF_epc/
 
 >> cp libVNF-release-socc/examples/epc/mme/mme ./\
@@ -28,3 +28,6 @@
 >>ifconfig dpdk0 169.254.9.10 netmask 255.255.255.0 up
 
 >>SGX=1 ./pal_loader mme 1
+
+# Build and run hss, sgw, pgw, ran (on the other machine)
+
