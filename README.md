@@ -32,6 +32,9 @@
 7.	Run the following command for building graphene dependencies: 
 >> sudo apt-get install -y \   build-essential autoconf gawk bison wget python3 libcurl4-openssl-dev \
    python3-protobuf libprotobuf-c-dev protobuf-c-compiler
+   
+# Navigating the repository
+
 
 # Installation:
 
@@ -126,27 +129,10 @@
     The next step is to build test cases; in our case we have tested SafeLib with LTE EPC, and ab
     In case of LTE EPC, the only component build using SafeLib is mme
 
-## 9. Build mme executable
-
->> cd /SafeLib/mtcp
-
->> export RTE_SDK=`echo $PWD`/dpdk 
-
->> export RTE_TARGET=x86_64-native-linuxapp-gcc
-
->> cd /SafeLib/graphene/Examples/libVNF_epc/libVNF-release-socc/examples/epc/mme/
-
->> make clean\
->> make
-
->> ifconfig dpdk0 x.x.x.x netmask 255.255.255.0 up
-
-    Note that before building mme add your own path for mtcp library and header at Makefile
-
 # Contact Information
 GitHub issue board is the preferred way to report bugs and ask questions about SafeLib.
 
 CONTACTS FOR THE AUTHORS\
-enio.marku@ntnu.no
+enio.marku@ntnu.no\
 biczok@crysys.hu
 
