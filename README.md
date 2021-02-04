@@ -2,10 +2,10 @@
 •	This is an implementation of paper: “SafeLib: a practical library for outsourcing stateful network functions securely” submitted at NetSoft 2021
 
 Features:
-•	Written entirely in C/C++
-•	Provide integrity and confidentiality protection of user traffic, VNF policies, and integrity of VNF code.
-•	Provide support for stateful VNFs
-•	Provide support for user-level TCP stack
+•	Written entirely in C/C++\
+•	Provide integrity and confidentiality protection of user traffic, VNF policies, and integrity of VNF code.\
+•	Provide support for stateful VNFs\
+•	Provide support for user-level TCP stack\
 •	Provide support for kernel bypass mechanisms such as DPDK
 
 
@@ -30,7 +30,7 @@ Prerequisites
 7.	Run the following command for building graphene dependencies: sudo apt-get install -y \   build-essential autoconf gawk bison wget python3 libcurl4-openssl-dev \
    python3-protobuf libprotobuf-c-dev protobuf-c-compiler
 
-Installation:\
+Installation:
 
 1. Build dpdk as follows:\
  >>cd /SafeLib/mtcp\
@@ -45,9 +45,9 @@ Installation:\
 #here register ethernet port corresponding to the NIC of your machine\
     step 62\
        y\
- >>ifconfig dpdk0 x.x.x.x netmask 255.255.255.0 up\
+ >>ifconfig dpdk0 x.x.x.x netmask 255.255.255.0 up
 
-2. Build mtcp trusted\
+2. Build mtcp trusted
 
   >> cd /SafeLib/mtcp\
   >> export RTE_SDK=`echo $PWD`/dpdk\
@@ -58,7 +58,8 @@ Installation:\
 
       Note: During this process should be an error while building the example applications of mtcp as we didn’t link the library(dpdk-dummy) related to ocall of trusted mtcp. So we can ignore this error.
 
-3. Build libVNF\
+3. Build libVNF
+
 >>cd /SafeLib/mtcp\ 
 >>export RTE_SDK=`echo $PWD`/dpdk\
 >>export RTE_TARGET=x86_64-native-linuxapp-gcc\ 
@@ -68,57 +69,62 @@ Installation:\
 >>cd build\
 >>cmake .. -DSTACK=KERNEL_BYPASS\
 >>make \
->>make install\
+>>make install
 
      Note that before building libVNF, you need to specify your mtcp path in CMakeLists.txt.
 
-4. Build dpdk-dummy\
+4. Build dpdk-dummy
+
 >> cd /SafeLib/mtcp/dpdk-dummy/\
 >> make distclean && make\
 >> cp libdpdkdummy.so* /usr/lib/x86_64-linux-gnu/\
 >> cd /usr/lib/x86_64-linux-gnu/\
 >> rm libdpdkdummy.so\
->> ln -s libdpdkdummy.so.1 libdpdkdummy.so\
+>> ln -s libdpdkdummy.so.1 libdpdkdummy.so
 
-5.Build untrusted mtcp\
-  cd /SafeLib/mtcp\
+5.Build untrusted mtcp
+
+  >>cd /SafeLib/mtcp\
   >> export RTE_SDK=`echo $PWD`/dpdk\
   >> export RTE_TARGET=x86_64-native-linuxapp-gcc\ 
   >> ./configure --with-dpdk-lib=$RTE_SDK/$RTE_TARGET CFLAGS="-DMAX_CPUS=#numberOFMaxCPUCores " \                 
   >>make clean\
-  >>make\
+  >>make
 
-6. Enable gsgx device (after restart)\
+6. Enable gsgx device (after restart)
+
   >> cd /SafeLib/graphene/Pal/src/host/Linux-SGX/sgx-driver\
   >> make\
-  >> sudo insmod gsgx.ko\
+  >> sudo insmod gsgx.ko
 
     Note that before building graphene add your own mtcp_lib path at the Makefile located at /SafeLib/graphene/Pal/src/host/Linux-SGX
 
-7.	Prepare a signing key\
-         openssl genrsa -3 -out graphene/Pal/src/host/Linux-SGX/signer/enclave-key.pem 3072
+7.	Prepare a signing key
+   >>openssl genrsa -3 -out graphene/Pal/src/host/Linux-SGX/signer/enclave-key.pem 3072
 
-8. Build graphene\
+8. Build graphene
+
 >>export ISGX_DRIVER_PATH="#the path of linux-sgx-driver"\
 >>cd /SafeLib/mtcp\
 >>export RTE_SDK=`echo $PWD`/dpdk\
 >>export RTE_TARGET=x86_64-native-linuxapp-gcc\ 
 >>cd /home/nuc/SafeLib/graphene\
 >> make SGX=1 distclean\
->>make SGX=1 DEBUG=1\
+>>make SGX=1 DEBUG=1
 
 
     The next step is to build test cases; in our case we have tested SafeLib with LTE EPC, and ab
     In case of LTE EPC, the only component build using SafeLib is mme
 
-9)Build mme executable\
+9)Build mme executable
+
    >> cd /SafeLib/mtcp\ 
    >> export RTE_SDK=`echo $PWD`/dpdk\ 
    >> export RTE_TARGET=x86_64-native-linuxapp-gcc\ 
    >> cd /SafeLib/graphene/Examples/libVNF_epc/libVNF-release-socc/examples/epc/mme/\       
    >> make clean\
    >> make\ 
-   >>ifconfig dpdk0 x.x.x.x netmask 255.255.255.0 up\
+   >>ifconfig dpdk0 x.x.x.x netmask 255.255.255.0 up
 
     Note that before building mme add your own path for mtcp library and header at Makefile
 
