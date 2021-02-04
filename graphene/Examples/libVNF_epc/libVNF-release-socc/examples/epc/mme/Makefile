@@ -13,19 +13,13 @@ DPDK_INC=/include
 DPDK_LIB=/lib/
 
 # mtcp library and header 
-<<<<<<< HEAD
-=======
 #add your own path
->>>>>>> 2c53c3a3c3425b26e172083f2728668fd5d55d6c
 MTCP_FLD    =/home/nuc/SafeLib/mtcp/mtcp
 MTCP_INC    =-I${MTCP_FLD}/include
 MTCP_LIB    =-L${MTCP_FLD}/lib
 MTCP_TARGET = ${MTCP_LIB}/libmtcp.a
 
-<<<<<<< HEAD
-=======
 #add your own path
->>>>>>> 2c53c3a3c3425b26e172083f2728668fd5d55d6c
 UTIL_FLD = /home/nuc/SafeLib/mtcp/util
 UTIL_INC = -I${UTIL_FLD}/include
 UTIL_OBJ = ${UTIL_FLD}/http_parsing.o ${UTIL_FLD}/tdate_parse.o ${UTIL_FLD}/netlib.o
