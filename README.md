@@ -1,7 +1,8 @@
-•	SafeLib is a library used for securely outsourcing VNFs in a third party service provider.
+•	SafeLib is a library used for securely outsourcing VNFs in a third party service provider.\
 •	This is an implementation of paper: “SafeLib: a practical library for outsourcing stateful network functions securely” submitted at NetSoft 2021
 
-Features:
+Features:\
+
 •	Written entirely in C/C++\
 •	Provide integrity and confidentiality protection of user traffic, VNF policies, and integrity of VNF code.\
 •	Provide support for stateful VNFs\
@@ -18,21 +19,23 @@ Prerequisites
  Preliminary steps:
 1.	Install Intel SGX driver/DCAP , SDK, and psw. To install them follow the instructions given in https://github.com/intel/linux-sgx
 2.	Install nasm 2.14 as follows;\
-         >>wget http://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.tar.xz \
-         >>tar -xf ./nasm-2.14.02-xdoc.tar.xz –strip-components=1 \
-         >>./configure –prefix=/usr \
-         >>make\
-         >>make install\
+ >> wget http://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.tar.xz \
+ >> tar -xf ./nasm-2.14.02-xdoc.tar.xz –strip-components=1 \
+ >> ./configure –prefix=/usr \
+ >> make\
+ >> make install
 3.	Install intel-ipsec-mb. Instructions can be found at https://github.com/intel/intel-ipsec-mb
 4.	Install spdlog. Instructions can be found at https://github.com/gabime/spdlog
 5.	Install boost (libboost-all-dev)
 6.	Install libnuma, libpthread, librt, libgmp
-7.	Run the following command for building graphene dependencies: sudo apt-get install -y \   build-essential autoconf gawk bison wget python3 libcurl4-openssl-dev \
+7.	Run the following command for building graphene dependencies: 
+>> sudo apt-get install -y \   build-essential autoconf gawk bison wget python3 libcurl4-openssl-dev \
    python3-protobuf libprotobuf-c-dev protobuf-c-compiler
 
 Installation:
 
-1. Build dpdk as follows:\
+1. Build dpdk as follows:
+
  >>cd /SafeLib/mtcp\
  >>export RTE_SDK=`echo $PWD`/dpdk\
  >>export RTE_TARGET=x86_64-native-linuxapp-gcc\
@@ -54,7 +57,7 @@ Installation:
   >> export RTE_TARGET=x86_64-native-linuxapp-gcc\
   >> ./configure --with-dpdk-lib=$RTE_SDK/$RTE_TARGET CFLAGS="-DDISABLE_DPDK -DIN_ENCLAVE -DMAX_CPUS=#numberOFMaxCPUCores"\
   >>make clean\
-  >>make\
+  >>make
 
       Note: During this process should be an error while building the example applications of mtcp as we didn’t link the library(dpdk-dummy) related to ocall of trusted mtcp. So we can ignore this error.
 
@@ -87,7 +90,7 @@ Installation:
   >>cd /SafeLib/mtcp\
   >> export RTE_SDK=`echo $PWD`/dpdk\
   >> export RTE_TARGET=x86_64-native-linuxapp-gcc\ 
-  >> ./configure --with-dpdk-lib=$RTE_SDK/$RTE_TARGET CFLAGS="-DMAX_CPUS=#numberOFMaxCPUCores " \                 
+  >> ./configure --with-dpdk-lib=$RTE_SDK/$RTE_TARGET CFLAGS="-DMAX_CPUS=#numberOFMaxCPUCores "\                 
   >>make clean\
   >>make
 
@@ -119,12 +122,12 @@ Installation:
 9. Build mme executable
 
 >> cd /SafeLib/mtcp\ 
->> export RTE_SDK=`echo $PWD`/dpdk\ 
+>> export RTE_SDK=`echo $PWD`/dpdk \ 
 >> export RTE_TARGET=x86_64-native-linuxapp-gcc\ 
 >> cd /SafeLib/graphene/Examples/libVNF_epc/libVNF-release-socc/examples/epc/mme/\       
 >> make clean\
 >> make\ 
->>ifconfig dpdk0 x.x.x.x netmask 255.255.255.0 up
+>> ifconfig dpdk0 x.x.x.x netmask 255.255.255.0 up
 
     Note that before building mme add your own path for mtcp library and header at Makefile
 
