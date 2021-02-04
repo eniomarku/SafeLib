@@ -146,6 +146,7 @@
 # Contact Information
 GitHub issue board is the preferred way to report bugs and ask questions about SafeLib.
 
-CONTACTS FOR THE AUTHORS
+CONTACTS FOR THE AUTHORS\
 enio.marku@ntnu.no
+biczok@crysys.hu
 
