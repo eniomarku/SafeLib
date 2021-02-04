@@ -1,7 +1,7 @@
 •	SafeLib is a library used for securely outsourcing VNFs in a third party service provider.\
 •	This is an implementation of paper: “SafeLib: a practical library for outsourcing stateful network functions securely” submitted at NetSoft 2021
 
-Features:
+# Features:
 
 •	Written entirely in C/C++\
 •	Provide integrity and confidentiality protection of user traffic, VNF policies, and integrity of VNF code.\
@@ -10,7 +10,7 @@ Features:
 •	Provide support for kernel bypass mechanisms such as DPDK
 
 
-Prerequisites
+# Prerequisites
 1.	SafeLib makes use of Intel SGX, so first step is to make sure to run SafeLib on Intel CPU machines with support for SGX.
 2.	Make sure to have a machine with Linux as OS; we have tested our library only for Ubuntu 18.04, and 20.04 version.
 3.	Make sure to use a CPU and NIC supported by DPDK. The list of CPUs and NIC supported by DPDK can be found at http://core.dpdk.org/supported/ . For our testing purpose we have used Intel CPUs and “igb” drivers.
@@ -33,9 +33,9 @@ Prerequisites
 >> sudo apt-get install -y \   build-essential autoconf gawk bison wget python3 libcurl4-openssl-dev \
    python3-protobuf libprotobuf-c-dev protobuf-c-compiler
 
-Installation:
+# Installation:
 
-1. Build dpdk as follows:
+## 1. Build dpdk as follows:
 
  >>cd /SafeLib/mtcp\
  >>export RTE_SDK=`echo $PWD`/dpdk\
@@ -51,7 +51,7 @@ Installation:
        y\
  >>ifconfig dpdk0 x.x.x.x netmask 255.255.255.0 up
 
-2. Build mtcp trusted
+## 2. Build mtcp trusted
 
   >> cd /SafeLib/mtcp\
   >> export RTE_SDK=`echo $PWD`/dpdk\
@@ -62,7 +62,7 @@ Installation:
 
       Note: During this process should be an error while building the example applications of mtcp as we didn’t link the library(dpdk-dummy) related to ocall of trusted mtcp. So we can ignore this error.
 
-3. Build libVNF
+## 3. Build libVNF
 
 >>cd /SafeLib/mtcp
 
@@ -80,7 +80,7 @@ Installation:
 
      Note that before building libVNF, you need to specify your mtcp path in CMakeLists.txt.
 
-4. Build dpdk-dummy
+## 4. Build dpdk-dummy
 
 >> cd /SafeLib/mtcp/dpdk-dummy/\
 >> make distclean && make\
@@ -89,7 +89,7 @@ Installation:
 >> rm libdpdkdummy.so\
 >> ln -s libdpdkdummy.so.1 libdpdkdummy.so
 
-5.Build untrusted mtcp
+## 5.Build untrusted mtcp
 
   >>cd /SafeLib/mtcp\
   >> export RTE_SDK=`echo $PWD`/dpdk\
@@ -100,7 +100,7 @@ Installation:
   >>make clean\
   >>make
 
-6. Enable gsgx device (after restart)
+## 6. Enable gsgx device (after restart)
 
   >> cd /SafeLib/graphene/Pal/src/host/Linux-SGX/sgx-driver\
   >> make
@@ -108,10 +108,10 @@ Installation:
 
     Note that before building graphene add your own mtcp_lib path at the Makefile located at /SafeLib/graphene/Pal/src/host/Linux-SGX
 
-7.	Prepare a signing key
+## 7.	Prepare a signing key
    >>openssl genrsa -3 -out graphene/Pal/src/host/Linux-SGX/signer/enclave-key.pem 3072
 
-8. Build graphene
+## 8. Build graphene
 
 >>export ISGX_DRIVER_PATH="#the path of linux-sgx-driver"\
 >>cd /SafeLib/mtcp\
@@ -126,7 +126,7 @@ Installation:
     The next step is to build test cases; in our case we have tested SafeLib with LTE EPC, and ab
     In case of LTE EPC, the only component build using SafeLib is mme
 
-9. Build mme executable
+## 9. Build mme executable
 
 >> cd /SafeLib/mtcp
 
@@ -142,4 +142,10 @@ Installation:
 >> ifconfig dpdk0 x.x.x.x netmask 255.255.255.0 up
 
     Note that before building mme add your own path for mtcp library and header at Makefile
+
+# Contact Information
+GitHub issue board is the preferred way to report bugs and ask questions about SafeLib.
+
+CONTACTS FOR THE AUTHORS
+enio.marku@ntnu.no
 
