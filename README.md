@@ -64,7 +64,8 @@ Installation:
 
 3. Build libVNF
 
->>cd /SafeLib/mtcp\ 
+>>cd /SafeLib/mtcp
+
 >>export RTE_SDK=`echo $PWD`/dpdk\
 >>export RTE_TARGET=x86_64-native-linuxapp-gcc 
 
