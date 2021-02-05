@@ -17,7 +17,7 @@
     Note that before building mme add your own path for mtcp library and header at Makefile
     
     
-# Build and run mme on the machine you built SafeLib (Enterprise aka trusted host)
+# Build and run mme on the machine you built SafeLib (Cloud provider aka untrusted host)
 >>cd SafeLib/graphene/Examples/libVNF_epc/
 
 >> cp libVNF-release-socc/examples/epc/mme/mme ./\
@@ -33,5 +33,5 @@
      Note the paths in Makefile and mme.manifest.template . Place your own local path for all dynamically compiled binaries loaded in the manifest.
      Note that it is recommended to arrange server.conf and ipsec.cfg according to your needs.
 
-# Build and run hss, sgw, pgw, ran in another machine (Cloud provider aka untrusted host)
+# Build and run hss, sgw, pgw, ran in another machine (Enterprise aka trusted host)
 
