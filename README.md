@@ -26,7 +26,7 @@
  >> make\
  >> make install
 3.	Install intel-ipsec-mb. Instructions can be found at https://github.com/intel/intel-ipsec-mb <br />
-     3.1 Configure ipsec file (ipsec.cfg). 
+     3.1 Configure ipsec file (ipsec.cfg). One example of ipsec.cfg can be found at (graphene/Examples/libVNF_epc/libVNF-release-socc/examples/epc/mme)
      
 4.	Install spdlog. Instructions can be found at https://github.com/gabime/spdlog
 5.	Install boost (libboost-all-dev)
