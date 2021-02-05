@@ -37,6 +37,15 @@
    
 # Navigating the repository
 
+1. libVNF folder contains the source code of libVNF, and some senario cases  <br />
+   1.1 Before building our library, one should use libVNF APIs for building stateful VNFs <br />
+   1.2 See below how to build libVNF <br />
+2. mTC folder containts the source code of mTCP, dpdk, and dpdk-dummy <br />
+3.graphene folder contains the source code of grahene, and our test cases (LTE EPC, ab) <br />
+    3.1 Our test cases can be found at https://github.com/eniomarku/SafeLib/tree/master/graphene/Examples
+
+
+
 
 # Installation:
 
