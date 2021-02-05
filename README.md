@@ -138,7 +138,9 @@
 
 
     The next step is to build test cases; in our case we have tested SafeLib with LTE EPC, and ab
-    In case of LTE EPC, the only component build using SafeLib is mme
+    After all the above steps are completed, and in case you want to try and run our scenario cases
+    then read ReadMe file located at https://github.com/eniomarku/SafeLib/tree/master/graphene/Examples/libVNF_epc for LTE EPC scenario
+    and ReadMe file located at https://github.com/eniomarku/SafeLib/tree/master/graphene/Examples/ipsec for ab scenario
 
 # Contact Information
 GitHub issue board is the preferred way to report bugs and ask questions about SafeLib.
