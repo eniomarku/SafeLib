@@ -1,0 +1,3251 @@
+HSS server started
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000003
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000003
+hss_handleautoinforeq: autn:15 rand:5 xres:14 k_asme:50 119000000003
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000003
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000000
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000000
+hss_handleautoinforeq: autn:6 rand:2 xres:5 k_asme:29 119000000000
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000000
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=7
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000002
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000002
+hss_handleautoinforeq: autn:12 rand:4 xres:11 k_asme:43 119000000002
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000002
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::accept_clients function 22222 conn_fd=8
+RIDER REPORT: SctpServer::accept_clients function 33333
+RIDER REPORT: SctpServer::accept_clients function 44444 pipe_fds[turn][1]=6
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=8 4,0,0,0
+RIDER REPORT: SctpServer::accept_clients function 55555 status=8
+RIDER REPORT: SctpServer::accept_clients function 66666
+RIDER REPORT: SctpServer::accept_clients function 11111 turn=0
+RIDER REPORT: SctpServer::worker_func 22222
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=4 4,0,0,0
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: Network::read_sctp_pkt function 11111 pkt_len=24 18,0,0,0
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=24
+hssserver_handlemme: case 1: autn info req
+hss_getautninfo:select key_id, rand_num from autn_info where imsi = 119000000001
+hss_getautninfo: fetched
+hss_handleautoinforeq: retrieved from database: 119000000001
+hss_handleautoinforeq: autn:9 rand:3 xres:8 k_asme:36 119000000001
+RIDER REPORT: Network::write_sctp_pkt function 11111 pkt.len=40 24,0,0,0
+hss_handleautoinforeq: response sent to mme: 119000000001
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111
+RIDER REPORT: SctpServer::worker_func 33333
+RIDER REPORT: hssserver_handlemme function started
+RIDER REPORT: hssserver_handlemme function 11111 pkt.len=0
+hssserver_handlemme: Connection closed
+RIDER REPORT: SctpServer::worker_func 44444
+RIDER REPORT: SctpServer::worker_func 11111

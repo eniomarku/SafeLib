@@ -1,0 +1,1687 @@
+PGW S5 server started
+Server listening..
+PGW SGI server started
+Server listening..
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function new connection ! cli_fd=7, cli_conn_count=0, errno=0
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000003
+pgw_handledetach: detach successful: 119000000003
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 40,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 40,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 40,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000000
+pgw_handledetach: detach successful: 119000000000
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000001
+pgw_handledetach: detach successful: 119000000001
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=49, 40,9e,21,0
+pgwserver_handles5traffic: case 1: create session
+RIDER REPORT: UdpServer::snd function, pkt.len=39, 48,9e,17,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=43, 27,0,0,0
+pgw_handlecreatesession: create session response sent to mme: 119000000002
+RIDER REPORT: UdpServer::rcv function started
+RIDER REPORT: UdpServer::rcv function reading... cli_fd=7
+RIDER REPORT: UdpServer::rcv function finished, cli_fd=7, cli_conn_count=1, pkt.len=25, 48,4f,9,0
+pgwserver_handles5traffic: case 4: detach
+RIDER REPORT: UdpServer::snd function, pkt.len=17, 48,4f,1,0
+RIDER REPORT: UdpServer::snd function cli_fd=7, pkt.len=21, 11,0,0,0
+pgw_handledetach: detach complete sent to sgw: 119000000002
+pgw_handledetach: detach successful: 119000000002
+RIDER REPORT: UdpServer::rcv function started
