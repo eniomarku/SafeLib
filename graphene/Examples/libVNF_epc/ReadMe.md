@@ -10,9 +10,9 @@
 
 # How to run
  1. To run LTE EPC over SafeLib, two physical machines are needed which are interconnected with each other via a private connection <br />
- 2. In one of the machines build and run **mme**is , and at the other machine build and run other components of LTE EPC (hss,sgw,pgw,ran) <br />
+ 2. In one of the machines build and run **mme** is , and at the other machine build and run other components of LTE EPC (hss,sgw,pgw,ran) <br />
  3. The machine which will be used to build and run **mme** _must_ have SafeLib built previously because mme itself is built over libVNF <br />
- 4. The machine which will be used to build and run other components of LTE EPC, does not require SGX support neither SafeLib being built.
+ 4. The machine which will be used to build and run other components of LTE EPC, does not require SGX support neither SafeLib.
  
 ## Build mme executable
 
@@ -65,6 +65,6 @@
   
   >> ./pgw.out 1 1 > pgw.log
   
-  >> ./ransim.out 4 60
+  >> ./ransim.out 4 60 where the first argument indicates number of RAN threads, and second argument indicates duration of experiment
   
  
