@@ -45,6 +45,26 @@
    3.1 Our test cases can be found at https://github.com/eniomarku/SafeLib/tree/master/graphene/Examples
 
 
+# Tested environment
+
+a) We have tested our library in the following environment:<br />
+
+1. Ubuntu 18.04<br />
+2. 5.3.0-28-generic kernel version<br />
+3. Intel(R) Core(TM) i7-8809G CPU @ 3.10GHz <br />
+
+b)We have tested our library also for the following environment: <br />
+
+1. Ubuntu 20.04 <br />
+2. 5.9.0-050900rc6-generic kernel version <br />
+
+**Note** For the second type of environment some changes are needed to be done in the current version of SafeLib published in this repository, as mentioned below: <br />
+
+b.1  dpdk_iface_mod.h needs to be patched for .nod_tx_timeout in order to support kernel 5.9 version<br />
+b.2 compat.h, and kni_dev.h (both part of dpdk) needs to be patched in order to support kernel 5.9 version<br />
+
+Please contact us in order to get help for patching the neccessary files, in case your tested environment is different from a)
+
 
 
 # Installation:
