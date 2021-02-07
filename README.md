@@ -62,7 +62,7 @@ b)We have tested our library also for the following environment: <br />
 
 **Note** For the second type of environment some changes are needed to be done in the current version of SafeLib published in this repository, as mentioned below: <br />
 
-b.1  dpdk_iface_mod.h needs to be patched for .nod_tx_timeout in order to support kernel 5.9 version<br />
+b.1  dpdk_iface.h needs to be patched for .nod_tx_timeout in order to support kernel 5.9 version<br />
 b.2 compat.h, and kni_dev.h (both part of dpdk) needs to be patched in order to support kernel 5.9 version<br />
 
 Please contact us in order to get help for patching the neccessary files, in case your tested environment is different from a)
