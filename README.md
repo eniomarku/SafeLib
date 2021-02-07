@@ -60,14 +60,11 @@ b)We have tested our library also for the following environment: <br />
 2. 5.9.0-050900rc6-generic kernel version <br />
 3. Intel SGX DCAP https://github.com/intel/SGXDataCenterAttestationPrimitives/ <br />
 
-**Note** For the second type of environment some changes are needed to be done in the current version of SafeLib published in this repository, as mentioned below: <br />
+**Note** For the second type of environment some changes are needed to be done in the current version of SafeLib published in this repository, as given below: <br />
 
 b.1  uncomment the function *static  void
 netdev_no_ret_dummy* at dpdk_iface.h<br />
-b.2 compat.h, and kni_dev.h (both part of dpdk) needs to be patched in order to support kernel 5.9 version<br />
-
-Please contact us in order to get help for patching the neccessary files, in case your tested environment is different from a)
-
+b.2 Uncomment the part of the code between *ridder added .... ridder closed* at compat.h, and kni_dev.h (both part of dpdk)<br />
 
 
 # Installation:
@@ -168,6 +165,7 @@ Please contact us in order to get help for patching the neccessary files, in cas
 # Contact Information
 GitHub issue board is the preferred way to report bugs and ask questions about SafeLib.
 
+For any difficulties experienced during the process of building SafeLib or any other question, please contact us at the details given below <br />
 CONTACTS FOR THE AUTHORS\
 enio.marku@ntnu.no\
 biczok@crysys.hu
