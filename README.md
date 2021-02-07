@@ -54,17 +54,17 @@ a) We have tested our library in the following environment:<br />
 3. No Intel SGX DCAP <br />
 4. Intel(R) Core(TM) i7-8809G CPU @ 3.10GHz <br />
 
-b)We have tested our library also for the following environment: <br />
+b) We have tested our library also for the following environment: <br />
 
 1. Ubuntu 20.04 <br />
 2. 5.9.0-050900rc6-generic kernel version <br />
 3. Intel SGX DCAP https://github.com/intel/SGXDataCenterAttestationPrimitives/ <br />
 
-**Note** For the second type of environment some changes are needed to be done in the current version of SafeLib published in this repository, as given below: <br />
+**Note:** For the second type of environment some changes are needed to be done in the current version of SafeLib published in this repository, as given below: <br />
 
-b.1  uncomment the function *static  void
+b.1)  Uncomment the function *static  void
 netdev_no_ret_dummy* at dpdk_iface.h<br />
-b.2 Uncomment the part of the code between *ridder added .... ridder closed* at compat.h, and kni_dev.h (both part of dpdk)<br />
+b.2) Uncomment the part of the code between *ridder added .... ridder closed* at compat.h, and kni_dev.h (both part of dpdk)<br />
 
 
 # Installation:
