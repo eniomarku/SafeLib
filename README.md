@@ -16,7 +16,7 @@
 3.	Make sure to use a CPU and NIC supported by DPDK. The list of CPUs and NIC supported by DPDK can be found at http://core.dpdk.org/supported/ . For our testing purpose we have used Intel CPUs and “igb” drivers.
 4.	To run our LTE EPC, and ab scenarios two physical machines are needed, which are interconnected via an ethernet cable. Only one of the machines needs to have support for SGX, and DPDK.
 
- Preliminary steps:
+# Preliminary steps:
 1.	Install Intel SGX driver/DCAP , SDK, and psw. To install them follow the instructions given in https://github.com/intel/linux-sgx
 2.	Install nasm 2.14 as follows;
 
