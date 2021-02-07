@@ -105,7 +105,22 @@ static inline phys_addr_t iova_to_phys(struct task_struct *tsk,
 				    FOLL_TOUCH, &page, NULL, NULL);
 	if (ret < 0)
 		return 0;
-
+	
+//ridder added 12.10.2020, for Linux 5.9
+	/*
+#ifdef HAVE_TSK_IN_GUP
+        ret = get_user_pages_remote(tsk, tsk->mm, iova, 1,
+                                    FOLL_TOUCH, &page, NULL, NULL);
+//ridder added 12.10.2020, for Linux 5.9
+#else
+        ret     =       get_user_pages_remote(tsk->mm,  iova,   1,
+                                              FOLL_TOUCH,       &page,  NULL,   NULL);
+#endif
+        if (ret < 0)
+                return 0;
+*/
+	//ridder closed
+	
 	phys_addr = page_to_phys(page) | offset;
 	put_page(page);
 
