@@ -51,12 +51,14 @@ a) We have tested our library in the following environment:<br />
 
 1. Ubuntu 18.04<br />
 2. 5.3.0-28-generic kernel version<br />
-3. Intel(R) Core(TM) i7-8809G CPU @ 3.10GHz <br />
+3. Intel SGX-driver  https://github.com/intel/linux-sgx-driver <br />
+4. Intel(R) Core(TM) i7-8809G CPU @ 3.10GHz <br />
 
 b)We have tested our library also for the following environment: <br />
 
 1. Ubuntu 20.04 <br />
-2. 5.9.0-050900rc6-generic kernel version <br />
+2. Intel SGX DCAP https://github.com/intel/SGXDataCenterAttestationPrimitives/ <br />
+3. 5.9.0-050900rc6-generic kernel version <br />
 
 **Note** For the second type of environment some changes are needed to be done in the current version of SafeLib published in this repository, as mentioned below: <br />
 
