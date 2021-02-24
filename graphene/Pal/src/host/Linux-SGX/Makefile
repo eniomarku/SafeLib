@@ -87,7 +87,7 @@ urts-asm-objs = sgx_entry.o
 graphene_lib = .lib/graphene-lib.a
 
 # rider added 2020-9-18 add mtcp dependency
-mtcp_lib  = /home/nuc/graphene_test/mtcp/mtcp/lib/libmtcp.a
+mtcp_lib  = /home/nuc/SafeLib/mtcp/mtcp/lib/libmtcp.a
 
 # use TLS-based stack protector of GCC (trusted PAL must have a canary in its PAL_TCB at offset
 # 0x8, untrusted PAL uses the default GCC scheme)
