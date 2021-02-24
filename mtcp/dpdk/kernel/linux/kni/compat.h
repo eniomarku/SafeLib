@@ -134,3 +134,10 @@
 #if KERNEL_VERSION(5, 6, 0) <= LINUX_VERSION_CODE
 #define HAVE_TX_TIMEOUT_TXQUEUE
 #endif
+//ridder added 12.10.2020, for LINUX 5.9 version
+/*
+#if     KERNEL_VERSION(5,9,0)   >       LINUX_VERSION_CODE
+#define HAVE_TSK_IN_GUP
+#endif
+*/
+//ridder closed
