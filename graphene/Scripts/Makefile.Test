@@ -1,0 +1,68 @@
+ifeq ($(SYS),)
+$(error include Makefile.config before $(lastword $(MAKEFILE_LIST)))
+endif
+
+ifeq ($(MAKEFILE_MANIFEST_DIR),)
+$(error include Makefile.manifest before $(lastword $(MAKEFILE_LIST)))
+endif
+
+SCRIPTS_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+SHIM_TEST_DIR = $(SCRIPTS_DIR)/../LibOS/shim/test
+
+PALDIR  = $(abspath $(SCRIPTS_DIR)/../Pal/src)
+SHIMDIR = $(abspath $(SCRIPTS_DIR)/../LibOS/shim)
+RUNTIME = $(abspath $(SCRIPTS_DIR)/../Runtime)
+
+include $(SCRIPTS_DIR)/Makefile.rules
+
+CFLAGS-libos = -I$(SHIMDIR)/include -L$(SHIMDIR)/../glibc-build/libos
+
+CFLAGS-libos-debug = -I$(SHIMDIR)/include -I$(PALDIR)/../include/pal -I$(PALDIR)/../include/lib -fno-builtin -nostdlib
+CXXFLAGS-libos-debug = -I$(SHIMDIR)/include -I$(PALDIR)/../include/pal -I$(PALDIR)/../include/lib -fno-builtin -nostdlib
+LDFLAGS-libos-debug = -L$(SHIMDIR)/src -L$(PALDIR)/host/$(PAL_HOST) -Wl,-rpath-link=$(abspath $(RUNTIME)) -lpal -lsysdb_debug
+
+.PHONY: all
+ifeq ($(findstring x86_64,$(SYS))$(findstring linux,$(SYS)),x86_64linux)
+all: pal_loader $(target) | $(exec_target) $(call expand_target_to_sgx,$(exec_target)) $(call expand_target_to_sig,$(exec_target))
+else
+all: pal_loader
+endif
+
+.PHONY: sgx-tokens
+sgx-tokens: $(call expand_target_to_token,$(exec_target))
+
+ifeq ($(ABSPATH_IN_MANIFEST),yes)
+manifest_rules = \
+	-e 's:\$$(PWD):$(PWD):g' \
+	-e 's:\$$(BIN):$(subst .manifest,,$(notdir $@)):g' \
+	-e 's:\$$(SHIMPATH):$(abspath $(RUNTIME))/libsysdb.so:g' \
+	-e 's:\$$(LIBCDIR):$(abspath $(RUNTIME)):g' \
+	-e 's:\$$(ARCH_LIBDIR):$(ARCH_LIBDIR):g' \
+	$(extra_rules)
+else
+manifest_rules= \
+	-e 's:\$$(PWD):$(PWD):g' \
+	-e 's:\$$(BIN):$(subst .manifest,,$(notdir $@)):g' \
+	-e 's:\$$(SHIMPATH):$(RUNTIME)/libsysdb.so:g' \
+	-e 's:\$$(LIBCDIR):$(RUNTIME):g' \
+	-e 's:\$$(ARCH_LIBDIR):$(ARCH_LIBDIR):g' \
+	$(extra_rules)
+endif
+
+pal_loader:
+	ln -sf $(RUNTIME)/pal_loader
+
+ifeq ($(filter %clean,$(MAKECMDGOALS)),)
+include $(wildcard *.d)
+ifeq ($(SGX),1)
+include $(addsuffix .manifest.sgx.d,$(patsubst %.manifest,%,$(exec_target)))
+endif
+endif
+
+.PHONY: clean
+clean: $(clean-extra)
+	$(RM) -r pal_loader $(exec_target) $(target) $(wildcard *.d) .output.* \
+	       *.sig *.token *.manifest.sgx
+
+.PHONY: distclean
+distclean: clean

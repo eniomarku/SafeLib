@@ -118,6 +118,20 @@ netdev_fix_features(struct net_device *netdev, netdev_features_t features)
 /**
  * dummy function that returns void
  */
+
+//ridder added for patching dpdk-iface with kernel version 5.9
+/*
+static  void
+netdev_no_ret_dummy(struct      net_device      *netdev,        unsigned        int     txqueue)
+{
+
+        (void)netdev;
+        (void)txqueue;
+        return;
+
+}
+*/
+
 static void 
 netdev_no_ret(struct net_device *netdev) 
 {
