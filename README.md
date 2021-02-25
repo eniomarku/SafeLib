@@ -70,7 +70,7 @@ b.2) Uncomment the part of the code between *ridder added .... ridder closed* at
 # Installation:
 
 ## 1. Build dpdk as follows:
-
+ >>sudo -s 
  >>cd /SafeLib/mtcp\
  >>export RTE_SDK=`echo $PWD`/dpdk\
  >>export RTE_TARGET=x86_64-native-linuxapp-gcc\
@@ -137,8 +137,8 @@ b.2) Uncomment the part of the code between *ridder added .... ridder closed* at
 ## 6. Enable gsgx device (after restart)
 
   >> cd /SafeLib/graphene/Pal/src/host/Linux-SGX/sgx-driver\
-  >> make
-  >> sudo insmod gsgx.ko
+  >> make clean && make\
+  >> insmod gsgx.ko
 
     Note that before building graphene add your own mtcp_lib path at the Makefile located at /SafeLib/graphene/Pal/src/host/Linux-SGX
 
