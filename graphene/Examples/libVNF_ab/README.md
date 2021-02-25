@@ -10,7 +10,7 @@
 
 # How to run
  1. To run ab over SafeLib, two physical machines are needed which are interconnected with each other via a private connection <br />
- 2. In one of the machines build and run **b** is , and at the other machine build and run a <br />
+ 2. In one of the machines build and run **b** , and at the other machine build and run **a** <br />
  3. The machine which will be used to build and run **b** _must_ have SafeLib built previously because b itself is built over libVNF <br />
  4. The machine which will be used to build and run **a**, does not require SGX support neither SafeLib.
  
@@ -38,20 +38,21 @@ SafeLib/graphene/Examples/libVNF_ab/ab <br />
 
 1. To build and run **a** and ran you must download on your machine only the folder named "Trusted-Host" <br />
 2. Then execute the following command <br />
->> cd Trusted-Host
+>> cd TrustedHost
 
 >> make clean && make
 
 ## Run b (Cloud provider aka untrusted host)
->>The process is the same as with LTE EPC, please refer to https://github.com/eniomarku/SafeLib/tree/master/graphene/Examples/libVNF_epc for more details
+>>The process is the same as with LTE EPC, please refer to https://github.com/eniomarku/SafeLib/tree/master/graphene/Examples/libVNF_epc for more details <br />
     1.1 You need to copy b-kernelbypass-dynamic executable, server.conf, and ipsec.cfg from SafeLib/graphene/Examples/libVNF_ab/ab to SafeLib/graphene/Examples/libVNF_ab <br />
-    1.2 Then execute: SGX=1 ./pal_loader b-kernelbypass-dynamic 4 169.254.9.10 5000 169.254.9.9 5000 at directory SafeLib/graphene/Examples/libVNF_ab
+    1.2 Then execute: SGX=1 ./pal_loader b-kernelbypass-dynamic 4 x.x.x.x 5000 y.y.y.y 5000 at directory SafeLib/graphene/Examples/libVNF_ab <br />
     
+        Note that x.x.x.x is the IP you set for dpdk interface, and y.y.y.y is the IP of the network interface of the trusted machine which is interconnected with dpdk interface of un trusted machine
      
  ## Run a
   >> cd Trusted-Host
 
   
-  >> ./a 4 60 169.254.9.9 6006 169.254.9.10 5000 
+  >> ./a 4 60 y.y.y.y 6006 x.x.x.x 5000 
   
  
