@@ -31,7 +31,7 @@ SafeLib/graphene/Examples/libVNF_ab/ab <br />
 
 >> ifconfig dpdk0 x.x.x.x netmask 255.255.255.0 up
 
-    Note that before building mme add your own path for mtcp library and header at Makefile
+    Note that before building b add your own path for mtcp library and header at Makefile
       
 
 ## Build a in another machine (Enterprise aka trusted host)
@@ -44,7 +44,7 @@ SafeLib/graphene/Examples/libVNF_ab/ab <br />
 
 ## Run b (Cloud provider aka untrusted host)
 >>The process is the same as with LTE EPC, please refer to https://github.com/eniomarku/SafeLib/tree/master/graphene/Examples/libVNF_epc for more details
-    1.1 You need to copy b-kernelbypass-dynamic executable, server.conf, and ipsec.cfg at https://github.com/eniomarku/SafeLib/edit/master/graphene/Examples/libVNF_ab
+    1.1 You need to copy b-kernelbypass-dynamic executable, server.conf, and ipsec.cfg from SafeLib/graphene/Examples/libVNF_ab/ab to SafeLib/graphene/Examples/libVNF_ab <br />
     1.2 Then execute: SGX=1 ./pal_loader b-kernelbypass-dynamic 4 169.254.9.10 5000 169.254.9.9 5000 at directory SafeLib/graphene/Examples/libVNF_ab
     
      
