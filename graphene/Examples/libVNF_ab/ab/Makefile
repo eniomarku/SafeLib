@@ -25,7 +25,7 @@ UTIL_OBJ = $(UTIL_FLD)/http_parsing.o $(UTIL_FLD)/tdate_parse.o $(UTIL_FLD)/netl
 
 INCLUDES = $(UTIL_INC) $(MTCP_INC)
 
-LIBS = $(MTCP_LIB) -lmtcp -lpthread -lnuma -lrt -lboost_system -ldpdkdummy
+LIBS = $(MTCP_LIB) -lmtcp -lpthread -lnuma -lrt -lboost_system -ldpdkdummy	-lIPSec_MB
 
 # ps library and header
 PS_DIR = $(MTCP_P_FLD)/io_engine/
