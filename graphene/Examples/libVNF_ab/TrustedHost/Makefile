@@ -64,4 +64,4 @@ $(A): a.cpp
 
 
 clean:
-	rm -f *~ *.o $(B_KERNEL_STATIC) $(B_KERNEL_DYNAMIC) $(B_KERNELBYPASS_STATIC) $(B_KERNELBYPASS_DYNAMIC) $(A) $(C) log_*
+	rm -f *~ *.o  $(A)  log_*
