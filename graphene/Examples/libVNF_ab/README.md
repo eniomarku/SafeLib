@@ -3,7 +3,7 @@
 
 1.AB scenario contains two components a and b. <br />
 2.The packet flow is as shown below <br />
-  a->b, b->a in a closed loop fashion. **a** generates multiple request to **b**, and **b** in each request perform some operations
+  a->b, b->a in a closed loop fashion. **a** generates multiple request to **b**, and **b** in each request perform some operations <br />
 3. **b** is built using libvnf <br />
 4. **a** is built without libvnf
 
@@ -15,8 +15,8 @@
  4. The machine which will be used to build and run **a**, does not require SGX support neither SafeLib.
  
 ## Build b executable
->>Before building **b**, copy and paste server.conf and ipsec.cfg from SafeLib/graphene/Examples/libVNF_epc/libVNF-release-socc/examples/epc/mme to <br />
-SafeLib/graphene/Examples/libVNF_ab/ab
+>>Before building **b**, copy and paste server.conf and ipsec.cfg from SafeLib/graphene/Examples/libVNF_epc/libVNF-release-socc/examples/epc/mme to 
+SafeLib/graphene/Examples/libVNF_ab/ab <br />
 
 >> cd /SafeLib/mtcp
 
