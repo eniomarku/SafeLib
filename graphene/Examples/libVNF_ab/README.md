@@ -36,7 +36,7 @@ SafeLib/graphene/Examples/libVNF_ab/ab <br />
 
 ## Build a in another machine (Enterprise aka trusted host)
 
-1. To build and run **a** and ran you must download on your machine only the folder named "Trusted-Host" <br />
+1. To build and run **a** and ran you must download on your machine only the folder named "TrustedHost" <br />
 2. Then execute the following command <br />
 >> cd TrustedHost
 
