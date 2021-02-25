@@ -45,7 +45,8 @@ SafeLib/graphene/Examples/libVNF_ab/ab <br />
 ## Run b (Cloud provider aka untrusted host)
 >>The process is the same as with LTE EPC, please refer to https://github.com/eniomarku/SafeLib/tree/master/graphene/Examples/libVNF_epc for more details <br />
     1.1 You need to copy b-kernelbypass-dynamic executable, server.conf, and ipsec.cfg from SafeLib/graphene/Examples/libVNF_ab/ab to SafeLib/graphene/Examples/libVNF_ab <br />
-    1.2 Then execute: SGX=1 ./pal_loader b-kernelbypass-dynamic 4 x.x.x.x 5000 y.y.y.y 5000 at directory SafeLib/graphene/Examples/libVNF_ab <br />
+    1.2 Place your relative path at _Makefile_ and _b-kernelbypass-dynamic.manifest.template_ <br />
+    1.3 Then execute: SGX=1 ./pal_loader b-kernelbypass-dynamic 4 x.x.x.x 5000 y.y.y.y 5000 at directory SafeLib/graphene/Examples/libVNF_ab <br />
     
         Note that x.x.x.x is the IP you set for dpdk interface, and y.y.y.y is the IP of the network interface of the trusted machine which is interconnected with dpdk interface of un trusted machine
      
