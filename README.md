@@ -70,7 +70,7 @@ b.2) Uncomment the part of the code between *ridder added .... ridder closed* at
 # Installation:
 
 ## 1. Build dpdk as follows:
- >>sudo -s 
+ >>sudo -s\
  >>cd /SafeLib/mtcp\
  >>export RTE_SDK=`echo $PWD`/dpdk\
  >>export RTE_TARGET=x86_64-native-linuxapp-gcc\
