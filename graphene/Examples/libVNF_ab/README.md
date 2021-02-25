@@ -50,7 +50,7 @@ SafeLib/graphene/Examples/libVNF_ab/ab <br />
         Note that x.x.x.x is the IP you set for dpdk interface, and y.y.y.y is the IP of the network interface of the trusted machine which is interconnected with dpdk interface of un trusted machine
      
  ## Run a
-  >> cd Trusted-Host
+  >> cd TrustedHost
 
   
   >> ./a 4 60 y.y.y.y 6006 x.x.x.x 5000 
