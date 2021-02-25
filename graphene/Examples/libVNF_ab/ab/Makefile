@@ -12,7 +12,7 @@ PS=0
 NETMAP=0
 
 # mtcp library and header
-MTCP_P_FLD  = /home/nuc/graphene_test/mtcp
+MTCP_P_FLD  = /home/nuc/SafeLib/mtcp
 MTCP_FLD    = $(MTCP_P_FLD)/mtcp
 MTCP_INC    = -I$(MTCP_FLD)/include
 MTCP_LIB    = -L$(MTCP_FLD)/lib
@@ -75,11 +75,6 @@ $(B_KERNEL_STATIC): b.cpp
 $(B_KERNEL_DYNAMIC): b.cpp
 	g++ b.cpp -O3 -std=c++11 -lvnf-kernel-dynamic -lpthread -lboost_system -lsctp -o $(B_KERNEL_DYNAMIC)
 
-$(A): a.cpp
-	g++ a.cpp -std=c++11 -lpthread -lboost_system -o $(A)
-
-$(C): c.cpp
-	g++ c.cpp -std=c++11 -lpthread -lboost_system -o $(C)
 
 clean:
-	rm -f *~ *.o $(B_KERNEL_STATIC) $(B_KERNEL_DYNAMIC) $(B_KERNELBYPASS_STATIC) $(B_KERNELBYPASS_DYNAMIC) $(A) $(C) log_*
+	rm -f *~ *.o $(B_KERNEL_STATIC) $(B_KERNEL_DYNAMIC) $(B_KERNELBYPASS_STATIC) $(B_KERNELBYPASS_DYNAMIC)  log_*
