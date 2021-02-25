@@ -1,10 +1,6 @@
-B_KERNEL_STATIC=b-kernel-static
-B_KERNEL_DYNAMIC=b-kernel-dynamic
-B_KERNELBYPASS_STATIC=b-kernelbypass-static
-B_KERNELBYPASS_DYNAMIC=b-kernelbypass-dynamic
 CXX_FLAGS=-fpermissive -std=c++11 -g -O3 -Wno-write-strings -Wall
 A=a
-C=c
+
 
 # options
 DPDK=1
@@ -61,25 +57,11 @@ endif
 
 all:
 
-$(B_KERNELBYPASS_STATIC): b.cpp
-	g++ $(CXX_FLAGS) b.cpp -c
-	g++ b.o -o $(B_KERNELBYPASS_STATIC) $(CXX_FLAGS) -lvnf-kernelbypass-static $(LIBS) $(INCLUDES)
 
-$(B_KERNELBYPASS_DYNAMIC): b.cpp
-	g++ b.cpp -o $(B_KERNELBYPASS_DYNAMIC) $(CXX_FLAGS) -lvnf-kernelbypass-dynamic $(LIBS) $(INCLUDES)
-
-$(B_KERNEL_STATIC): b.cpp
-	g++ $(CXX_FLAGS) b.cpp -c
-	g++ b.o -O3 -std=c++11 -lvnf-kernel-static -lpthread -lboost_system -lsctp -o $(B_KERNEL_STATIC)
-
-$(B_KERNEL_DYNAMIC): b.cpp
-	g++ b.cpp -O3 -std=c++11 -lvnf-kernel-dynamic -lpthread -lboost_system -lsctp -o $(B_KERNEL_DYNAMIC)
 
 $(A): a.cpp
 	g++ a.cpp -std=c++11 -lpthread -lboost_system -o $(A)
 
-$(C): c.cpp
-	g++ c.cpp -std=c++11 -lpthread -lboost_system -o $(C)
 
 clean:
 	rm -f *~ *.o $(B_KERNEL_STATIC) $(B_KERNEL_DYNAMIC) $(B_KERNELBYPASS_STATIC) $(B_KERNELBYPASS_DYNAMIC) $(A) $(C) log_*
