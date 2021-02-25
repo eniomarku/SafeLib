@@ -1,18 +1,4 @@
-# Build Redis as follows:
-#
-# - make               -- create non-SGX no-debug-log manifest
-# - make SGX=1         -- create SGX no-debug-log manifest
-# - make SGX=1 DEBUG=1 -- create SGX debug-log manifest
-#
-# Any of these invocations clones Redis' git repository and builds Redis in
-# default configuration and in the latest-to-date (5.0.5) version.
-#
-# By default, Redis uses poll/epoll mechanism of Linux. To build Redis with
-# select, use `make USE_SELECT=1`. For correct re-builds, always clean up
-# Redis source code beforehand via `make distclean`.
-#
-# Use `make clean` to remove Graphene-generated files and `make distclean` to
-# additionally remove the cloned Redis git repository.
+
 
 ################################# CONSTANTS ###################################
 
@@ -38,19 +24,8 @@ endif
 
 include ../../Scripts/Makefile.configs
 
-############################## REDIS EXECUTABLE ###############################
+############################## MME EXECUTABLE ###############################
 
-# Redis is built as usual, without any changes to the build process (except to
-# test select syscall instead of poll/epoll). The source is downloaded from the
-# GitHub repo (5.0.5 tag) and built via `make`. The result of this build process
-# is the final executable "src/redis-server".
-
-#$(SRCDIR)/Makefile:
-#	$(GRAPHENEDIR)/Scripts/download --output libVNF-master.tar.gz \
-#	--sha256 $(TAR_SHA256) \
-#	--url https://github.com/networkedsystemsIITB/libVNF.git
-#	mkdir $(SRCDIR)
-#	tar -C $(SRCDIR) --strip-components=1 -xf libVNF-master.tar.gz
 
 #ifeq ($(USE_SELECT),1)
 #$(SRCDIR)/src/libVNF-master: $(SRCDIR)/Makefile
@@ -61,11 +36,10 @@ include ../../Scripts/Makefile.configs
 #	$(MAKE) -C $(SRCDIR)
 #endif
 
-################################ REDIS MANIFEST ###############################
+################################ MME MANIFEST ###############################
 
-# The template file contains almost all necessary information to run Redis
-# under Graphene / Graphene-SGX. We create redis.manifest (to be run under
-# non-SGX Graphene) by simply replacing variables in the template file via sed.
+# The template file contains almost all necessary information to run mme
+# under Graphene / Graphene-SGX.
 
 mme.manifest: mme.manifest.template
 	sed -e 's|$$(GRAPHENEDIR)|'"$(GRAPHENEDIR)"'|g' \
@@ -74,8 +48,8 @@ mme.manifest: mme.manifest.template
 		$< > $@
 
 # Manifest for Graphene-SGX requires special "pal-sgx-sign" procedure. This
-# procedure measures all Redis dependencies (shared libraries and trusted
-# files), measures Redis code/data pages, and adds measurements in the
+# procedure measures all mm dependencies (shared libraries and trusted
+# files), measures mmm code/data pages, and adds measurements in the
 # resulting manifest.sgx file (among other, less important SGX options).
 #
 # Additionally, Graphene-SGX requires EINITTOKEN and SIGSTRUCT objects (see
@@ -95,8 +69,7 @@ mme.manifest.sgx: mme.manifest $(SRCDIR)/examples/epc/mme/mme
 
 ########################### COPIES OF EXECUTABLES #############################
 
-# Redis build process creates the final executable as src/redis-server. For
-# simplicity, copy it into our root directory.
+# mmm build process creates the final executable.
 # Also, create a link to pal_loader for simplicity.
 
 #mme: $(SRCDIR)/src/libVNF-master
