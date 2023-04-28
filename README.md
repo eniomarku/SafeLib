@@ -1,47 +1,26 @@
-•	SafeLib is a library used for securely outsourcing VNFs in a third party service provider.\
-•	This is an implementation of paper: “SafeLib: a practical library for outsourcing stateful network functions securely” submitted at NetSoft 2021
+* SafeLib is a library used for securely outsourcing VNFs in a third party service provider.
+*	This is an implementation of paper: “SafeLib: a practical library for outsourcing stateful network functions securely” submitted at NetSoft 2021
 
 # Features:
 
-•	Written entirely in C/C++\
-•	Provide integrity and confidentiality protection of user traffic, VNF policies, and integrity of VNF code.\
-•	Provide support for stateful VNFs\
-•	Provide support for user-level TCP stack\
-•	Provide support for kernel bypass mechanisms such as DPDK
+*	Written entirely in C/C++.
+*	Provide integrity and confidentiality protection of user traffic, VNF policies, and integrity of VNF code.
+*	Provide support for stateful VNFs.
+*	Provide support for user-level TCP stack.
+*	Provide support for kernel bypass mechanisms such as DPDK.
 
 
 # Prerequisites
-1.	SafeLib makes use of Intel SGX, so first step is to make sure to run SafeLib on Intel CPU machines with support for SGX.
-2.	Make sure to have a machine with Linux as OS; we have tested our library only for Ubuntu 18.04, and 20.04 version.
-3.	Make sure to use a CPU and NIC supported by DPDK. The list of CPUs and NIC supported by DPDK can be found at http://core.dpdk.org/supported/ . For our testing purpose we have used Intel CPUs and “igb” drivers.
-4.	To run our LTE EPC, and ab scenarios two physical machines are needed, which are interconnected via an ethernet cable. Only one of the machines needs to have support for SGX, and DPDK.
+*	To run our LTE EPC, and ab scenarios two physical machines are needed, which are interconnected via an ethernet cable. Only one of the machines needs to have support for SGX, and DPDK.
 
-# Preliminary steps:
-1.	Install Intel SGX driver/DCAP , SDK, and psw. To install them follow the instructions given in https://github.com/intel/linux-sgx
-2.	Install nasm 2.14 as follows;
-
- >> wget http://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.tar.xz \
- >> tar -xf ./nasm-2.14.02-xdoc.tar.xz –strip-components=1 \
- >> ./configure –prefix=/usr \
- >> make\
- >> make install
-3.	Install intel-ipsec-mb. Instructions can be found at https://github.com/intel/intel-ipsec-mb <br />
-     3.1 Configure ipsec file (ipsec.cfg). One example of ipsec.cfg can be found at (graphene/Examples/libVNF_epc/libVNF-release-socc/examples/epc/mme)
-     
-4.	Install spdlog. Instructions can be found at https://github.com/gabime/spdlog
-5.	Install boost (libboost-all-dev)
-6.	Install libnuma, libpthread, librt, libgmp
-7.	Run the following command for building graphene dependencies: 
->> sudo apt-get install -y \   build-essential autoconf gawk bison wget python3 libcurl4-openssl-dev \
-   python3-protobuf libprotobuf-c-dev protobuf-c-compiler
    
 # Navigating the repository
 
-1. libVNF folder contains the source code of libVNF, and some senario cases  <br />
+* libVNF folder contains the source code of libVNF, and some senario cases  <br />
    1.1 Before building our library, one should use libVNF APIs for building stateful VNFs <br />
    1.2 See below how to build libVNF <br />
-2. mTC folder containts the source code of mTCP, dpdk, and dpdk-dummy <br />
-3. graphene folder contains the source code of grahene, and our test cases (LTE EPC, ab) <br />
+* mTC folder containts the source code of mTCP, dpdk, and dpdk-dummy <br />
+* graphene folder contains the source code of grahene, and our test cases (LTE EPC, ab) <br />
    3.1 Our test cases can be found at https://github.com/eniomarku/SafeLib/tree/master/graphene/Examples
 
 
